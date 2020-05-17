@@ -1,4 +1,4 @@
-package mainInfrastructure;
+package system;
 
 public class GPS {
 

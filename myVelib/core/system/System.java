@@ -1,7 +1,9 @@
-package mainInfrastructure;
+package system;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import station.Station;
 
 public class System {
 
