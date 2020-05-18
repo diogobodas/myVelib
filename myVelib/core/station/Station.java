@@ -15,10 +15,8 @@ public class Station {
 		on_service = online;
 		coordinates = coord;
 		terminal = t;
-		slots = new ParkingSlot[number_of_slots];
-		for (int i = 0; i < number_of_slots; i++) {
-			slots[i] = new ParkingSlot(i, SlotStatus.FREE);
-		}
+		SlotCreator slot_factory = new SlotCreator();
+		slots = slot_factory.fillSlots(number_of_slots);
 	}
 	
 	// method for releasing bike

@@ -14,9 +14,9 @@ public class System {
 	private RidePlanning rideplan;
 	
 	// Creates N stations, summing up to M parking Slots
-	// Each station will have Floor(M/N) stations and if
+	// Each station will have Floor(M/N) slots and if
 	// M is not divisible by N, one station will have M mod N stations
-	System(int N,int M) {
+	public System(int N,int M) {
 		this.users = new ArrayList<User>();
 		this.rideplan = new StandardPlanning();
 		stations = new Station[N];
@@ -31,6 +31,7 @@ public class System {
 			// Then the last station created will have  M mod N stations
 			else
 				numSlots = M % N;
+			// Stations take care of filling correctly electric/regular bikes and empty slots
 			stations[i] = new Station(i,true,new GPS(10*rand.nextDouble(),10*rand.nextDouble()),new Terminal(),numSlots);
 		}
 			

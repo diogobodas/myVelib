@@ -1,25 +1,22 @@
 package station;
-import java.lang.Enum;
+import bike.Bike;
 
 public class ParkingSlot {
 	// attributes 
 	private int id;
 	private SlotStatus status;
+	private Bike bike;
 	
-	//constructor
-	public ParkingSlot(int id, SlotStatus status) {
+	//constructors
+	public ParkingSlot(int id) {
 		this.id = id;
-		this.status = status;
+		this.status = SlotStatus.FREE;
 	}
 	
-	// method for releasing bike
-	public void releaseBike() {
-		// TO DO
-	}
-	
-	// method for receiving bike
-	public void receiveBike() {
-		// TO DO
+	public ParkingSlot(int id, Bike bike) {
+		this.id = id;
+		this.status = SlotStatus.OCCUPIED;
+		this.bike = bike;
 	}
 	
 	// getters / setters
@@ -35,7 +32,12 @@ public class ParkingSlot {
 	public void setStatus(SlotStatus status) {
 		this.status = status;
 	}
-	
-	
 
+	public Bike getBike() {
+		return bike;
+	}
+
+	public void setBike(Bike bike) {
+		this.bike = bike;
+	}
 }
