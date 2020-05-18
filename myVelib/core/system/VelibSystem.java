@@ -1,24 +1,27 @@
 package system;
 
 import user.User;
+import bike.Bike;
+
+import java.awt.desktop.UserSessionEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
 import station.Station;
 import station.Terminal;
 
-public class System {
+public class VelibSystem {
 
-	private Station[] stations;
-	private ArrayList<User> users;
-	private RidePlanning rideplan;
+	private static Station[] stations;
+	private static ArrayList<User> users;
+	private static RidePlanning rideplan;
 	
 	// Creates N stations, summing up to M parking Slots
 	// Each station will have Floor(M/N) slots and if
 	// M is not divisible by N, one station will have M mod N stations
-	public System(int N,int M) {
-		this.users = new ArrayList<User>();
-		this.rideplan = new StandardPlanning();
+	public VelibSystem(int N,int M) {
+		VelibSystem.users = new ArrayList<User>();
+		VelibSystem.rideplan = new StandardPlanning();
 		stations = new Station[N];
 		int i = 0;
 		int residue = M;
@@ -44,7 +47,7 @@ public class System {
 
 
 	public void setStations(Station[] stations) {
-		this.stations = stations;
+		VelibSystem.stations = stations;
 	}
 
 
@@ -56,7 +59,7 @@ public class System {
 
 
 	public void setUsers(ArrayList<User> users) {
-		this.users = users;
+		VelibSystem.users = users;
 	}
 
 
@@ -68,16 +71,32 @@ public class System {
 
 
 	public void setRideplan(RidePlanning rideplan) {
-		this.rideplan = rideplan;
+		VelibSystem.rideplan = rideplan;
 	}
 
 
 
 	public void addUser(String cardType) {
-		this.users.add(new User(cardType));
+		VelibSystem.users.add(new User(cardType));
 	}
 	
 	public Station[] PlanRide(GPS start, GPS finish,String bikeType) {
-		return this.rideplan.plan(this.stations,start,finish,bikeType);
+		return VelibSystem.rideplan.plan(VelibSystem.stations,start,finish,bikeType);
+	}
+	
+	public static User getUserByBike(Bike b) {
+		for (User u : VelibSystem.users) {
+			if (u.getBike().getID() == b.getID())
+				return u;
+		}
+		return null;
+	}
+	
+	public static void chargeUserMoney(User usr, double value) {
+		
+	}
+	
+	public static void chargeUserTime(User usr, double value) {
+		
 	}
 }

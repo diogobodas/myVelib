@@ -10,4 +10,8 @@ public abstract class Bike {
 		Bike.last_id += 1;
 	}
 	
+	public int getID() {
+		return this.id;
+	}
+	
 }

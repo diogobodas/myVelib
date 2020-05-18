@@ -1,6 +1,8 @@
 package station;
 import bike.Bike;
 import user.User;
+import system.VelibSystem;
+import user.Payment;
 
 public class ParkingSlot {
 	// attributes 
@@ -22,11 +24,16 @@ public class ParkingSlot {
 	
 	public void receiveBike(Bike bike) {
 		if (this.status == SlotStatus.FREE) {
-			User usr = System.getUserByBike(bike);
-			usr.getPayment().pay();
-			usr.setPayment(null);
-			this.setBike(bike);
-			this.setStatus(SlotStatus.OCCUPIED);
+			User usr = VelibSystem.getUserByBike(bike);
+			if (usr != null) {
+				VelibSystem.chargeUserMoney(usr, usr.getPayment().getValue());
+				usr.setPayment(null);
+				this.setBike(bike);
+				this.setStatus(SlotStatus.OCCUPIED);
+			} else {
+				System.out.println("Bike does not belong to any user");
+				// Insert custom exception here later
+			}
 		} else {
 			System.out.println("Slot not Free");
 			// insert custom exception here later
