@@ -73,5 +73,12 @@ public class Station {
 	}
 	
 	
+	public boolean hasDesiredBike(String bikeType) {
+		
+	}
+	
+	public boolean hasFreeSlot() {
+		
+	}
 	
 }

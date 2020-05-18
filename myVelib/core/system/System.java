@@ -1,22 +1,24 @@
 package system;
 
+import user.User;
 import java.util.ArrayList;
 import java.util.Random;
 
 import station.Station;
+import station.Terminal;
 
 public class System {
 
 	private Station[] stations;
 	private ArrayList<User> users;
-	private RidePlanner rideplanner;
+	private RidePlanning rideplan;
 	
 	// Creates N stations, summing up to M parking Slots
 	// Each station will have Floor(M/N) stations and if
 	// M is not divisible by N, one station will have M mod N stations
 	System(int N,int M) {
 		this.users = new ArrayList<User>();
-		this.rideplanner = new RidePlanner();
+		this.rideplan = new StandardPlanning();
 		stations = new Station[N];
 		int i = 0;
 		int residue = M;
@@ -29,7 +31,7 @@ public class System {
 			// Then the last station created will have  M mod N stations
 			else
 				numSlots = M % N;
-			stations[i] = new Station(i,true,new GPS(10*rand.nextDouble()(),10*rand.nextDouble()),numSlots);
+			stations[i] = new Station(i,true,new GPS(10*rand.nextDouble(),10*rand.nextDouble()),new Terminal(),numSlots);
 		}
 			
 	}
@@ -58,14 +60,14 @@ public class System {
 
 
 
-	public RidePlanner getRideplanner() {
-		return rideplanner;
+	public RidePlanning getRideplan() {
+		return rideplan;
 	}
 
 
 
-	public void setRideplanner(RidePlanner rideplanner) {
-		this.rideplanner = rideplanner;
+	public void setRideplan(RidePlanning rideplan) {
+		this.rideplan = rideplan;
 	}
 
 
@@ -74,7 +76,7 @@ public class System {
 		this.users.add(new User(cardType));
 	}
 	
-	public Station[] PlanRide(GPS start, GPS finish) {
-		return this.rideplanner.(start,finish);
+	public Station[] PlanRide(GPS start, GPS finish,String bikeType) {
+		return this.rideplan.plan(this.stations,start,finish,bikeType);
 	}
 }

@@ -1,11 +1,6 @@
 package station;
 import java.lang.Enum;
 
-enum SlotStatus{
-	OCCUPIED, FREE, OUT_OF_ORDER
-}
-
-
 public class ParkingSlot {
 	// attributes 
 	private int id;

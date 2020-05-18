@@ -9,6 +9,10 @@ public class GPS {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public static double distance(GPS p1,GPS p2) {
+		return Math.sqrt(( p1.getX() - p2.getX()) + (p1.getY() - p2.getY()));
+	}
 
 	public double getX() {
 		return x;
