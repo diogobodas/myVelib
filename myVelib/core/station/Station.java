@@ -18,15 +18,22 @@ public class Station {
 		SlotCreator slot_factory = new SlotCreator();
 		slots = slot_factory.fillSlots(number_of_slots);
 	}
-	
-	// method for releasing bike
-	public void releaseBike() {
-		// TO DO
+
+	public boolean hasDesiredBike(Class<?> bikeType) {
+		for (int i = 0; i < this.slots.length; i++) {
+			if (slots[i].getBike() != null)
+				if (slots[i].getBike().getClass() == bikeType)
+					return true;
+		}
+		return false;
 	}
 	
-	// method for receiving bike
-	public void receiveBike() {
-		// TO DO
+	public boolean hasFreeSlot() {
+		for (int i = 0; i < this.slots.length; i++) {
+			if (slots[i].getBike() == null)
+				return true;
+		}
+		return false;	
 	}
 
 	// getters / setters
@@ -65,18 +72,6 @@ public class Station {
 	public Terminal getTerminal() {
 		return terminal;
 	}
-
-	public void setTerminal(Terminal terminal) {
-		this.terminal = terminal;
-	}
 	
-	
-	public boolean hasDesiredBike(String bikeType) {
-		
-	}
-	
-	public boolean hasFreeSlot() {
-		
-	}
 	
 }

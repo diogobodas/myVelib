@@ -5,7 +5,7 @@ public class GPS {
 	private double x;
 	private double y;
 	
-	GPS(double x,double y) {
+	public GPS(double x,double y) {
 		this.x = x;
 		this.y = y;
 	}

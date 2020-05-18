@@ -9,7 +9,7 @@ import station.Station;
 public class StandardPlanning implements RidePlanning{
 
 	
-	public Station[] plan(Station[] stations,GPS start,GPS finish,String bikeType) {
+	public Station[] plan(Station[] stations,GPS start,GPS finish,Class<?> bike_type) {
 		
 		// Let's first clear out all stations out of service
 		
@@ -30,7 +30,7 @@ public class StandardPlanning implements RidePlanning{
 		ArrayList<Station> endStations = new ArrayList<Station>();
 		
 		for (Station station:workingStations) {
-			if (station.hasDesiredBike(bikeType))
+			if (station.hasDesiredBike(bike_type))
 				startStations.add(station);
 			if (station.hasFreeSlot())
 				endStations.add(station);

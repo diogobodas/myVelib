@@ -1,8 +1,10 @@
-package station;
+package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 import bike.ElectricBike;
 import bike.RegularBike;
+import station.ParkingSlot;
+import station.SlotCreator;
 
 import org.junit.jupiter.api.Test;
 

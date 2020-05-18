@@ -9,4 +9,5 @@ public abstract class Bike {
 		this.id = Bike.last_id + 1;
 		Bike.last_id += 1;
 	}
+	
 }
