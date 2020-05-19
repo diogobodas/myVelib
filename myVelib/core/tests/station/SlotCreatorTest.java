@@ -29,9 +29,9 @@ class SlotCreatorTest {
 				fail("Unsupported bike type. Change this test if a new bike was added");
 			}
 		}
-		assertTrue(empty <= n_slots * factory.percent_empty);
-		assertTrue(regular <= (n_slots - empty) * factory.percent_regular);
-		assertTrue(electric >= (regular + electric) * (1 - factory.percent_regular));
+		assertTrue(empty <= n_slots * factory.getPercent_empty());
+		assertTrue(regular <= (n_slots - empty) * factory.getPercent_regular());
+		assertTrue(electric >= (regular + electric) * (1 - factory.getPercent_regular()));
 	}
 
 }

@@ -15,33 +15,42 @@ public abstract class Payment {
 	}
 	
 	// abstract method to be implemented by concrete classes with payments
-	public abstract double getValue();
+	// should return value of the payment to be done
+	public abstract double getValue(LocalDateTime end_time);
+	
+	// Method for returning eventual discounts in time. Since not all payment methods use it
+	// It is defaulted in the abstract class as as a return 0 method
+	// The time discount is counted exclusively in integer minutes (seconds are not considered)
+	// When used, should return a the discount in minutes
+	public long getTimeDiscount(LocalDateTime end_time) {
+		return 0;
+	}
 	
 	// static method for generating correct payment class
 	// Payment abstract class acts as factory for generating correct payment methods through this method
 	public static Payment createAdequatePayment(User usr, Bike bike) {
-		if (usr.getCard() == null) {
+		if (usr.getRegistrationCard() == null) {
 			if (bike.getClass() == RegularBike.class)
 				return new PaymentStd(LocalDateTime.now(), 1.0);
 			if (bike.getClass() == ElectricBike.class)
 				return new PaymentStd(LocalDateTime.now(), 2.0);
 		}
-		if (usr.getCard().getClass() == Vlibre.class) {
+		if (usr.getRegistrationCard().getClass() == Vlibre.class) {
 			if (bike.getClass() == RegularBike.class)
-				return new PaymentVlibre(LocalDateTime.now(), 1.0, usr.getCard().getCredit());
+				return new PaymentVlibre(LocalDateTime.now(), 1.0, usr.getRegistrationCard().getCredit());
 			if (bike.getClass() == ElectricBike.class)
-				return new PaymentVlibre(LocalDateTime.now(), 2.0, usr.getCard().getCredit());
+				return new PaymentVlibre(LocalDateTime.now(), 2.0, usr.getRegistrationCard().getCredit());
 		}
-		if (usr.getCard().getClass() == Vmax.class) {
+		if (usr.getRegistrationCard().getClass() == Vmax.class) {
 			return new PaymentVmax(LocalDateTime.now());
 		}
 	}
 
-	public LocalDateTime getRent_start_time() {
+	public LocalDateTime getStartTime() {
 		return rent_start_time;
 	}
 
-	public void setRent_start_time(LocalDateTime rent_start_time) {
+	public void setStartTime(LocalDateTime rent_start_time) {
 		this.rent_start_time = rent_start_time;
 	}
 }

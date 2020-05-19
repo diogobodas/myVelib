@@ -7,8 +7,8 @@ public class SlotCreator {
 	// Factory class used exclusively to create slots for each station according to parameters that may change
 	
 	// In case of new bike type, add percentage of this new type and change method
-	double percent_empty = 0.3;
-	double percent_regular = 0.7;
+	private double percent_empty = 0.3;
+	private double percent_regular = 0.7;
 	
 	public ParkingSlot[] fillSlots(int number_of_slots) {
 		ParkingSlot[] slots = new ParkingSlot[number_of_slots];
@@ -25,5 +25,23 @@ public class SlotCreator {
 		}
 		return slots;
 	}
+
+	public double getPercent_empty() {
+		return percent_empty;
+	}
+
+	public void setPercent_empty(double percent_empty) {
+		this.percent_empty = percent_empty;
+	}
+
+	public double getPercent_regular() {
+		return percent_regular;
+	}
+
+	public void setPercent_regular(double percent_regular) {
+		this.percent_regular = percent_regular;
+	}
+	
+	
 	
 }

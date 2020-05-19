@@ -1,4 +1,6 @@
 package station;
+import java.time.LocalDateTime;
+
 import bike.Bike;
 import user.User;
 import system.VelibSystem;
@@ -26,8 +28,9 @@ public class ParkingSlot {
 		if (this.status == SlotStatus.FREE) {
 			User usr = VelibSystem.getUserByBike(bike);
 			if (usr != null) {
-				VelibSystem.chargeUserMoney(usr, usr.getPayment().getValue());
-				usr.setPayment(null);
+				VelibSystem.chargeUserMoney(usr, usr.getPaymentMode().getValue(LocalDateTime.now()));
+				VelibSystem.chargeUserTime(usr, usr.getPaymentMode().getTimeDiscount(LocalDateTime.now()));
+				usr.setPaymentMode(null);
 				this.setBike(bike);
 				this.setStatus(SlotStatus.OCCUPIED);
 			} else {
@@ -42,7 +45,7 @@ public class ParkingSlot {
 	
 	public void releaseBike(User usr) {
 		if (this.status == SlotStatus.OCCUPIED) {
-			usr.setPayment(Payment.createAdequatePayment(usr, this.bike)); // establishes payment regime for user
+			usr.setPaymentMode(Payment.createAdequatePayment(usr, this.bike)); // establishes payment regime for user
 			usr.setBike(this.bike); // gives bike
 			this.status = SlotStatus.FREE; // frees slot
 		} else {
