@@ -3826,7 +3826,7 @@
 											"font": "Arial;13;1",
 											"left": 2397,
 											"top": 935,
-											"width": 135,
+											"width": 162.9443359375,
 											"height": 13,
 											"text": "GPS"
 										},
@@ -3861,7 +3861,7 @@
 									"font": "Arial;13;0",
 									"left": 2392,
 									"top": 928,
-									"width": 145,
+									"width": 172.9443359375,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFx9pwoSvIKAho="
@@ -3898,7 +3898,7 @@
 											"font": "Arial;13;0",
 											"left": 2397,
 											"top": 958,
-											"width": 135,
+											"width": 162.9443359375,
 											"height": 13,
 											"text": "+double x_coord",
 											"horizontalAlignment": 0
@@ -3915,7 +3915,7 @@
 											"font": "Arial;13;0",
 											"left": 2397,
 											"top": 973,
-											"width": 135,
+											"width": 162.9443359375,
 											"height": 13,
 											"text": "+double y_coord",
 											"horizontalAlignment": 0
@@ -3924,7 +3924,7 @@
 									"font": "Arial;13;0",
 									"left": 2392,
 									"top": 953,
-									"width": 145,
+									"width": 172.9443359375,
 									"height": 38
 								},
 								{
@@ -3936,11 +3936,30 @@
 									"model": {
 										"$ref": "AAAAAAFx9pwoSPIGD14="
 									},
+									"subViews": [
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAFyKiZJcgVKzuM=",
+											"_parent": {
+												"$ref": "AAAAAAFx9pwoS/IPQDE="
+											},
+											"model": {
+												"$ref": "AAAAAAFyKiZJIwVHa0s="
+											},
+											"font": "Arial;13;0",
+											"left": 2397,
+											"top": 996,
+											"width": 162.9443359375,
+											"height": 13,
+											"text": "+distance(GPS p1, GPS p2)",
+											"horizontalAlignment": 0
+										}
+									],
 									"font": "Arial;13;0",
 									"left": 2392,
 									"top": 991,
-									"width": 145,
-									"height": 10
+									"width": 172.9443359375,
+									"height": 23
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -3979,7 +3998,7 @@
 							"containerChangeable": true,
 							"left": 2392,
 							"top": 928,
-							"width": 145,
+							"width": 172.9443359375,
 							"height": 105,
 							"nameCompartment": {
 								"$ref": "AAAAAAFx9pwoSvIJiiE="
@@ -5084,7 +5103,7 @@
 										"$ref": "AAAAAAFyBcTT0aRHzIA="
 									},
 									"font": "Arial;13;0",
-									"left": 2403,
+									"left": 2410,
 									"top": 1113,
 									"width": 89.97802734375,
 									"height": 13,
@@ -5107,8 +5126,8 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 2432,
-									"top": 1113,
+									"left": 2439,
+									"top": 1112,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -5128,7 +5147,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 2476,
+									"left": 2483,
 									"top": 1114,
 									"height": 13,
 									"alpha": -1.5707963267948966,
@@ -5147,7 +5166,7 @@
 								"$ref": "AAAAAAFyBOLzympSETs="
 							},
 							"lineStyle": 1,
-							"points": "2461:1207;2463:1033",
+							"points": "2464:1207;2474:1033",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFyBcTT0qRKAHQ="
@@ -10459,7 +10478,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFx9liLntU91yY="
 							},
-							"name": "Bike bike"
+							"name": "Bike bike",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -10493,7 +10513,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyIsUUmonNe70="
 									},
-									"name": "int id"
+									"name": "int id",
+									"type": ""
 								}
 							]
 						},
@@ -11695,6 +11716,36 @@
 							"name": "double y_coord",
 							"type": ""
 						}
+					],
+					"operations": [
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAFyKiZJIwVHa0s=",
+							"_parent": {
+								"$ref": "AAAAAAFx9pwoSPIGD14="
+							},
+							"name": "distance",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFyKiaKvAbO7gQ=",
+									"_parent": {
+										"$ref": "AAAAAAFyKiZJIwVHa0s="
+									},
+									"name": "GPS p1",
+									"type": ""
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFyKiaKvAbP0hk=",
+									"_parent": {
+										"$ref": "AAAAAAFyKiZJIwVHa0s="
+									},
+									"name": "GPS p2",
+									"type": ""
+								}
+							]
+						}
 					]
 				},
 				{
@@ -12361,7 +12412,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFyKPIR02ehavE="
 							},
-							"name": "double percentage_empty"
+							"name": "double percentage_empty",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -12369,7 +12421,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFyKPIR02ehavE="
 							},
-							"name": "double percentage_regular"
+							"name": "double percentage_regular",
+							"type": ""
 						}
 					],
 					"operations": [

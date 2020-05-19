@@ -1,10 +1,13 @@
 package system;
 
 import user.User;
+import user.Card;
+
 import bike.Bike;
 
 import java.awt.desktop.UserSessionEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import station.Station;
@@ -15,6 +18,7 @@ public class VelibSystem {
 	private static Station[] stations;
 	private static ArrayList<User> users;
 	private static RidePlanning rideplan;
+	private int countUsers = 0;
 	
 	// Creates N stations, summing up to M parking Slots
 	// Each station will have Floor(M/N) slots and if
@@ -76,11 +80,12 @@ public class VelibSystem {
 
 
 
-	public void addUser(String cardType) {
-		VelibSystem.users.add(new User(cardType));
+	public void addUser(GPS location,Card cardType) {
+		VelibSystem.users.add(new User(countUsers,location,cardType));
+		countUsers += 1;
 	}
 	
-	public Station[] PlanRide(GPS start, GPS finish,String bikeType) {
+	public Station[] PlanRide(GPS start, GPS finish,Class <?> bikeType) {
 		return VelibSystem.rideplan.plan(VelibSystem.stations,start,finish,bikeType);
 	}
 	
@@ -98,5 +103,33 @@ public class VelibSystem {
 	
 	public static void chargeUserTime(User usr, double value) {
 		
+	}
+	
+	// auxiliary function for RidePlanning interface implementation
+	public static Station argmin(HashMap<Station,Double> dict, ArrayList<Station> keys) {
+		
+		Station minStation = null;
+		Double minValue = Double.MAX_VALUE;
+		for(Station station:keys) {
+			double value = dict.get(station);
+			if(value < minValue) {
+				minValue = value;
+				minStation = station;
+			}
+		}
+		return minStation;
+	}
+	
+	// Sort of a toString analogue
+	public static void printSystemInfo() {
+		String stationsInfo = "";
+		String usersInfo = "";
+		for (Station station:stations)
+			stationsInfo += station.toString() + " ";
+		for (User user:users) 
+			usersInfo += user.toString() + " ";
+		System.out.println("Stations " + stationsInfo);
+		System.out.println("Users " + usersInfo);
+		System.out.println("RidePlanning" + rideplan.toString());
 	}
 }

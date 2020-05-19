@@ -1,4 +1,4 @@
-package tests;
+package tests.station;
 
 import static org.junit.jupiter.api.Assertions.*;
 import bike.ElectricBike;

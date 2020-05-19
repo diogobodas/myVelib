@@ -3,13 +3,14 @@ package system;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import station.Station;
 
 public class StandardPlanning implements RidePlanning{
 
 	
-	public Station[] plan(Station[] stations,GPS start,GPS finish,Class<?> bike_type) {
+	public Station[] plan(Station[] stations,GPS start,GPS finish,Class <?> bike_type) {
 		
 		// Let's first clear out all stations out of service
 		
@@ -47,7 +48,28 @@ public class StandardPlanning implements RidePlanning{
 		// Idea: create a dictionary for each ArrayList with (station: distance)
 		// get min for each of them
 		
+		HashMap<Station,Double> startDict = new HashMap<Station,Double>();
+		HashMap<Station,Double> endDict = new HashMap<Station,Double>();
 		
+		Station bestStart,bestEnd;
+		
+		for (Station station:startStations)
+			startDict.put(station, GPS.distance(start, station.getCoordinates()));
+		
+		for (Station station:endStations)
+			endDict.put(station, GPS.distance(finish, station.getCoordinates()));
+		
+		bestStart = VelibSystem.argmin(startDict, startStations);
+		bestEnd = VelibSystem.argmin(endDict,endStations);
+		
+		Station[] result = {bestStart,bestEnd};
+		
+		return result;
+		
+	}
+	
+	public String toString() {
+		return "Standard Planning";
 	}
 	
 }
