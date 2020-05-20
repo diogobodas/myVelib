@@ -1,5 +1,5 @@
 package user;
 
-public class Vmax implements Card{
+public class Vmax extends Card{
 
 }

@@ -1,5 +1,15 @@
 package station;
 
+import bike.Bike;
+
 public class Terminal {
-	// Stub class, complete later
+	
+	private Station station;
+	
+	// to perdido nessa parte
+	
+	public Bike releaseBike(Class <?> bikeType) {
+		
+	}
+	
 }

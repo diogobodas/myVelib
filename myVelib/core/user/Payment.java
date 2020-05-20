@@ -31,19 +31,18 @@ public abstract class Payment {
 	public static Payment createAdequatePayment(User usr, Bike bike) {
 		if (usr.getRegistrationCard() == null) {
 			if (bike.getClass() == RegularBike.class)
-				return new PaymentStd(LocalDateTime.now(), 1.0);
-			if (bike.getClass() == ElectricBike.class)
-				return new PaymentStd(LocalDateTime.now(), 2.0);
+				return (Payment) new PaymentStd(LocalDateTime.now(), 1.0);
+			else
+				return (Payment) new PaymentStd(LocalDateTime.now(), 2.0);
 		}
-		if (usr.getRegistrationCard().getClass() == Vlibre.class) {
+		else if (usr.getRegistrationCard().getClass() == Vlibre.class) {
 			if (bike.getClass() == RegularBike.class)
-				return new PaymentVlibre(LocalDateTime.now(), 1.0, usr.getRegistrationCard().getCredit());
-			if (bike.getClass() == ElectricBike.class)
-				return new PaymentVlibre(LocalDateTime.now(), 2.0, usr.getRegistrationCard().getCredit());
+				return (Payment) new PaymentVlibre(LocalDateTime.now(), 1.0,(long) usr.getRegistrationCard().getCredit());
+			else 
+				return (Payment) new PaymentVlibre(LocalDateTime.now(), 2.0, (long) usr.getRegistrationCard().getCredit());
 		}
-		if (usr.getRegistrationCard().getClass() == Vmax.class) {
-			return new PaymentVmax(LocalDateTime.now());
-		}
+		else 
+			return (Payment) new PaymentVmax(LocalDateTime.now());
 	}
 
 	public LocalDateTime getStartTime() {

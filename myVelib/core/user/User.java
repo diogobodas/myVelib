@@ -2,6 +2,10 @@ package user;
 
 import system.GPS;
 import bike.Bike;
+import station.ParkingSlot;
+import station.SlotStatus;
+import station.Station;
+import station.Terminal;
 
 public class User {
 
@@ -82,6 +86,40 @@ public class User {
 		this.bike = bike;
 	}
 	
+	// Rents a bike through the station's terminal
+	void rentBike(Class <?> bikeType,Station station) {
+		
+		//checks if there is an available bike of the desired type 
+		//if (station.hasDesiredBike(bikeType) == false) {
+		//	System.out.println("Sorry, the desired bike is not available in the specified station");
+		//	return;
+		//}
+		
+		Terminal terminal = station.getTerminal();
+		this.bike = terminal.releaseBike(bikeType);
+	}
 	
+	void dropBike(Station station) {
+		
+		//checks if there is an available slot for the drop off
+		if (station.hasFreeSlot() == false) {
+			System.out.println("Sorry, there are no free slots to drop off your bike in this station");
+			return;
+		}
+		
+		ParkingSlot freeSlot = null;
+		
+		//finds free slot
+		for (ParkingSlot slot: station.getSlots()) {
+			if (slot.getStatus() == SlotStatus.FREE) {
+				freeSlot = slot;
+				break;
+			}	
+		}
+		
+		// drops off bike
+		freeSlot.receiveBike(this.bike);
+		this.bike = null;
+	}
 	
 }

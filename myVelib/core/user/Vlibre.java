@@ -1,5 +1,5 @@
 package user;
 
-public class Vlibre implements Card{
+public class Vlibre extends Card{
 
 }
