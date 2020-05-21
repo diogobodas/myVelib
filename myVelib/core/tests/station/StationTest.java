@@ -14,15 +14,20 @@ class StationTest {
 
 	@Test
 	void testHasDesiredBike() {
-		Station s = new Station(1, true, new GPS(0,0), new Terminal(), 10);
+		Station s = new Station(1, true, new GPS(0,0), 10);
 		assertTrue(s.hasDesiredBike(ElectricBike.class));
 		assertTrue(s.hasDesiredBike(RegularBike.class));
 	}
 
 	@Test
 	void testHasFreeSlot() {
-		Station s = new Station(1, true, new GPS(0,0), new Terminal(), 10);
+		Station s = new Station(1, true, new GPS(0,0), 10);
 		assertTrue(s.hasFreeSlot());
+	}
+	
+	@Test
+	void testGetBikeByID() {
+		fail("Not yet implemented");
 	}
 
 }

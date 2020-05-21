@@ -3,17 +3,17 @@ package user;
 public abstract class Card {
 	
 	private int id;
-	private double timeCredit = 0;
+	private long timeCredit = 0;
 	private static int countCards = 0;
 	
-	Card(double timeCredit) {
+	public Card(long timeCredit) {
 		this.id = countCards;
 		countCards += 1;
 		this.timeCredit = timeCredit;
 	}
 	
 	//Creates a card with credit set as zero
-	Card() {
+	public Card() {
 		this.id = countCards;
 		countCards += 1;
 	}
@@ -22,11 +22,11 @@ public abstract class Card {
 		return timeCredit;
 	}
 	
-	public void setCredit(double credit) {
+	public void setCredit(long credit) {
 		this.timeCredit = credit;
 	}
 	
-	public int getId() {
+	public int getID() {
 		return id;
 	}
 	

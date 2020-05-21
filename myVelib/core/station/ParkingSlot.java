@@ -2,6 +2,7 @@ package station;
 import java.time.LocalDateTime;
 
 import bike.Bike;
+import exceptions.UnavailableBikeException;
 import user.User;
 import system.VelibSystem;
 import user.Payment;
@@ -33,6 +34,7 @@ public class ParkingSlot {
 				usr.setPaymentMode(null);
 				this.setBike(bike);
 				this.setStatus(SlotStatus.OCCUPIED);
+				VelibSystem.addUserTime(usr, bike);
 			} else {
 				System.out.println("Bike does not belong to any user");
 				// Insert custom exception here later
@@ -43,14 +45,14 @@ public class ParkingSlot {
 		}
 	}
 	
-	public void releaseBike(User usr) {
+	public void releaseBike(User usr) throws UnavailableBikeException {
 		if (this.status == SlotStatus.OCCUPIED) {
 			usr.setPaymentMode(Payment.createAdequatePayment(usr, this.bike)); // establishes payment regime for user
 			usr.setBike(this.bike); // gives bike
+			this.setBike(null);
 			this.status = SlotStatus.FREE; // frees slot
 		} else {
-			System.out.println("Slot has no bike");
-			// insert custom exception here later
+			throw new UnavailableBikeException("Slot empty or out-of-order");
 		}
 	}
 	

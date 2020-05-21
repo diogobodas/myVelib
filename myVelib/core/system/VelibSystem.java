@@ -39,7 +39,8 @@ public class VelibSystem {
 			else
 				numSlots = M % N;
 			// Stations take care of filling correctly electric/regular bikes and empty slots
-			stations[i] = new Station(i,true,new GPS(10*rand.nextDouble(),10*rand.nextDouble()),new Terminal(),numSlots);
+			stations[i] = new Station(i,true,new GPS(10*rand.nextDouble(),10*rand.nextDouble()),numSlots);
+			stations[i].setTerminal(new Terminal(stations[i]));
 		}
 			
 	}
@@ -80,8 +81,8 @@ public class VelibSystem {
 
 
 
-	public void addUser(GPS location,Card cardType) {
-		VelibSystem.users.add(new User(countUsers,location,cardType));
+	public void addUser(GPS location, String credit_card_number) {
+		VelibSystem.users.add(new User(countUsers, location, credit_card_number));
 		countUsers += 1;
 	}
 	
@@ -98,11 +99,42 @@ public class VelibSystem {
 	}
 	
 	public static void chargeUserMoney(User usr, double value) {
-		
+		// complete later
 	}
 	
 	public static void chargeUserTime(User usr, double value) {
-		
+		// complete later
+	}
+	
+	public static void addUserTime(User usr, Bike bike) {
+		// complete later
+	}
+	
+	public static Station getStationByBike(Bike b) {
+		for (Station s: VelibSystem.stations) {
+			if (s.getBikeByID(b) != null)
+				return s;
+		}
+		System.out.println("Bike is not in any station");
+		return null;
+	}
+	
+	public static User getUserByRegistrationCard(Card c) {
+		for (User u : VelibSystem.users) {
+			if (u.getRegistrationCard().getID() == c.getID())
+				return u;
+		}
+		return null;
+	}
+	
+	public static ArrayList <User> getUsersWithCreditCard(String card_number) {
+		ArrayList <User> us = new ArrayList <User> ();
+		for (User u : VelibSystem.users) {
+			if (u.getCreditCard().equals(card_number)) {
+				us.add(u);
+			}
+		}
+		return us;
 	}
 	
 	// auxiliary function for RidePlanning interface implementation
@@ -120,7 +152,7 @@ public class VelibSystem {
 		return minStation;
 	}
 	
-	// Sort of a toString analogue
+	// Sort of a toString analog
 	public static void printSystemInfo() {
 		String stationsInfo = "";
 		String usersInfo = "";

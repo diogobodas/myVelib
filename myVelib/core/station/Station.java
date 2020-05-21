@@ -1,4 +1,5 @@
 package station;
+import bike.Bike;
 import system.GPS;
 
 public class Station {
@@ -6,10 +7,19 @@ public class Station {
 	private int id;
 	private boolean on_service;
 	private GPS coordinates;
-	private ParkingSlot[] slots;
 	private Terminal terminal;
+	private ParkingSlot[] slots;
 	
 	// constructor
+	public Station(int id_num, boolean online, GPS coord, int number_of_slots) {
+		id = id_num;
+		on_service = online;
+		coordinates = coord;
+		terminal = null;
+		SlotCreator slot_factory = new SlotCreator();
+		slots = slot_factory.fillSlots(number_of_slots);
+	}
+	
 	public Station(int id_num, boolean online, GPS coord, Terminal t, int number_of_slots) {
 		id = id_num;
 		on_service = online;
@@ -34,6 +44,14 @@ public class Station {
 				return true;
 		}
 		return false;	
+	}
+	
+	public Bike getBikeByID(Bike b) {
+		for (ParkingSlot p : this.slots) {
+			if (p.getBike().getID() == b.getID())
+				return p.getBike();
+		}
+		return null;
 	}
 
 	// getters / setters
@@ -71,6 +89,10 @@ public class Station {
 
 	public Terminal getTerminal() {
 		return terminal;
+	}
+
+	public void setTerminal(Terminal terminal) {
+		this.terminal = terminal;
 	}
 	
 	

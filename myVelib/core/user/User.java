@@ -2,6 +2,9 @@ package user;
 
 import system.GPS;
 import bike.Bike;
+import exceptions.IrregularCardException;
+import exceptions.IrregularUserException;
+import exceptions.UnavailableBikeException;
 import station.ParkingSlot;
 import station.SlotStatus;
 import station.Station;
@@ -17,22 +20,69 @@ public class User {
 	private Bike bike;
 	
 	
-	public User(int id,GPS location,Card registrationCard) {
+	public User(int id, GPS location, String card_number) {
 		this.id = id;
 		this.location = location;
-		this.creditCard = ( (Integer) id).toString(); // change later if putting card number
-		this.registrationCard = registrationCard;
+		this.creditCard = card_number; // change later if putting card number
+		this.registrationCard = null;
 		this.bike = null;
 		this.payment_mode = null;
 	}
 
+	// Rents a bike through the station's terminal
+	void rentBike(Station station, int slot_id) {
+		Terminal terminal = station.getTerminal();
+		try {
+			terminal.identifyUser(this);
+			terminal.releaseBike(this, slot_id);
+		} catch (UnavailableBikeException e) {
+			System.out.println(e);
+		} catch (IrregularUserException e) {
+			System.out.println(e);
+		} catch (IrregularCardException e) {
+			System.out.println(e);
+		}
+	}
+	
+	void dropBike(Station station) {
+		
+		//checks if there is an available slot for the drop off
+		// insert exception here later? 
+		if (station.hasFreeSlot() == false) {
+			System.out.println("Sorry, there are no free slots to drop off your bike in this station");
+			return;
+		}
+		
+		ParkingSlot freeSlot = null;
+		
+		//finds free slot
+		for (ParkingSlot slot: station.getSlots()) {
+			if (slot.getStatus() == SlotStatus.FREE) {
+				freeSlot = slot;
+				break;
+			}	
+		}
+		
+		// drops off bike
+		freeSlot.receiveBike(this.bike);
+		this.bike = null;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof User) {
+			User u = (User) obj;
+			return u.getID() == this.id;
+		}
+		return false;
+	}
 
-	public int getId() {
+	public int getID() {
 		return id;
 	}
 
 
-	public void setId(int id) {
+	public void setID(int id) {
 		this.id = id;
 	}
 
@@ -84,42 +134,6 @@ public class User {
 
 	public void setBike(Bike bike) {
 		this.bike = bike;
-	}
-	
-	// Rents a bike through the station's terminal
-	void rentBike(Class <?> bikeType,Station station) {
-		
-		//checks if there is an available bike of the desired type 
-		//if (station.hasDesiredBike(bikeType) == false) {
-		//	System.out.println("Sorry, the desired bike is not available in the specified station");
-		//	return;
-		//}
-		
-		Terminal terminal = station.getTerminal();
-		this.bike = terminal.releaseBike(bikeType);
-	}
-	
-	void dropBike(Station station) {
-		
-		//checks if there is an available slot for the drop off
-		if (station.hasFreeSlot() == false) {
-			System.out.println("Sorry, there are no free slots to drop off your bike in this station");
-			return;
-		}
-		
-		ParkingSlot freeSlot = null;
-		
-		//finds free slot
-		for (ParkingSlot slot: station.getSlots()) {
-			if (slot.getStatus() == SlotStatus.FREE) {
-				freeSlot = slot;
-				break;
-			}	
-		}
-		
-		// drops off bike
-		freeSlot.receiveBike(this.bike);
-		this.bike = null;
 	}
 	
 }
