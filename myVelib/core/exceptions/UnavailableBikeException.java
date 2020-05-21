@@ -2,7 +2,7 @@ package exceptions;
 
 public class UnavailableBikeException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	private String error_message;
 	
 	public UnavailableBikeException(String msg) {
