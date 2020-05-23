@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import station.ParkingSlot;
 import station.Station;
 import station.Terminal;
 
@@ -41,6 +42,7 @@ public class VelibSystem {
 			// Stations take care of filling correctly electric/regular bikes and empty slots
 			stations[i] = new Station(i,true,new GPS(10*rand.nextDouble(),10*rand.nextDouble()),numSlots);
 			stations[i].setTerminal(new Terminal(stations[i]));
+			i+= 1;
 		}
 			
 	}
@@ -98,13 +100,15 @@ public class VelibSystem {
 		return null;
 	}
 	
-	public static void chargeUserMoney(User usr, double value) {
-		// to complete
+	public static Station getStationBySlot(ParkingSlot slot) {
 		
-	}
-	
-	public static void chargeUserTime(User usr, double value) {
-		// to complete
+		int stationId = slot.getId()/100;
+		for (Station station: VelibSystem.stations) {
+			if (station.getId() == stationId)
+				return station;
+		}
+		return null;
+
 	}
 	
 	public static Station getStationByBike(Bike b) {

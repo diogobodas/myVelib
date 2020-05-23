@@ -9,6 +9,7 @@ public class Station {
 	private GPS coordinates;
 	private Terminal terminal;
 	private ParkingSlot[] slots;
+	private StationBalance balance;
 	
 	// constructor
 	public Station(int id_num, boolean online, GPS coord, int number_of_slots) {
@@ -17,7 +18,8 @@ public class Station {
 		coordinates = coord;
 		terminal = null;
 		SlotCreator slot_factory = new SlotCreator();
-		slots = slot_factory.fillSlots(number_of_slots);
+		slots = slot_factory.fillSlots(id_num,number_of_slots);
+		balance = new StationBalance(this);
 	}
 	
 	public Station(int id_num, boolean online, GPS coord, Terminal t, int number_of_slots) {
@@ -26,7 +28,8 @@ public class Station {
 		coordinates = coord;
 		terminal = t;
 		SlotCreator slot_factory = new SlotCreator();
-		slots = slot_factory.fillSlots(number_of_slots);
+		slots = slot_factory.fillSlots(id_num,number_of_slots);
+		balance = new StationBalance(this);
 	}
 
 	public boolean hasDesiredBike(Class<?> bikeType) {
@@ -94,6 +97,15 @@ public class Station {
 	public void setTerminal(Terminal terminal) {
 		this.terminal = terminal;
 	}
+
+	public StationBalance getBalance() {
+		return balance;
+	}
+
+	public void setBalance(StationBalance balance) {
+		this.balance = balance;
+	}
+	
 	
 	
 }
