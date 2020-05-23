@@ -18,6 +18,7 @@ public class User {
 	private Card registrationCard;
 	private Payment payment_mode;
 	private Bike bike;
+	private UserBalance usrBalance;
 	
 	
 	public User(int id, GPS location, String card_number) {
@@ -27,6 +28,15 @@ public class User {
 		this.registrationCard = null;
 		this.bike = null;
 		this.payment_mode = null;
+		this.usrBalance = new UserBalance(this);
+	}
+
+	public UserBalance getUsrBalance() {
+		return usrBalance;
+	}
+
+	public void setUsrBalance(UserBalance usrBalance) {
+		this.usrBalance = usrBalance;
 	}
 
 	// Rents a bike through the station's terminal

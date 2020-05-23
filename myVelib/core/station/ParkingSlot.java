@@ -29,12 +29,15 @@ public class ParkingSlot {
 		if (this.status == SlotStatus.FREE) {
 			User usr = VelibSystem.getUserByBike(bike);
 			if (usr != null) {
-				VelibSystem.chargeUserMoney(usr, usr.getPaymentMode().getValue(LocalDateTime.now()));
-				VelibSystem.chargeUserTime(usr, usr.getPaymentMode().getTimeDiscount(LocalDateTime.now()));
+				double moneyValue = usr.getPaymentMode().getValue(LocalDateTime.now());
+				double timeValue = usr.getPaymentMode().getTimeDiscount(LocalDateTime.now());
+				double timeCreditDiscount = 0; //CHANGE THIS
+				VelibSystem.chargeUserMoney(usr, moneyValue);
+				VelibSystem.chargeUserTime(usr, timeValue);
 				usr.setPaymentMode(null);
 				this.setBike(bike);
 				this.setStatus(SlotStatus.OCCUPIED);
-				VelibSystem.addUserTime(usr, bike);
+				usr.getUsrBalance().updateBalance(timeValue, moneyValue, timeCreditDiscount);
 			} else {
 				System.out.println("Bike does not belong to any user");
 				// Insert custom exception here later
