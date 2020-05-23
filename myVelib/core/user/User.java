@@ -28,6 +28,7 @@ public class User {
 		this.registrationCard = null;
 		this.bike = null;
 		this.payment_mode = null;
+		// check if this works
 		this.usrBalance = new UserBalance(this);
 	}
 
@@ -124,6 +125,8 @@ public class User {
 
 	public void setRegistrationCard(Card registrationCard) {
 		this.registrationCard = registrationCard;
+		// check if this works
+		this.usrBalance.setTimeCredit(registrationCard.getCredit());
 	}
 
 

@@ -2,7 +2,6 @@ package user;
 
 public class UserBalance {
 	
-	private User usr;
 	private int rideNumber;
 	private double totalBikeTime;
 	private double totalCharge;
@@ -12,8 +11,10 @@ public class UserBalance {
 		rideNumber = 0;
 		totalBikeTime = 0;
 		totalCharge = 0;
-		timeCredit = usr.getRegistrationCard().getCredit();
-		this.usr = usr;
+		if (usr.getRegistrationCard() == null)
+			timeCredit = 0;
+		else 
+			timeCredit = usr.getRegistrationCard().getCredit();
 	}
 	
 	public void updateBalance(double bikeTime, double charge,double timeCreditDiscount) {
@@ -26,6 +27,16 @@ public class UserBalance {
 			timeCredit -= timeCreditDiscount;
 	}
 	
+	public void showBalance() {
+		this.toString();
+	}
+	
+	@Override
+	public String toString() {
+		return "UserBalance [rideNumber=" + rideNumber + ", totalBikeTime=" + totalBikeTime + ", totalCharge="
+				+ totalCharge + ", timeCredit=" + timeCredit + "]";
+	}
+
 	public int getRideNumber() {
 		return rideNumber;
 	}

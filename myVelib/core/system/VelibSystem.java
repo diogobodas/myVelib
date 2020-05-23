@@ -99,12 +99,12 @@ public class VelibSystem {
 	}
 	
 	public static void chargeUserMoney(User usr, double value) {
-		
+		// to complete
 		
 	}
 	
 	public static void chargeUserTime(User usr, double value) {
-		// complete later
+		// to complete
 	}
 	
 	public static Station getStationByBike(Bike b) {
