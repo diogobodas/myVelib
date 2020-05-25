@@ -16,12 +16,15 @@ public class Terminal {
 		station = s;
 	}
 	
-	public void releaseBike(User usr, int slot_id) throws UnavailableBikeException {
-		try{
-			this.station.getSlots()[slot_id].releaseBike(usr);
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("Non-existent parking slot. Please try again");
+	public void releaseBike(User usr, Class <?> bikeType) throws UnavailableBikeException {
+		
+		ParkingSlot[] pslots = this.station.getSlots();
+		for (ParkingSlot slot:pslots) {
+			if(slot.getBike() != null)
+				if (slot.getBike().getClass() == bikeType)
+					slot.releaseBike(usr);
 		}
+			
 	}
 	
 	public void identifyUser(User usr) throws IrregularCardException, IrregularUserException {

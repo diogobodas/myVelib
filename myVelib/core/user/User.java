@@ -31,6 +31,17 @@ public class User {
 		// check if this works
 		this.usrBalance = new UserBalance(this);
 	}
+	
+	public User(int id, GPS location, String card_number,Card registrationCard) {
+		this.id = id;
+		this.location = location;
+		this.creditCard = card_number; // change later if putting card number
+		this.registrationCard = registrationCard;
+		this.bike = null;
+		this.payment_mode = null;
+		// check if this works
+		this.usrBalance = new UserBalance(this);
+	}
 
 	public UserBalance getUsrBalance() {
 		return usrBalance;
@@ -41,21 +52,27 @@ public class User {
 	}
 
 	// Rents a bike through the station's terminal
-	void rentBike(Station station, int slot_id) {
+	public void rentBike(Station station,Class <?> bikeType) {
 		Terminal terminal = station.getTerminal();
-		try {
-			terminal.identifyUser(this);
-			terminal.releaseBike(this, slot_id);
-		} catch (UnavailableBikeException e) {
-			System.out.println(e);
-		} catch (IrregularUserException e) {
-			System.out.println(e);
-		} catch (IrregularCardException e) {
-			System.out.println(e);
+		if (station.hasDesiredBike(bikeType)) {
+			
+			try {
+				terminal.identifyUser(this);
+				terminal.releaseBike(this,bikeType);
+			} catch (UnavailableBikeException e) {
+				System.out.println(e);
+			} catch (IrregularUserException e) {
+				System.out.println(e);
+			} catch (IrregularCardException e) {
+				System.out.println(e);
+			}
+		
 		}
+		else
+			System.out.println("The bike is not available in this station");
 	}
 	
-	void dropBike(Station station) {
+	public void dropBike(Station station) {
 		
 		//checks if there is an available slot for the drop off
 		// insert exception here later? 

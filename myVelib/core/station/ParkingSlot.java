@@ -39,6 +39,7 @@ public class ParkingSlot {
 				
 				// The two following operations update the statistics on
 				//user and station, as well as charge the user money and time credit
+	
 				
 				usr.getUsrBalance().updateBalance(timeValue, moneyValue, timeCreditDiscount);
 				station.getBalance().updateBalance(this);

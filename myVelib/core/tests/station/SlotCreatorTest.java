@@ -14,7 +14,7 @@ class SlotCreatorTest {
 	void testFillSlots() {
 		int n_slots = 17;
 		SlotCreator factory = new SlotCreator();
-		ParkingSlot[] slots = factory.fillSlots(n_slots);
+		ParkingSlot[] slots = factory.fillSlots(0,n_slots);
 		int empty = 0;
 		int regular = 0;
 		int electric = 0;

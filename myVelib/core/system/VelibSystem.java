@@ -88,6 +88,11 @@ public class VelibSystem {
 		countUsers += 1;
 	}
 	
+	public void addUser(GPS location, String credit_card_number,Card registrationCard) {
+		VelibSystem.users.add(new User(countUsers, location, credit_card_number,registrationCard));
+		countUsers += 1;
+	}
+	
 	public Station[] PlanRide(GPS start, GPS finish,Class <?> bikeType) {
 		return VelibSystem.rideplan.plan(VelibSystem.stations,start,finish,bikeType);
 	}
