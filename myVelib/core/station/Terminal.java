@@ -7,6 +7,7 @@ import exceptions.UnavailableBikeException;
 import system.VelibSystem;
 import user.User;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class Terminal {
 	
@@ -16,13 +17,13 @@ public class Terminal {
 		station = s;
 	}
 	
-	public void releaseBike(User usr, Class <?> bikeType) throws UnavailableBikeException {
+	public void releaseBike(User usr, Class <?> bikeType, LocalDateTime time) throws UnavailableBikeException {
 		
 		ParkingSlot[] pslots = this.station.getSlots();
 		for (ParkingSlot slot:pslots) {
 			if(slot.getBike() != null)
 				if (slot.getBike().getClass() == bikeType)
-					slot.releaseBike(usr);
+					slot.releaseBike(usr, time);
 		}
 			
 	}

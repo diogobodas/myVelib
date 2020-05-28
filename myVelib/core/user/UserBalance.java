@@ -3,28 +3,21 @@ package user;
 public class UserBalance {
 	
 	private int rideNumber;
-	private double totalBikeTime;
+	private long totalBikeTime;
 	private double totalCharge;
-	private double timeCredit;
+	private Card card;
 	
-	UserBalance(User usr) {
+	public UserBalance(User usr) {
 		rideNumber = 0;
 		totalBikeTime = 0;
 		totalCharge = 0;
-		if (usr.getRegistrationCard() == null)
-			timeCredit = 0;
-		else 
-			timeCredit = usr.getRegistrationCard().getCredit();
+		card = usr.getRegistrationCard();
 	}
 	
-	public void updateBalance(double bikeTime, double charge,double timeCreditDiscount) {
+	public void updateBalance(long bikeTime, double charge) {
 		rideNumber += 1;
 		totalBikeTime += bikeTime;
 		totalCharge += charge;
-		if (timeCredit < timeCreditDiscount)
-			timeCredit = 0;
-		else
-			timeCredit -= timeCreditDiscount;
 	}
 	
 	public void showBalance() {
@@ -33,8 +26,12 @@ public class UserBalance {
 	
 	@Override
 	public String toString() {
-		return "UserBalance [rideNumber=" + rideNumber + ", totalBikeTime=" + totalBikeTime + ", totalCharge="
-				+ totalCharge + ", timeCredit=" + timeCredit + "]";
+		String s =  "UserBalance [rideNumber=" + rideNumber + ", totalBikeTime=" + totalBikeTime + ", totalCharge="
+				+ totalCharge;
+		if (card != null)
+			s += " timeCredit=" + card.getCredit();
+		s += "]";
+		return s;
 	}
 
 	public int getRideNumber() {
@@ -46,7 +43,7 @@ public class UserBalance {
 	public double getTotalBikeTime() {
 		return totalBikeTime;
 	}
-	public void setTotalBikeTime(double totalBikeTime) {
+	public void setTotalBikeTime(long totalBikeTime) {
 		this.totalBikeTime = totalBikeTime;
 	}
 	public double getTotalCharge() {
@@ -55,13 +52,4 @@ public class UserBalance {
 	public void setTotalCharge(double totalCharge) {
 		this.totalCharge = totalCharge;
 	}
-	public double getTimeCredit() {
-		return timeCredit;
-	}
-	public void setTimeCredit(double timeCredit) {
-		this.timeCredit = timeCredit;
-	}
-	
-	
-
 }

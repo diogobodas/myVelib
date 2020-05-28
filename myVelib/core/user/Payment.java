@@ -28,21 +28,21 @@ public abstract class Payment {
 	
 	// static method for generating correct payment class
 	// Payment abstract class acts as factory for generating correct payment methods through this method
-	public static Payment createAdequatePayment(User usr, Bike bike) {
+	public static Payment createAdequatePayment(User usr, Bike bike, LocalDateTime time) {
 		if (usr.getRegistrationCard() == null) {
 			if (bike.getClass() == RegularBike.class)
-				return (Payment) new PaymentStd(LocalDateTime.now(), 1.0);
+				return (Payment) new PaymentStd(time, 1.0);
 			else
-				return (Payment) new PaymentStd(LocalDateTime.now(), 2.0);
+				return (Payment) new PaymentStd(time, 2.0);
 		}
 		else if (usr.getRegistrationCard().getClass() == Vlibre.class) {
 			if (bike.getClass() == RegularBike.class)
-				return (Payment) new PaymentVlibre(LocalDateTime.now(), 1.0,(long) usr.getRegistrationCard().getCredit());
+				return (Payment) new PaymentVlibre(time, 1.0,(long) usr.getRegistrationCard().getCredit());
 			else 
-				return (Payment) new PaymentVlibre(LocalDateTime.now(), 2.0, (long) usr.getRegistrationCard().getCredit());
+				return (Payment) new PaymentVlibre(time, 2.0, (long) usr.getRegistrationCard().getCredit());
 		}
 		else 
-			return (Payment) new PaymentVmax(LocalDateTime.now());
+			return (Payment) new PaymentVmax(time);
 	}
 
 	public LocalDateTime getStartTime() {

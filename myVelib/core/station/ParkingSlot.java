@@ -1,4 +1,5 @@
 package station;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 import bike.Bike;
@@ -25,14 +26,13 @@ public class ParkingSlot {
 		this.bike = bike;
 	}
 	
-	public void receiveBike(Bike bike) {
+	public void receiveBike(Bike bike, LocalDateTime time) {
 		if (this.status == SlotStatus.FREE) {
 			User usr = VelibSystem.getUserByBike(bike);
 			Station station = VelibSystem.getStationBySlot(this);
 			if (usr != null) {
-				double moneyValue = usr.getPaymentMode().getValue(LocalDateTime.now());
-				double timeValue = usr.getPaymentMode().getTimeDiscount(LocalDateTime.now());
-				double timeCreditDiscount = 0; //CHANGE THIS
+				double moneyValue = usr.getPaymentMode().getValue(time);
+				long timeValue = Duration.between(usr.getPaymentMode().getStartTime(), time).toMinutes();
 				usr.setPaymentMode(null);
 				this.setBike(bike);
 				this.setStatus(SlotStatus.OCCUPIED);
@@ -40,9 +40,9 @@ public class ParkingSlot {
 				// The two following operations update the statistics on
 				//user and station, as well as charge the user money and time credit
 	
-				
-				usr.getUsrBalance().updateBalance(timeValue, moneyValue, timeCreditDiscount);
-				station.getBalance().updateBalance(this);
+				// adicionar funcoes credito de tempo (adicionar e retirar)
+				usr.getUsrBalance().updateBalance(timeValue, moneyValue);
+				station.getBalance().updateBalance(this, time);
 				
 				
 			} else {
@@ -55,9 +55,9 @@ public class ParkingSlot {
 		}
 	}
 	
-	public void releaseBike(User usr) throws UnavailableBikeException {
+	public void releaseBike(User usr, LocalDateTime time) throws UnavailableBikeException {
 		if (this.status == SlotStatus.OCCUPIED) {
-			usr.setPaymentMode(Payment.createAdequatePayment(usr, this.bike)); // establishes payment regime for user
+			usr.setPaymentMode(Payment.createAdequatePayment(usr, this.bike, time)); // establishes payment regime for user
 			usr.setBike(this.bike); // gives bike
 			this.setBike(null);
 			this.status = SlotStatus.FREE; // frees slot

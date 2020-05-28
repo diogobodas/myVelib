@@ -11,7 +11,7 @@ public class StationBalance {
 	private HashMap<ParkingSlot,ArrayList<LocalDateTime>> timeSlotDict;
 	private Station station;
 
-	StationBalance(Station station) {
+	public StationBalance(Station station) {
 		rentCount = 0;
 		returnCount = 0;
 		this.station = station;
@@ -21,7 +21,7 @@ public class StationBalance {
 			timeSlotDict.put(slot,new ArrayList<LocalDateTime>());
 	}
 	
-	public void updateBalance(ParkingSlot slot) {
+	public void updateBalance(ParkingSlot slot, LocalDateTime time) {
 		
 		// if there is an odd number of timestamps for a slot, we are renting, else we are returning
 		
@@ -33,7 +33,7 @@ public class StationBalance {
 		else
 			returnCount += 1;
 		
-		array.add(LocalDateTime.now());
+		array.add(time);
 		
 	}
 	

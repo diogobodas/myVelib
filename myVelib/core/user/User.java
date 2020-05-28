@@ -9,6 +9,7 @@ import station.ParkingSlot;
 import station.SlotStatus;
 import station.Station;
 import station.Terminal;
+import java.time.LocalDateTime;
 
 public class User {
 
@@ -52,13 +53,13 @@ public class User {
 	}
 
 	// Rents a bike through the station's terminal
-	public void rentBike(Station station,Class <?> bikeType) {
+	public void rentBike(Station station, Class <?> bikeType, LocalDateTime time) {
 		Terminal terminal = station.getTerminal();
 		if (station.hasDesiredBike(bikeType)) {
 			
 			try {
 				terminal.identifyUser(this);
-				terminal.releaseBike(this,bikeType);
+				terminal.releaseBike(this,bikeType, time);
 			} catch (UnavailableBikeException e) {
 				System.out.println(e);
 			} catch (IrregularUserException e) {
@@ -72,7 +73,7 @@ public class User {
 			System.out.println("The bike is not available in this station");
 	}
 	
-	public void dropBike(Station station) {
+	public void dropBike(Station station, LocalDateTime time) {
 		
 		//checks if there is an available slot for the drop off
 		// insert exception here later? 
@@ -92,7 +93,7 @@ public class User {
 		}
 		
 		// drops off bike
-		freeSlot.receiveBike(this.bike);
+		freeSlot.receiveBike(this.bike, time);
 		this.bike = null;
 	}
 	
