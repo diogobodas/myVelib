@@ -44,6 +44,7 @@ public class ParkingSlot {
 				usr.getUsrBalance().updateBalance(timeValue, moneyValue, timeCreditDiscount);
 				station.getBalance().updateBalance(this);
 				
+				
 			} else {
 				System.out.println("Bike does not belong to any user");
 				// Insert custom exception here later
@@ -60,6 +61,10 @@ public class ParkingSlot {
 			usr.setBike(this.bike); // gives bike
 			this.setBike(null);
 			this.status = SlotStatus.FREE; // frees slot
+			// Now, we update station statistics
+			Station station = VelibSystem.getStationBySlot(this);
+			station.getBalance().updateBalance(this);
+			
 		} else {
 			throw new UnavailableBikeException("Slot empty or out-of-order");
 		}

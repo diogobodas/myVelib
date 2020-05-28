@@ -22,7 +22,7 @@ class SystemExperience {
 		System.out.println(usr.getBike());
 		usr.dropBike(sys.getStations()[0]);
 		System.out.println(usr.getUsrBalance().toString());
-		
+		System.out.println(sys.getStations()[0].getBalance());
 	}
 
 }
