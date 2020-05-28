@@ -14,10 +14,13 @@ public class UserBalance {
 		card = usr.getRegistrationCard();
 	}
 	
-	public void updateBalance(long bikeTime, double charge) {
+	public void updateBalance(long bikeTime) {
 		rideNumber += 1;
 		totalBikeTime += bikeTime;
-		totalCharge += charge;
+	}
+	
+	public void addCharge(double money) {
+		totalCharge += money;
 	}
 	
 	public void showBalance() {

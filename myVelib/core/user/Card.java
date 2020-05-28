@@ -26,6 +26,14 @@ public abstract class Card {
 		this.timeCredit = credit;
 	}
 	
+	public void addCredit(long credit) {
+		this.timeCredit += credit;
+	}
+	
+	public void takeCredit(long credit) {
+		this.timeCredit -= credit;
+	}
+	
 	public int getID() {
 		return id;
 	}

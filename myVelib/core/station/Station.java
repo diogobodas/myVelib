@@ -1,6 +1,7 @@
 package station;
 import bike.Bike;
 import system.GPS;
+import user.User;
 
 public class Station {
 	// attributes
@@ -55,6 +56,11 @@ public class Station {
 				return p.getBike();
 		}
 		return null;
+	}
+	
+	public void chargeUser(User usr, double money, long time_credit) {
+		usr.getUsrBalance().addCharge(money);
+		usr.getRegistrationCard().takeCredit(time_credit);
 	}
 
 	// getters / setters

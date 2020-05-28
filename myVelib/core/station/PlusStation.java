@@ -1,6 +1,7 @@
 package station;
 
 import system.GPS;
+import user.User;
 
 public class PlusStation extends Station {
 
@@ -8,8 +9,11 @@ public class PlusStation extends Station {
 		super(id_num, online, coord, t, number_of_slots);
 	}
 	
-	public void giveTimeCredit() {
-		// TO DO
+	@Override
+	public void chargeUser(User usr, double money, long time_credit) {
+		usr.getUsrBalance().addCharge(money);
+		usr.getRegistrationCard().takeCredit(time_credit);
+		usr.getRegistrationCard().addCredit(5); // adds 5 minutes to credit since it's plus station
 	}
 
 }

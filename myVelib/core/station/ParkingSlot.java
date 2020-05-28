@@ -31,20 +31,15 @@ public class ParkingSlot {
 			User usr = VelibSystem.getUserByBike(bike);
 			Station station = VelibSystem.getStationBySlot(this);
 			if (usr != null) {
-				double moneyValue = usr.getPaymentMode().getValue(time);
-				long timeValue = Duration.between(usr.getPaymentMode().getStartTime(), time).toMinutes();
-				usr.setPaymentMode(null);
-				this.setBike(bike);
+				double moneyValue = usr.getPaymentMode().getValue(time); // get payment value
+				long timeValue = usr.getPaymentMode().getTimeDiscount(time); // get time credit to discount
+				long bikeTime = Duration.between(usr.getPaymentMode().getStartTime(), time).toMinutes(); // get bike use time
+				station.chargeUser(usr, moneyValue, timeValue); // charges user money and time credit
+				usr.setPaymentMode(null); // changes user payment because bike is returned
+				this.setBike(bike); // returns bike
 				this.setStatus(SlotStatus.OCCUPIED);
-				
-				// The two following operations update the statistics on
-				//user and station, as well as charge the user money and time credit
-	
-				// adicionar funcoes credito de tempo (adicionar e retirar)
-				usr.getUsrBalance().updateBalance(timeValue, moneyValue);
-				station.getBalance().updateBalance(this, time);
-				
-				
+				usr.getUsrBalance().updateBalance(bikeTime); // updates user statistics
+				station.getBalance().updateBalance(this, time); // update station statistics
 			} else {
 				System.out.println("Bike does not belong to any user");
 				// Insert custom exception here later
@@ -63,7 +58,7 @@ public class ParkingSlot {
 			this.status = SlotStatus.FREE; // frees slot
 			// Now, we update station statistics
 			Station station = VelibSystem.getStationBySlot(this);
-			station.getBalance().updateBalance(this);
+			station.getBalance().updateBalance(this, time);
 			
 		} else {
 			throw new UnavailableBikeException("Slot empty or out-of-order");
