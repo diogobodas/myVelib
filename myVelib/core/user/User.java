@@ -143,8 +143,7 @@ public class User {
 
 	public void setRegistrationCard(Card registrationCard) {
 		this.registrationCard = registrationCard;
-		// check if this works
-		this.usrBalance.setTimeCredit(registrationCard.getCredit());
+		this.usrBalance.setCard(registrationCard);
 	}
 
 

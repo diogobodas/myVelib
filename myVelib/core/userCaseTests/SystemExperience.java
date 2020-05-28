@@ -2,6 +2,8 @@ package userCaseTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 
 import bike.RegularBike;
@@ -16,11 +18,11 @@ class SystemExperience {
 	void test() {
 		// PROBLEM WHEN M IS NOT DIVISBLE BY N!!!
 		VelibSystem sys = new VelibSystem(5,30);
-		sys.addUser(new GPS(5,5), "153",new Vlibre());
+		sys.addUser(new GPS(5,5), "153", new Vlibre());
 		User usr = sys.getUsers().get(0);
-		usr.rentBike(sys.getStations()[0],RegularBike.class);
+		usr.rentBike(sys.getStations()[0],RegularBike.class, LocalDateTime.of(2020, 5, 28, 10, 30));
 		System.out.println(usr.getBike());
-		usr.dropBike(sys.getStations()[0]);
+		usr.dropBike(sys.getStations()[0], LocalDateTime.of(2020, 5, 28, 12, 30));
 		System.out.println(usr.getUsrBalance().toString());
 		System.out.println(sys.getStations()[0].getBalance());
 	}

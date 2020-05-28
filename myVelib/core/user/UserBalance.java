@@ -55,4 +55,8 @@ public class UserBalance {
 	public void setTotalCharge(double totalCharge) {
 		this.totalCharge = totalCharge;
 	}
+	
+	public void setCard(Card card) {
+		this.card = card;
+	}
 }
