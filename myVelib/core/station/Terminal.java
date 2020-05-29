@@ -40,6 +40,10 @@ public class Terminal {
 				// another user has the same registration card
 				throw new IrregularCardException("Another user has the same registration card");
 			}
+			if (u.getBike() != null) {
+				// user already has bike under his name
+				throw new IrregularUserException("User already has a bike under his name. It cannot rent any other bikes");
+			}
 			return;
 		}
 		// user has no registration card -> try to get user by credit card
@@ -50,8 +54,11 @@ public class Terminal {
 		}
 		// if it user is registered, this loop will find it
 		for (User u : users_with_card) {
-			if (u.equals(usr))
+			if (u.equals(usr)) {
+				if (u.getBike() != null)
+					throw new IrregularUserException("User already has a bike under his name. It cannot rent any other bikes");
 				return;
+			}
 		}
 		// someone else is registered under this card, but it is not the user provided
 		throw new IrregularUserException("User not registered");

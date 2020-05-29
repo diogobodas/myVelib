@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
+import bike.ElectricBike;
 import bike.RegularBike;
 import exceptions.UnavailableBikeException;
 import exceptions.UnavailableSlotException;
@@ -26,6 +27,7 @@ class ParkingSlotTest {
 	ParkingSlot [] slots = {new ParkingSlot(100), new ParkingSlot(101), new ParkingSlot(102)};
 	User usr1 = new User(0, new GPS(0,0), "000");
 	RegularBike bike1 = new RegularBike();
+	ElectricBike bike2 = new ElectricBike();
 	
 	@Test
 	void testReceiveBike() throws UnavailableBikeException, UnavailableSlotException {
@@ -55,12 +57,37 @@ class ParkingSlotTest {
 
 	@Test
 	void testReleaseBike() {
-		fail("Not yet implemented");
+		sys.addUser(usr1);
+		sys.setStations(stations);
+		slots[0].setBike(bike1);
+		slots[0].setStatus(SlotStatus.OCCUPIED);
+		slots[2].setBike(bike2);
+		slots[2].setStatus(SlotStatus.OUT_OF_ORDER);
+		stations[0].setSlots(slots);
+		try {
+			slots[0].releaseBike(usr1, LocalDateTime.of(2020, 5, 28, 12, 30));
+			assertTrue(usr1.getBike().equals(bike1));
+			assertTrue(slots[0].getBike() == null);
+			assertTrue(slots[0].getStatus().equals(SlotStatus.FREE));
+		} catch (Exception e) {
+			fail("Unexpected exception occurred during normal method behavior");
+		}
+		usr1.setBike(null);
+		try {
+			slots[1].releaseBike(usr1, LocalDateTime.of(2020, 5, 28, 12, 30));
+			fail("Expected to catch exception because slot is empty");
+		} catch (UnavailableBikeException e) {}
+		try {
+			slots[2].releaseBike(usr1, LocalDateTime.of(2020, 5, 28, 12, 30));
+			fail("Expected to catch exception because slot is out of order");
+		} catch (UnavailableBikeException e) {}	
 	}
 
 	@Test
 	void testEqualsObject() {
-		fail("Not yet implemented");
+		ParkingSlot s = new ParkingSlot(100);
+		assertTrue(s.equals(slots[0]));
+		assertFalse(s.equals(slots[2]));
 	}
 
 }

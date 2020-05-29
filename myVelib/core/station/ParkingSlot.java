@@ -121,6 +121,9 @@ public class ParkingSlot {
 		return result;
 	}
 
+	/**
+	 * Equality condition for two ParkingSlot objects. Only true if they possess the same id
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
