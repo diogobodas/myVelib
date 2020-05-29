@@ -20,6 +20,8 @@ public class ParkingSlot {
 	private SlotStatus status;
 	private Bike bike;
 	
+	boolean startedFree;//aux for stationBalance 
+	
 	/**
 	 * Initializes a free slot with unique id.
 	 * @param id Parking slot id number
@@ -27,6 +29,7 @@ public class ParkingSlot {
 	public ParkingSlot(int id) {
 		this.id = id;
 		this.status = SlotStatus.FREE;
+		startedFree = true;
 	}
 	
 	/**
@@ -38,6 +41,7 @@ public class ParkingSlot {
 		this.id = id;
 		this.status = SlotStatus.OCCUPIED;
 		this.bike = bike;
+		startedFree = false;
 	}
 	
 	/**
@@ -61,7 +65,7 @@ public class ParkingSlot {
 				this.setBike(bike); // returns bike
 				this.setStatus(SlotStatus.OCCUPIED);
 				usr.getUsrBalance().updateBalance(bikeTime); // updates user statistics
-				station.getBalance().updateBalance(this, time); // update station statistics
+				station.getBalance().updateBalance(this, time,true); // update station statistics
 			} else {
 				throw new UnavailableBikeException("The bike being returned is not registered under any user right now");
 			}
@@ -84,7 +88,7 @@ public class ParkingSlot {
 			this.status = SlotStatus.FREE; // frees slot
 			// Now, we update station statistics
 			Station station = VelibSystem.getStationBySlot(this);
-			station.getBalance().updateBalance(this, time);
+			station.getBalance().updateBalance(this, time,false);
 			
 		} else {
 			throw new UnavailableBikeException("Slot empty or out-of-order");
@@ -137,6 +141,11 @@ public class ParkingSlot {
 			return false;
 		return true;
 	}
+
+	public boolean isStartedFree() {
+		return startedFree;
+	}
+
 	
 	
 	

@@ -1,7 +1,18 @@
 package station;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 import bike.Bike;
 import system.GPS;
 import user.User;
+
+
+/**
+ * Class representing station . It is a central part of the system, where slots are stored.
+ * A terminal is available for the user to interact with the system. In addition, it holds a station balance,
+ * to calculate the station statistics depending on input parameters ( a time window).
+ * Finally, an array is used to save the times the whole station is offline.
+ */
 
 public class Station {
 	// attributes
@@ -11,6 +22,7 @@ public class Station {
 	private Terminal terminal;
 	private ParkingSlot[] slots;
 	private StationBalance balance;
+	private ArrayList<LocalDateTime> intervalsOutOfOrder = new ArrayList<LocalDateTime>();
 	
 	// constructor
 	public Station(int id_num, boolean online, GPS coord, int number_of_slots) {
@@ -112,7 +124,38 @@ public class Station {
 	public void setBalance(StationBalance balance) {
 		this.balance = balance;
 	}
+
+	public ArrayList<LocalDateTime> getIntervalsOutOfOrder() {
+		return intervalsOutOfOrder;
+	}
+
+	public void setIntervalsOutOfOrder(ArrayList<LocalDateTime> intervalsOutOfOrder) {
+		this.intervalsOutOfOrder = intervalsOutOfOrder;
+	}
 	
 	
+	public void online(LocalDateTime time) {
+		if (this.intervalsOutOfOrder.size() % 2 == 1) {
+			this.intervalsOutOfOrder.add(time);
+			for (ParkingSlot slot:slots)
+				slot.setStatus(SlotStatus.OUT_OF_ORDER);
+		}
+		else
+			System.out.println("Station is already online");
+	}
 	
+	public void offline(LocalDateTime time) {
+		if (this.intervalsOutOfOrder.size() % 2 == 0) {
+			this.intervalsOutOfOrder.add(time);
+			for (ParkingSlot slot:slots) {
+				if (slot.getBike() == null)
+					slot.setStatus(SlotStatus.FREE);
+				else
+					slot.setStatus(SlotStatus.OCCUPIED);
+			}
+		}
+		else
+			System.out.println("Station is already offline");
+		}
 }
+	

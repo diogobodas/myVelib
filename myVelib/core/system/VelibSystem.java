@@ -20,11 +20,15 @@ public class VelibSystem {
 	private static ArrayList<User> users;
 	private static RidePlanning rideplan;
 	private int countUsers = 0;
+	static private int N;
+	static private int M;
 	
 	// Creates N stations, summing up to M parking Slots
 	// Each station will have Floor(M/N) slots and if
 	// M is not divisible by N, one station will have M mod N stations
 	public VelibSystem(int N,int M) {
+		this.N = N;
+		this.M = M;
 		VelibSystem.users = new ArrayList<User>();
 		VelibSystem.rideplan = new StandardPlanning();
 		stations = new Station[N];
@@ -173,4 +177,14 @@ public class VelibSystem {
 		System.out.println("Users " + usersInfo);
 		System.out.println("RidePlanning" + rideplan.toString());
 	}
+
+	public static int getN() {
+		return N;
+	}
+
+	public static int getM() {
+		return M;
+	}
+	
+	
 }

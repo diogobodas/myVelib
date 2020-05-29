@@ -22,8 +22,11 @@ public class Terminal {
 		ParkingSlot[] pslots = this.station.getSlots();
 		for (ParkingSlot slot:pslots) {
 			if(slot.getBike() != null)
-				if (slot.getBike().getClass() == bikeType)
+				if (slot.getBike().getClass() == bikeType) {
 					slot.releaseBike(usr, time);
+					break;
+				}
+			
 		}
 			
 	}
