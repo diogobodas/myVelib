@@ -12,8 +12,10 @@ public class PlusStation extends Station {
 	@Override
 	public void chargeUser(User usr, double money, long time_credit) {
 		usr.getUsrBalance().addCharge(money);
-		usr.getRegistrationCard().takeCredit(time_credit);
-		usr.getRegistrationCard().addCredit(5); // adds 5 minutes to credit since it's plus station
+		if (usr.getRegistrationCard() != null) {
+			usr.getRegistrationCard().takeCredit(time_credit);
+			usr.getRegistrationCard().addCredit(5); // adds 5 minutes to credit since it's plus station
+		}
 	}
 
 }

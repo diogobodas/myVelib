@@ -5,6 +5,7 @@ import bike.Bike;
 import exceptions.IrregularCardException;
 import exceptions.IrregularUserException;
 import exceptions.UnavailableBikeException;
+import exceptions.UnavailableSlotException;
 import station.ParkingSlot;
 import station.SlotStatus;
 import station.Station;
@@ -29,7 +30,6 @@ public class User {
 		this.registrationCard = null;
 		this.bike = null;
 		this.payment_mode = null;
-		// check if this works
 		this.usrBalance = new UserBalance(this);
 	}
 	
@@ -40,7 +40,6 @@ public class User {
 		this.registrationCard = registrationCard;
 		this.bike = null;
 		this.payment_mode = null;
-		// check if this works
 		this.usrBalance = new UserBalance(this);
 	}
 
@@ -93,8 +92,14 @@ public class User {
 		}
 		
 		// drops off bike
-		freeSlot.receiveBike(this.bike, time);
-		this.bike = null;
+		try {
+			freeSlot.receiveBike(this.bike, time);
+			this.bike = null;
+		} catch (UnavailableBikeException e) {
+			System.out.println(e);
+		} catch (UnavailableSlotException e) {
+			System.out.println(e);
+		}
 	}
 	
 	@Override

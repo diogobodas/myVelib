@@ -4,29 +4,51 @@ import java.time.LocalDateTime;
 
 import bike.Bike;
 import exceptions.UnavailableBikeException;
+import exceptions.UnavailableSlotException;
 import user.User;
 import system.VelibSystem;
 import user.Payment;
 
+/**
+ * Class representing station parking slot. It is the end point responsible for releasing and receiving bikes.
+ * For this, it uses methods receiveBike and releaseBike
+ *
+ */
 public class ParkingSlot {
 	// attributes 
 	private int id;
 	private SlotStatus status;
 	private Bike bike;
 	
-	//constructors
+	/**
+	 * Initializes a free slot with unique id.
+	 * @param id Parking slot id number
+	 */
 	public ParkingSlot(int id) {
 		this.id = id;
 		this.status = SlotStatus.FREE;
 	}
 	
+	/**
+	 * Initializes an occupied slot with unique id and bike.
+	 * @param id Slot id number
+	 * @param bike Bike in slot
+	 */
 	public ParkingSlot(int id, Bike bike) {
 		this.id = id;
 		this.status = SlotStatus.OCCUPIED;
 		this.bike = bike;
 	}
 	
-	public void receiveBike(Bike bike, LocalDateTime time) {
+	/**
+	 * Method for receiving bike from user at a given time. This method should be called by the user when returning the bike.
+	 * It will automatically call other functions for charging adequate payment and give time credit, and also updates VelibSystem statistics 
+	 * @param bike Bike being returned by the user. It must be given as a usr.getBike(), otherwise it will raise an exception
+	 * @param time Time of bike return. Must be a java.time.LocalDateTime value
+	 * @throws UnavailableBikeException Exception thrown when the bike being returned is not registered under any user and is thus in fact unavailable
+	 * @throws UnavailableSlotException Exception thrown when slot is not free
+	 */
+	public void receiveBike(Bike bike, LocalDateTime time) throws UnavailableBikeException, UnavailableSlotException{
 		if (this.status == SlotStatus.FREE) {
 			User usr = VelibSystem.getUserByBike(bike);
 			Station station = VelibSystem.getStationBySlot(this);
@@ -41,15 +63,19 @@ public class ParkingSlot {
 				usr.getUsrBalance().updateBalance(bikeTime); // updates user statistics
 				station.getBalance().updateBalance(this, time); // update station statistics
 			} else {
-				System.out.println("Bike does not belong to any user");
-				// Insert custom exception here later
+				throw new UnavailableBikeException("The bike being returned is not registered under any user right now");
 			}
 		} else {
-			System.out.println("Slot not Free");
-			// insert custom exception here later
+			throw new UnavailableSlotException("Slot is not available");
 		}
 	}
 	
+	/**
+	 * Method for releasing bike on command from terminal. It will attribute a payment regime to the user renting the bike, change slot status and user bike and update system statistics.
+	 * @param usr User renting the bike. Should be informed by the station terminal after identification
+	 * @param time Time of bike rent. Should also be a java.time.LocalDateTime value
+	 * @throws UnavailableBikeException Exception thrown when there is no bike in this slot or when it is out of order.
+	 */
 	public void releaseBike(User usr, LocalDateTime time) throws UnavailableBikeException {
 		if (this.status == SlotStatus.OCCUPIED) {
 			usr.setPaymentMode(Payment.createAdequatePayment(usr, this.bike, time)); // establishes payment regime for user

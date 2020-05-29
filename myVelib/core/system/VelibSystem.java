@@ -81,8 +81,6 @@ public class VelibSystem {
 		VelibSystem.rideplan = rideplan;
 	}
 
-
-
 	public void addUser(GPS location, String credit_card_number) {
 		VelibSystem.users.add(new User(countUsers, location, credit_card_number));
 		countUsers += 1;
@@ -90,6 +88,11 @@ public class VelibSystem {
 	
 	public void addUser(GPS location, String credit_card_number,Card registrationCard) {
 		VelibSystem.users.add(new User(countUsers, location, credit_card_number,registrationCard));
+		countUsers += 1;
+	}
+	
+	public void addUser(User usr) {
+		VelibSystem.users.add(usr);
 		countUsers += 1;
 	}
 	

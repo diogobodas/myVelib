@@ -60,7 +60,8 @@ public class Station {
 	
 	public void chargeUser(User usr, double money, long time_credit) {
 		usr.getUsrBalance().addCharge(money);
-		usr.getRegistrationCard().takeCredit(time_credit);
+		if (usr.getRegistrationCard() != null)
+			usr.getRegistrationCard().takeCredit(time_credit);
 	}
 
 	// getters / setters
