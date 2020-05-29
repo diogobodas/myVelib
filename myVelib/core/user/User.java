@@ -53,23 +53,27 @@ public class User {
 
 	// Rents a bike through the station's terminal
 	public void rentBike(Station station, Class <?> bikeType, LocalDateTime time) {
-		Terminal terminal = station.getTerminal();
-		if (station.hasDesiredBike(bikeType)) {
-			
-			try {
-				terminal.identifyUser(this);
-				terminal.releaseBike(this,bikeType, time);
-			} catch (UnavailableBikeException e) {
-				System.out.println(e);
-			} catch (IrregularUserException e) {
-				System.out.println(e);
-			} catch (IrregularCardException e) {
-				System.out.println(e);
-			}
-		
+		if (!station.isOn_service()) {
+			System.out.println("Cannot use this station, it is offline");
+			// add custom exception here later?
+			return;
 		}
-		else
+		if (!station.hasDesiredBike(bikeType)) {
 			System.out.println("The bike is not available in this station");
+			// add custom exception here later?
+			return;
+		}
+		Terminal terminal = station.getTerminal();	
+		try {
+			terminal.identifyUser(this);
+			terminal.releaseBike(this,bikeType, time);
+		} catch (UnavailableBikeException e) {
+			System.out.println(e);
+		} catch (IrregularUserException e) {
+			System.out.println(e);
+		} catch (IrregularCardException e) {
+			System.out.println(e);
+		}
 	}
 	
 	public void dropBike(Station station, LocalDateTime time) {
