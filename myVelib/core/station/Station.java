@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import bike.Bike;
+import exceptions.IrregularOperationException;
 import system.GPS;
 import user.User;
 
@@ -20,8 +21,8 @@ public class Station {
 	private GPS coordinates;
 	private Terminal terminal;
 	private ParkingSlot[] slots;
+	private SlotStatus[] slots_status; // used to remember previous status for slots when station is set offline
 	private StationBalance balance;
-	private ArrayList<LocalDateTime> intervalsOutOfOrder = new ArrayList<LocalDateTime>();
 	
 	/**
 	 * Initializes station without terminal through the use of {@link #station.SlotCreator} to assure correct filling of the slots.
@@ -99,36 +100,50 @@ public class Station {
 		return null;
 	}
 	
+	/**
+	 * Charges user with a certain amount of money and discounts a certain time credit.
+	 * @param usr User object to be charged
+	 * @param money Double value containing the money value being charged
+	 * @param time_credit Time credit being discounted from cumulated value
+	 */
 	public void chargeUser(User usr, double money, long time_credit) {
 		usr.getUsrBalance().addCharge(money);
 		if (usr.getRegistrationCard() != null)
 			usr.getRegistrationCard().takeCredit(time_credit);
 	}
 	
-
-	public void online(LocalDateTime time) {
-		if (this.intervalsOutOfOrder.size() % 2 == 1) {
-			this.intervalsOutOfOrder.add(time);
-			for (ParkingSlot slot:slots)
-				slot.setStatus(SlotStatus.OUT_OF_ORDER);
+	/**
+	 * Used by the CLI to set the station online
+	 * @param time Time when station is set online. Used for statistics
+	 * @throws IrregularOperationException Throws this exception when someone tries to put online a station already online
+	 */
+	public void setStationOnline(LocalDateTime time) throws IrregularOperationException {
+		if (this.on_service)
+			throw new IrregularOperationException("Station is already online");
+		for (int i = 0; i < slots.length; i++) {
+			if (slots_status[i] != SlotStatus.OUT_OF_ORDER)
+				slots[i].setSlotOnline(time);
 		}
-		else
-			System.out.println("Station is already online");
+		slots_status = null;
+		this.on_service = true;
 	}
 	
-	public void offline(LocalDateTime time) {
-		if (this.intervalsOutOfOrder.size() % 2 == 0) {
-			this.intervalsOutOfOrder.add(time);
-			for (ParkingSlot slot:slots) {
-				if (slot.getBike() == null)
-					slot.setStatus(SlotStatus.FREE);
-				else
-					slot.setStatus(SlotStatus.OCCUPIED);
-			}
+	/**
+	 * Used by the CLI to set the station offline
+	 * @param time Time when station is set offline. Used for statistics
+	 * @throws IrregularOperationException Throws this exception when someone tries to put offline a station already offline
+	 */
+	public void setStationOffline(LocalDateTime time) throws IrregularOperationException {
+		if (!this.on_service)
+			throw new IrregularOperationException("Station is already offline");
+		slots_status = new SlotStatus[slots.length];
+		for(int i = 0; i < slots.length; i++) {
+			slots_status[i] = slots[i].getStatus();
+			if (slots[i].getStatus() != SlotStatus.OUT_OF_ORDER)
+				slots[i].setSlotOffline(time);
 		}
-		else
-			System.out.println("Station is already offline");
-		}
+		this.on_service = false;
+	}
 
 	// getters / setters
 	public int getId() {
@@ -177,14 +192,6 @@ public class Station {
 
 	public void setBalance(StationBalance balance) {
 		this.balance = balance;
-	}
-
-	public ArrayList<LocalDateTime> getIntervalsOutOfOrder() {
-		return intervalsOutOfOrder;
-	}
-
-	public void setIntervalsOutOfOrder(ArrayList<LocalDateTime> intervalsOutOfOrder) {
-		this.intervalsOutOfOrder = intervalsOutOfOrder;
 	}
 	
 	

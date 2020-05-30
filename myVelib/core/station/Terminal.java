@@ -9,28 +9,46 @@ import user.User;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
+/**
+ * This class serves as the interface for the user when he is renting bikes. It is responsible for identifying the user correctly and telling the station to release a Bike
+ *
+ */
 public class Terminal {
 	
 	private Station station;
 	
+	/**
+	 * Initializes terminal with an associated station.
+	 * @param s Station to be associated with this terminal
+	 */
 	public Terminal(Station s) {
 		station = s;
 	}
 	
+	/**
+	 * Method for passing instruction to release bike to correct ParkingSlot
+	 * @param usr User renting the bike
+	 * @param bikeType Desired bike type. It is a class object
+	 * @param time Timestamp of the rental. It is a LocalDateTime object.
+	 * @throws UnavailableBikeException Exception thrown by release bike. Should not be handled here, see {@link #user.User}
+	 */
 	public void releaseBike(User usr, Class <?> bikeType, LocalDateTime time) throws UnavailableBikeException {
-		
 		ParkingSlot[] pslots = this.station.getSlots();
 		for (ParkingSlot slot:pslots) {
 			if(slot.getBike() != null)
 				if (slot.getBike().getClass() == bikeType) {
 					slot.releaseBike(usr, time);
 					break;
-				}
-			
-		}
-			
+				}	
+		}		
 	}
 	
+	/**
+	 * Method for identifying user and ensuring he is allowed to rent a bike. May throw several different exceptions
+	 * @param usr User trying to rent bike
+	 * @throws IrregularCardException Exception thrown when user card shows incompatibilities such as multiple users with same card or user having a card but not registered in the VelibSystem.
+	 * @throws IrregularUserException Exception thrown when user presents some irregularity that should make it impossible for him to rent a bike
+	 */
 	public void identifyUser(User usr) throws IrregularCardException, IrregularUserException {
 		// try to get user by registration card
 		if (usr.getRegistrationCard() != null) {

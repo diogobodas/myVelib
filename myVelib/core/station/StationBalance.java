@@ -57,7 +57,7 @@ public class StationBalance {
 			ArrayList<LocalDateTime> adjustedOoo;
 			ArrayList<LocalDateTime> union;
 			adjustedOccupied = fitIntoWindow(timeSlotDict.get(slot),ts,te,slot.isStartedFree());
-			adjustedOoo = fitIntoWindow(station.getIntervalsOutOfOrder(),ts,te,slot.isStartedFree());
+			adjustedOoo = fitIntoWindow(slot.getIntervalsOutOfOrder(),ts,te,slot.isStartedFree());
 			union = union(adjustedOccupied,adjustedOoo,te);
 			ti = addTimeIntervals(union, te);
 			numerator += ti;

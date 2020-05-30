@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import bike.ElectricBike;
 import bike.RegularBike;
+import exceptions.IrregularOperationException;
 import exceptions.UnavailableBikeException;
 import exceptions.UnavailableSlotException;
 import user.PaymentStd;
@@ -88,6 +89,38 @@ class ParkingSlotTest {
 		ParkingSlot s = new ParkingSlot(100);
 		assertTrue(s.equals(slots[0]));
 		assertFalse(s.equals(slots[2]));
+	}
+	
+	@Test
+	void testSetSlotOffline() {
+		ParkingSlot s = new ParkingSlot(100);
+		try {
+			s.setSlotOffline(LocalDateTime.of(2020, 5, 30, 10, 30));
+			assertTrue(s.getStatus().equals(SlotStatus.OUT_OF_ORDER));
+		} catch (IrregularOperationException e) {
+			fail("Slot is unexpectedly out of order");
+		}
+		try {
+			s.setSlotOffline(LocalDateTime.of(2020, 5, 30, 12, 30));
+			fail("Should not be able to set offline slot already out-of-order");
+		} catch (IrregularOperationException e) {}
+	}
+	
+	@Test
+	void testSetSlotOnline() {
+		ParkingSlot s = new ParkingSlot(100);
+		try {
+			s.setSlotOnline(LocalDateTime.of(2020, 5, 30, 12, 30));
+			fail("Should not be able to set online slot already functional");
+		} catch (IrregularOperationException e) {}
+		try {
+			s.setSlotOffline(LocalDateTime.of(2020, 5, 30, 10, 30));
+			s.setSlotOnline(LocalDateTime.of(2020, 5, 30, 12, 30));
+			assertFalse(s.getStatus().equals(SlotStatus.OUT_OF_ORDER));
+		} catch (IrregularOperationException e) {
+			fail("Unable to set offline slot online");
+		}
+		
 	}
 
 }

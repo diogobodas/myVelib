@@ -1,8 +1,10 @@
 package station;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import bike.Bike;
+import exceptions.IrregularOperationException;
 import exceptions.UnavailableBikeException;
 import exceptions.UnavailableSlotException;
 import user.User;
@@ -19,8 +21,8 @@ public class ParkingSlot {
 	private int id;
 	private SlotStatus status;
 	private Bike bike;
-	
-	boolean startedFree;//aux for stationBalance 
+	boolean startedFree; //aux for stationBalance 
+	private ArrayList<LocalDateTime> intervalsOutOfOrder = new ArrayList<LocalDateTime>(); // also used for statistics
 	
 	/**
 	 * Initializes a free slot with unique id.
@@ -95,6 +97,34 @@ public class ParkingSlot {
 		}
 	}
 	
+	/**
+	 * Method for setting the slot as out of order. Implemented separately from setStatus because a few modifications for the calculation of statistics were needed 
+	 * @param time LocalDateTime of when the station was set off.
+	 * @throws IrregularOperationException Exception thrown when the slot is already out of order before the command
+	 */
+	public void setSlotOffline(LocalDateTime time) throws IrregularOperationException {
+		if (this.status == SlotStatus.OUT_OF_ORDER)
+			throw new IrregularOperationException("Slot is already out-of-order");
+		this.intervalsOutOfOrder.add(time);
+		this.status = SlotStatus.OUT_OF_ORDER;
+	}
+	
+	/**
+	 * Method for putting a slot back working. Implemented separately from setStatus because a few modifications for the calculation of statistics were needed
+	 * @param time LocalDateTime of when the station was set on.
+	 * @throws IrregularOperationException thrown when the slot is already functional before the command
+	 */
+	public void setSlotOnline(LocalDateTime time) throws IrregularOperationException {
+		if (this.status != SlotStatus.OUT_OF_ORDER)
+			throw new IrregularOperationException("Slot is already functional");
+		this.intervalsOutOfOrder.add(time);
+		if (this.bike == null) {
+			this.status = SlotStatus.FREE;
+		} else {
+			this.status = SlotStatus.OCCUPIED;
+		}
+	}
+	
 	// getters / setters
 	public int getId() {
 		return id;
@@ -115,6 +145,10 @@ public class ParkingSlot {
 
 	public void setBike(Bike bike) {
 		this.bike = bike;
+	}
+	
+	public ArrayList<LocalDateTime> getIntervalsOutOfOrder() {
+		return intervalsOutOfOrder;
 	}
 
 	@Override
