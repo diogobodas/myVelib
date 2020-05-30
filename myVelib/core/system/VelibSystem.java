@@ -125,7 +125,7 @@ public class VelibSystem {
 	
 	public static Station getStationByBike(Bike b) {
 		for (Station s: VelibSystem.stations) {
-			if (s.getBikeByID(b) != null)
+			if (s.getBikeByID(b.getID()) != null)
 				return s;
 		}
 		System.out.println("Bike is not in any station");

@@ -3,13 +3,23 @@ package station;
 import bike.ElectricBike;
 import bike.RegularBike;
 
+/**
+ * Factory class used exclusively to create slots for each station according to parameters that may change, namely minimal percentage of occupied slots and minimal percentage of electric bikes.
+ * In case of creation of a new bike type, this class needs to be modified with the correct percentage of presence in the stations.
+ * For now, the information concerning minimal occupation rate and minimal electric bike rate is stored in the attributes percentage_empty and percentage_regular, because they represent the complement of these information, that is, the maximal percentage of empty slots and regular bikes.
+ *
+ */
 public class SlotCreator {
-	// Factory class used exclusively to create slots for each station according to parameters that may change
 	
-	// In case of new bike type, add percentage of this new type and change method
 	private double percent_empty = 0.3;
 	private double percent_regular = 0.7;
 	
+	/**
+	 * Method for adequately filling the slots of a newly creation station. It is the only method that should be used by this class, and represents the factory creation method.
+	 * @param stationId ID number of the station whose slots are being filled
+	 * @param number_of_slots number of slots to be filled
+	 * @return a ParkingSlot array containing all slots correctly initialized and respecting the constraints for each station concerning minimal occupation and bike type rates.
+	 */
 	public ParkingSlot[] fillSlots(int stationId, int number_of_slots) {
 		ParkingSlot[] slots = new ParkingSlot[number_of_slots];
 		int empty_slots = (int) Math.floor(percent_empty * number_of_slots); // at least 70% of slots are occupied
