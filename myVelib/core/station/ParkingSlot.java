@@ -44,6 +44,7 @@ public class ParkingSlot {
 		this.status = SlotStatus.OCCUPIED;
 		this.bike = bike;
 		startedFree = false;
+		//station.getBalance().initBikeOcuppation(this);
 	}
 	
 	/**

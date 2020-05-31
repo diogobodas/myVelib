@@ -6,6 +6,7 @@ import user.Card;
 import bike.Bike;
 
 import java.awt.desktop.UserSessionEvent;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -22,31 +23,26 @@ public class VelibSystem {
 	private int countUsers = 0;
 	static private int N;
 	static private int M;
+	static public LocalDateTime initTime = LocalDateTime.of(2020, 6, 1, 8,30);
 	
 	// Creates N stations, summing up to M parking Slots
 	// Each station will have Floor(M/N) slots and if
-	// M is not divisible by N, one station will have M mod N stations
+	// M is not divisible by N, one station will have Floor(M/N) + M mod N stations
 	public VelibSystem(int N,int M) {
 		this.N = N;
 		this.M = M;
 		VelibSystem.users = new ArrayList<User>();
 		VelibSystem.rideplan = new StandardPlanning();
 		stations = new Station[N];
-		int i = 0;
-		int residue = M;
 		Random rand = new Random();
-		while (residue > 0) {
-			residue = residue - M/N;
+		for (int i = 0; i < N;i ++) {
 			int numSlots;
-			if (residue > 0)
+			if (i < N -1)
 				numSlots = M/N;
-			// Then the last station created will have  M mod N stations
 			else
-				numSlots = M % N;
-			// Stations take care of filling correctly electric/regular bikes and empty slots
+				numSlots = M/N + M % N;
 			stations[i] = new Station(i,true,new GPS(10*rand.nextDouble(),10*rand.nextDouble()),numSlots);
 			stations[i].setTerminal(new Terminal(stations[i]));
-			i+= 1;
 		}
 			
 	}
