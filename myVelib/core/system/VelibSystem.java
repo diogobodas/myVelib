@@ -24,6 +24,7 @@ public class VelibSystem {
 	static private int N;
 	static private int M;
 	static private double squareLength;
+	static private String name;
 	static public LocalDateTime initTime = LocalDateTime.of(2020, 6, 1, 8,30);
 	
 	// Creates N stations, summing up to M parking Slots
@@ -63,6 +64,27 @@ public class VelibSystem {
 			else
 				numSlots = M/N + M % N;
 			stations[i] = new Station(i,true,new GPS(s*rand.nextDouble(),s*rand.nextDouble()),numSlots);
+			stations[i].setTerminal(new Terminal(stations[i]));
+		}
+			
+	}
+	
+	public VelibSystem(int N,int M,double s, double empty, double regular, String name) {
+		this.N = N;
+		this.M = M;
+		this.squareLength = s;
+		this.name = name;
+		VelibSystem.users = new ArrayList<User>();
+		VelibSystem.rideplan = new StandardPlanning();
+		stations = new Station[N];
+		Random rand = new Random();
+		for (int i = 0; i < N;i ++) {
+			int numSlots;
+			if (i < N -1)
+				numSlots = M/N;
+			else
+				numSlots = M/N + M % N;
+			stations[i] = new Station(i,true,new GPS(s*rand.nextDouble(),s*rand.nextDouble()),numSlots, empty, regular);
 			stations[i].setTerminal(new Terminal(stations[i]));
 		}
 			

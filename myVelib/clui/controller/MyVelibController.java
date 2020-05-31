@@ -31,7 +31,7 @@ public class MyVelibController {
 		return command.split(" "); // transforms single string into array of strings separated by whitespace
 	}
 	
-	public void executeCommand(String[] command) {
+	public void executeCommand(String[] command) throws IncompatibleArgumentsException {
 		switch (command[0]) {
 		
 		case "addUser":
@@ -64,6 +64,7 @@ public class MyVelibController {
 			
 		default:
 			// Aqui o certo mesmo seria jogar uma exceçao de comando inválido
+			// botar throw
 			System.out.println("Invalid command");
 		}
 	}

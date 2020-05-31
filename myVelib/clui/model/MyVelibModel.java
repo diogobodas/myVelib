@@ -20,6 +20,7 @@ public class MyVelibModel extends Observable{
 	 */
 	public MyVelibModel() {
 		// completar esse construtor com aqueles bagulhos do .ini
+		// ler .ini
 		system = null;
 	}
 	
@@ -37,9 +38,8 @@ public class MyVelibModel extends Observable{
 	}
 	
 	public void setup(String velibNetworkName) {
-		// completar
-		System.out.println("To no setup");
+		system = new VelibSystem(10, 100, 4.0, 0.25, 0.7, velibNetworkName); 
 		this.setChanged();
-		this.notifyObservers("Correctly setup");
+		this.notifyObservers("Default setup for " + velibNetworkName + ": " + "\n" + "10 stations, 100 bikes, 4km square side, occupation rate of 75% and electric bike rate of 30%");
 	}
 }

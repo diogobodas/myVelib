@@ -16,7 +16,11 @@ public class MyVelib {
 		while (controller.isRunning()) {
 			System.out.println("Enter command: ");
 			command = keyboard.nextLine();
+			try {
 			controller.executeCommand(controller.parseCommand(command));
+			} catch (Exception e) {
+				System.out.println("Error exectuing command: " + e.getMessage());
+			}
 		}
 		keyboard.close();
 	}

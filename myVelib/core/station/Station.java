@@ -42,6 +42,25 @@ public class Station {
 	}
 	
 	/**
+	 * Initializes station without terminal with custom percentages for maximum rate of empty slots and regular bikes. Same use as both others constructors
+	 * @param id_num ID of the station. Is an integer
+	 * @param online Boolean variable representing if the station is online or not
+	 * @param coord GPS coordinates of the station. It is a {@link #system.GPS} type
+	 * @param number_of_slots Number of slots of this station. Is an integer.
+	 * @param empty Maximum percentage of empty slots in the station
+	 * @param regular Maximum percentage of regular bikes in the station
+	 */
+	public Station(int id_num, boolean online, GPS coord, int number_of_slots, double empty, double regular) {
+		id = id_num;
+		on_service = online;
+		coordinates = coord;
+		terminal = null;
+		SlotCreator slot_factory = new SlotCreator(empty, regular);
+		slots = slot_factory.fillSlots(id_num,number_of_slots);
+		balance = new StationBalance(this);
+	}
+	
+	/**
 	 * Initializes station with terminal through the use of {@link #station.SlotCreator} to assure correct filling of the slots.
 	 * Only to be used in testing. The correct version used in the system initialization does not include the terminal because it needs a reference station for correct use.
 	 * @param id_num ID of the station. Is an integer

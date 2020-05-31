@@ -11,8 +11,26 @@ import bike.RegularBike;
  */
 public class SlotCreator {
 	
-	private double percent_empty = 0.3;
-	private double percent_regular = 0.7;
+	private double percent_empty;
+	private double percent_regular;
+	
+	/**
+	 * Default setup for slot creator. Here the maximum percentage of empty bikes is set at 30%, and the maxumum percentage of regular bikes is set at 70%
+	 */
+	public SlotCreator() {
+		percent_empty = 0.3;
+		percent_regular = 0.7;
+	}
+	
+	/**
+	 * Sets SlotCreator with customized maximum percentages of empty slots and regular bikes
+	 * @param empty Maximum percentage of empty slots in station
+	 * @param regular Maximum percentage of regular bikes in station
+	 */
+	public SlotCreator(double empty, double regular) {
+		percent_empty = empty;
+		percent_regular = regular;
+	}
 	
 	/**
 	 * Method for adequately filling the slots of a newly creation station. It is the only method that should be used by this class, and represents the factory creation method.
