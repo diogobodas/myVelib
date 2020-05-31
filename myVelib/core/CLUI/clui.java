@@ -1,6 +1,13 @@
 package CLUI;
 
+import java.time.LocalDateTime;
+import java.util.Random;
+
+import station.Station;
+import system.GPS;
 import system.VelibSystem;
+import user.Vlibre;
+import user.Vmax;
 
 /**
  * 
@@ -12,19 +19,42 @@ public class clui {
 	
 	public static void main() {
 		VelibSystem sys = null;
-		
+		String sysName = null;
 	}
+	
+	public LocalDateTime parseTime(String year,String month,String day,String hour,String minute) throws Exception{
+		try {
+			return LocalDateTime.of(Integer.valueOf(year), Integer.valueOf(month),Integer.valueOf(day),
+					Integer.valueOf(hour),Integer.valueOf(minute));
+		}
+		catch(Exception e) {
+			throw e;
+		}
+	}
+	
 	/**
 	 * 
 	 * List of all commands and their expected parameters:
 	 * 
-	 * setup <>,<> / setup <>
 	 * 
+	 * setup <VelibNetworkName> / setup <VelibNetworkName,nStations,nSlots,s,nBikes>
+	 * addUser <userName,cardType,VelibNetworkName>
+	 * offline <velibNetworkName,stationID,time>
+	 * online <velibNetworkName,stationID>
+	 * rentBike <userID,stationID,time>
+	 * returnBike <userID,stationID,time>
+	 * displayStation <velibNetworkName,stationID>
+	 * displayUser <velibNetworkName,userID>
+	 * sortStation <velibNetworkName,sortPolicy>
+	 * display <velibNetworkName>
+	 * 
+	 * Important remarks for parameters:
+	 * Expected time format : "year month day hour minute"
 	 * 
 	 * @param args
 	 * @throws IncompatibleArgumentsException
 	 */
-	void parseArgumentsAndExecute(VelibSystem sys,final String args[]) throws IncompatibleArgumentsException {
+	void parseArgumentsAndExecute(VelibSystem sys,String Name,final String args[]) throws IncompatibleArgumentsException,Exception {
 		int argsSize = args.length;
 		if (argsSize < 1)
 			throw new IncompatibleArgumentsException(" No command specified");
@@ -34,24 +64,44 @@ public class clui {
 				throw new IncompatibleArgumentsException(" You need to setup your system before running other commands");
 		if (command == "setup") {
 			if (argsSize == 2) {
-				
+				sys = new VelibSystem(10,100,4.0);
+				Name = args[1];
 			}
-			else if (argsSize == 3) {
+			else if (argsSize == 6) {
 				//to complete
 			}
 			else 
 				throw new IncompatibleArgumentsException("Number of Arguments do not match command setup");
 		}
+		// Assuming user is spawned at random location
 		else if (command == "addUser"){
 			if (argsSize == 4) {
-				//to complete
+				Random rand = new Random();
+				String card = args[2];
+				if (card == "vlibre")
+					sys.addUser(args[1],new Vlibre());
+				else if (card == "vmax")
+					sys.addUser(args[1],new Vmax());
+				else if (card == "none")
+					sys.addUser(args[1],null);
+				else
+					throw new IncompatibleArgumentsException("Incorrect card Type");
 			}
 			else
 				throw new IncompatibleArgumentsException("Number of Arguments do not match command addUser");
 		}
 		else if (command == "offline"){
-			if (argsSize == 3) {
-				//to complete
+			if (argsSize == 7) {
+				LocalDateTime time;
+				try {
+				time = parseTime(args[2],args[3],args[4],args[5],args[6]);
+				}
+				catch(Exception e) {
+					throw e;
+				}
+				int ID = Integer.valueOf(args[2]);
+				Station station = VelibSystem.getStationByID(ID);
+				station.setStationOffline(time);
 			}
 			else
 				throw new IncompatibleArgumentsException("Number of Arguments do not match command offline");

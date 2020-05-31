@@ -1,6 +1,7 @@
 package user;
 
 import system.GPS;
+import system.VelibSystem;
 import bike.Bike;
 import exceptions.IrregularCardException;
 import exceptions.IrregularUserException;
@@ -11,6 +12,7 @@ import station.SlotStatus;
 import station.Station;
 import station.Terminal;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 public class User {
 
@@ -21,6 +23,7 @@ public class User {
 	private Payment payment_mode;
 	private Bike bike;
 	private UserBalance usrBalance;
+	private String name = "Unnamed";
 	
 	
 	public User(int id, GPS location, String card_number) {
@@ -41,6 +44,24 @@ public class User {
 		this.bike = null;
 		this.payment_mode = null;
 		this.usrBalance = new UserBalance(this);
+	}
+	/**
+	 * Used in CLUI addUser
+	 * @param name
+	 * @param id
+	 * @param registrationCard
+	 */
+	public User(String name,int id,Card registrationCard) {
+		this.id = id;
+		Random rand = new Random();
+		double s = VelibSystem.getSquareLength();
+		this.location = new GPS(s*rand.nextDouble(),s*rand.nextDouble());
+		this.creditCard = String.valueOf(id); // change later if putting card number
+		this.registrationCard = registrationCard;
+		this.bike = null;
+		this.payment_mode = null;
+		this.usrBalance = new UserBalance(this);
+		this.name = name;
 	}
 
 	public UserBalance getUsrBalance() {

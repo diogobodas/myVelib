@@ -23,6 +23,7 @@ public class VelibSystem {
 	private int countUsers = 0;
 	static private int N;
 	static private int M;
+	static private double squareLength;
 	static public LocalDateTime initTime = LocalDateTime.of(2020, 6, 1, 8,30);
 	
 	// Creates N stations, summing up to M parking Slots
@@ -42,6 +43,26 @@ public class VelibSystem {
 			else
 				numSlots = M/N + M % N;
 			stations[i] = new Station(i,true,new GPS(10*rand.nextDouble(),10*rand.nextDouble()),numSlots);
+			stations[i].setTerminal(new Terminal(stations[i]));
+		}
+			
+	}
+	
+	public VelibSystem(int N,int M,double s) {
+		this.N = N;
+		this.M = M;
+		this.squareLength = s;
+		VelibSystem.users = new ArrayList<User>();
+		VelibSystem.rideplan = new StandardPlanning();
+		stations = new Station[N];
+		Random rand = new Random();
+		for (int i = 0; i < N;i ++) {
+			int numSlots;
+			if (i < N -1)
+				numSlots = M/N;
+			else
+				numSlots = M/N + M % N;
+			stations[i] = new Station(i,true,new GPS(s*rand.nextDouble(),s*rand.nextDouble()),numSlots);
 			stations[i].setTerminal(new Terminal(stations[i]));
 		}
 			
@@ -91,6 +112,16 @@ public class VelibSystem {
 		countUsers += 1;
 	}
 	
+	/**
+	 * Used in CLUI addUser
+	 * @param name
+	 * @param registrationCard
+	 */
+	public void addUser(String name,Card registrationCard) {
+		VelibSystem.users.add(new User(name,countUsers,registrationCard));
+		countUsers += 1;
+	}
+	
 	public void addUser(User usr) {
 		VelibSystem.users.add(usr);
 		countUsers += 1;
@@ -133,6 +164,13 @@ public class VelibSystem {
 			if (u.getRegistrationCard().getID() == c.getID())
 				return u;
 		}
+		return null;
+	}
+	
+	public static Station getStationByID(int id) {
+		for (Station station : VelibSystem.stations)
+			if (station.getId() == id)
+				return station;
 		return null;
 	}
 	
@@ -181,6 +219,11 @@ public class VelibSystem {
 	public static int getM() {
 		return M;
 	}
+
+	public static double getSquareLength() {
+		return squareLength;
+	}
+	
 	
 	
 }
