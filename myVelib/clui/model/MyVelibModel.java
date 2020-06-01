@@ -1,5 +1,7 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Observer;
@@ -9,6 +11,7 @@ import user.Card;
 import bike.ElectricBike;
 import bike.RegularBike;
 import station.Station;
+import system.GPS;
 import system.VelibSystem;
 import user.User;
 import user.Vlibre;
@@ -28,10 +31,42 @@ public class MyVelibModel extends Observable{
 	/**
 	 * Setup for model to be used
 	 */
-	public MyVelibModel() {
-		// completar esse construtor com aqueles bagulhos do .ini
-		// ler .ini
-		system = null;
+	public MyVelibModel() throws Exception{
+		
+		FileReader file = null;
+		BufferedReader reader = null;
+		
+		try {
+			file = new FileReader("my_velib.ini");
+			reader = new BufferedReader(file);
+			String line;
+			if ((line = reader.readLine()) == null) {
+				throw new Exception("Ini file not correctly configured");
+			}
+			else {
+				String[] args = line.split(" ");
+				if (args.length != 5)
+					throw new Exception("Ini file not correctly configured");
+				String name = args[0];
+				int nStations = Integer.valueOf(args[1]);
+				int nSlots = Integer.valueOf(args[2]);
+				double s = Double.valueOf(args[3]);
+				int nBikes = Integer.valueOf(args[4]);
+				double occupationRate = ( (double) nBikes/(nSlots));
+				system = new VelibSystem(nStations,nSlots,s,1 - occupationRate,0.7,name);
+			}
+		}
+		catch (Exception e) {
+			throw new Exception(e);
+		}
+		finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				}
+				catch (Exception e) {}
+			}
+		}
 	}
 	
 	/**
@@ -118,6 +153,18 @@ public class MyVelibModel extends Observable{
 		this.setChanged();
 		this.notifyObservers("Bike returned by User with Id" + String.valueOf(userID) + "on station with ID:" + String.valueOf(stationID));
 	
+	}
+	
+	public void planRide(double xStart,double yStart,double xEnd,double yEnd,String bikeType) throws Exception{
+		Class <?> type;
+		if (bikeType.equals("regular"))
+			type = RegularBike.class;
+		else if (bikeType.equals("electric"))
+			type = ElectricBike.class;
+		else
+			throw new Exception("Invalid bikeType");
+		Station[] stations = system.PlanRide(new GPS(xStart,yStart),new GPS(xEnd,yEnd),type);
+		System.out.println("You should start on station " + String.valueOf(stations[0].getId()) + " and drop your bike in station " + String.valueOf(stations[1].getId()));
 	}
 
 	public VelibSystem getSystem() {

@@ -27,7 +27,7 @@ public class MyVelibController {
 		return command.split(" "); // transforms single string into array of strings separated by whitespace
 	}
 	
-	public void executeCommand(String[] command) throws IncompatibleArgumentsException {
+	public void executeCommand(String[] command) throws IncompatibleArgumentsException,Exception {
 		switch (command[0]) {
 		
 		case "addUser":
@@ -206,6 +206,20 @@ public class MyVelibController {
 			else
 				throw new IncompatibleArgumentsException("Wrong number of arguments");
 			break;
+			
+		case "planRide":
+			if (command.length == 6) {
+				double xStart = Double.valueOf(command[1]);
+				double yStart = Double.valueOf(command[2]);
+				double xEnd = Double.valueOf(command[3]);
+				double yEnd = Double.valueOf(command[4]);
+				model.planRide(xStart,yStart,xEnd,yEnd,command[5]);
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
+			break;
+			
+		case "readAndWriteS":
 			
 		case "exit":
 			this.running = false;

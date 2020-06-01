@@ -302,7 +302,7 @@ public class VelibSystem {
 		String stationsInfo = "";
 		String usersInfo = "";
 		for (Station station:stations)
-			stationsInfo += station.toString() + " ";
+			stationsInfo += station.toString() + " " + station.getCoordinates().toString() + " ";
 		for (User user:users) 
 			usersInfo += user.toString() + " ";
 		System.out.println("Stations " + stationsInfo);
