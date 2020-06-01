@@ -140,15 +140,15 @@ public class MyVelibController {
 			break;
 			
 		case "rentBike":
-			if(command.length == 8) {
+			if(command.length == 9) {
 				try {
 					LocalDateTime time = parseTime(command[3],command[4],command[5],command[6],command[7]);
 					if (time == null)
 						throw new IncompatibleArgumentsException("Invalid time for offline");
 					else {
-						Integer userID = Integer.valueOf(command[1]);
-						Integer stationID = Integer.valueOf(command[2]);
-						model.rentBike(userID,stationID,time);
+						int userID = Integer.valueOf(command[1]);
+						int stationID = Integer.valueOf(command[2]);
+						model.rentBike(userID,stationID,time,command[9]);
 					}
 				}
 				catch (Exception e) {
@@ -240,8 +240,8 @@ public class MyVelibController {
 	 * setup <VelibNetworkName> / setup <VelibNetworkName,nStations,nSlots,s,nBikes>
 	 * addUser <userName,cardType,VelibNetworkName>
 	 * offline <velibNetworkName,stationID,time>
-	 * online <velibNetworkName,stationID>
-	 * rentBike <userID,stationID,time>
+	 * online <velibNetworkName,stationID,time>
+	 * rentBike <userID,stationID,time,type>
 	 * returnBike <userID,stationID,time>
 	 * displayStation <velibNetworkName,stationID>
 	 * displayUser <velibNetworkName,userID>
