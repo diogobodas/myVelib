@@ -213,21 +213,6 @@ public class VelibSystem {
 		return us;
 	}
 	
-	// auxiliary function for RidePlanning interface implementation
-	public static Station argmin(HashMap<Station,Double> dict, ArrayList<Station> keys) {
-		
-		Station minStation = null;
-		Double minValue = Double.MAX_VALUE;
-		for(Station station:keys) {
-			double value = dict.get(station);
-			if(value < minValue) {
-				minValue = value;
-				minStation = station;
-			}
-		}
-		return minStation;
-	}
-	
 	// Sort of a toString analog
 	public static void printSystemInfo() {
 		String stationsInfo = "";

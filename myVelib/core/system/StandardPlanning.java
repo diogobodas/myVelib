@@ -7,9 +7,18 @@ import java.util.HashMap;
 
 import station.Station;
 
-public class StandardPlanning implements RidePlanning{
+/**
+ * Implementation of the RidePlanning interface with the default criteria for a ride plan.
+ *
+ */
+public class StandardPlanning extends RidePlanning{
 
-	
+	/**
+	 * Implementation of the plan method of the RidePlanning interface according to the default criteria. They are :
+	 * 1 - Start and end stations as close as possible from start and end coordinates
+	 * 2 - Starting station has at least one bike of the desired type
+	 * 3 - End station has at least one free parking slot
+	 */
 	public Station[] plan(Station[] stations,GPS start,GPS finish,Class <?> bike_type) {
 		
 		// Let's first clear out all stations out of service
@@ -20,10 +29,13 @@ public class StandardPlanning implements RidePlanning{
 				workingStations.add(station);
 		
 		int size = workingStations.size();
-		if (size < 2)
+		if (size < 2) {
+			// System.out.println("Debug: got into less than 2 working stations");
 			return null;
-		else if (size == 2)
+		} else if (size == 2) {
+			// System.out.println("Debug: Exactly two working stations");
 			return stations;
+		}
 		
 		// We will filter stations with available desired bikes and
 		// stations with available slots
@@ -38,11 +50,12 @@ public class StandardPlanning implements RidePlanning{
 		}
 		
 		if (startStations.size() == 0) {
-			java.lang.System.out.println("There is no station with the desired bike");
+			System.out.println("There is no station with the desired bike");
 			return null;
 		}
 		if (endStations.size() == 0) {
-			java.lang.System.out.println("There is no station with available slots");
+			System.out.println("There is no station with available slots");
+			return null; 
 		}
 		
 		// Idea: create a dictionary for each ArrayList with (station: distance)
@@ -53,14 +66,20 @@ public class StandardPlanning implements RidePlanning{
 		
 		Station bestStart,bestEnd;
 		
-		for (Station station:startStations)
+		for (Station station:startStations) {
+			// System.out.println(station.getCoordinates());
 			startDict.put(station, GPS.distance(start, station.getCoordinates()));
+		}
 		
-		for (Station station:endStations)
+		// System.out.println("Debug: Between startStation loop and endStation loop");
+		
+		for (Station station:endStations) {
+			// System.out.println(station.getCoordinates());
 			endDict.put(station, GPS.distance(finish, station.getCoordinates()));
+		}
 		
-		bestStart = VelibSystem.argmin(startDict, startStations);
-		bestEnd = VelibSystem.argmin(endDict,endStations);
+		bestStart = this.getClosestStation(startDict);
+		bestEnd = this.getClosestStation(endDict);
 		
 		Station[] result = {bestStart,bestEnd};
 		
