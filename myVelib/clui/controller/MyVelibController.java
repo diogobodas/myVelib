@@ -1,7 +1,6 @@
 package controller;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Random;
 
 import exceptions.IncompatibleArgumentsException;
@@ -33,13 +32,14 @@ public class MyVelibController {
 		
 		case "addUser":
 			if (command.length == 4) {
-				if (command[2] == "vmax" || command[2] == "vlibre" || command[2] == "none")
+				if (command[2].equals("vmax") || command[2].equals("vlibre") || command[2].equals("none")) {
 					try {
-						model.addUser(command[1], command[2], command[3]);
+						model.addUser(command[1], command[2]);
 					}
 					catch (Exception e) {
 						System.out.println(e.getMessage());
 					}
+				}
 				else
 					throw new IncompatibleArgumentsException("Card name does not exist for addUser command");
 			}
@@ -62,7 +62,7 @@ public class MyVelibController {
 					int nSlots = Integer.valueOf(command[3]);
 					double s = Double.valueOf(command[4]);
 					int nBikes = Integer.valueOf(command[5]);
-					model.setup(command[1]);
+					model.setup(command[1],nStations,nSlots,s,nBikes);
 				}
 				catch (Exception e) {
 					System.out.println(e.getMessage());
@@ -70,7 +70,6 @@ public class MyVelibController {
 			}
 			else
 				throw new IncompatibleArgumentsException("Wrong number of arguments");
-			model.setup(command[1]);
 			break;
 			
 		case "displayUser":

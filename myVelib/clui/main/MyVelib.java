@@ -3,6 +3,7 @@ package main;
 import java.util.Scanner;
 
 import controller.MyVelibController;
+import exceptions.IncompatibleArgumentsException;
 import model.MyVelibModel;
 import view.MyVelibView;
 
@@ -18,8 +19,9 @@ public class MyVelib {
 			command = keyboard.nextLine();
 			try {
 			controller.executeCommand(controller.parseCommand(command));
-			} catch (Exception e) {
-				System.out.println("Error exectuing command: " + e.getMessage());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		keyboard.close();

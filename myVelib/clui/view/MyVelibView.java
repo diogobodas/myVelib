@@ -1,9 +1,20 @@
 package view;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Observable;
 import java.util.Observer;
 
+import exceptions.IncompatibleArgumentsException;
 import model.MyVelibModel;
+import station.LeastOccupiedComparator;
+import station.MostUsedComparator;
+import station.Station;
+import system.VelibSystem;
+import user.User;
 
 @SuppressWarnings("deprecation")
 /**
@@ -22,20 +33,44 @@ public class MyVelibView implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// update pra toda vez que o sistema mudar printar a atualizacao
 		System.out.println(arg);
 	}
 	
-	public void displayUser(MyVelibModel m,Integer ID) {
-		System.out.println("To no display users");
-		// completar
+	public void displayUser(MyVelibModel m,Integer ID) throws Exception{
+		User user = VelibSystem.getUserByID(ID);
+		if (user == null)
+			throw new Exception("User not found");
+		System.out.println(user.toString());
+		
 	}
 	
-	public void displayStation(MyVelibModel m,Integer ID) {
-		System.out.println("To no display stations");
-		// completar
+	public void displayStation(MyVelibModel m,Integer ID) throws Exception{
+		Station station = VelibSystem.getStationByID(ID);
+		if (station == null)
+			throw new Exception("User not found");
+		System.out.println(station.toString());
 	} 
 	
-	public void sortStation
+	public void sortStation(MyVelibModel model,String policy) throws Exception{
+		ArrayList<Station> stations = new ArrayList<Station>(Arrays.asList(model.getSystem().getStations()));
+		if (policy == "mostUsed") {
+			LeastOccupiedComparator comparator = new LeastOccupiedComparator();
+			Collections.sort(stations,comparator);
+		}
+		else if (policy == "leastOccupied") {
+			MostUsedComparator comparator = new MostUsedComparator();
+			Collections.sort(stations,comparator);
+		}
+		else
+			throw new IncompatibleArgumentsException("Policy for sorting stations non existant");
+	
+		for (Station station:stations) {
+			System.out.println(station.toString());
+		}
+	}
+	
+	public void display(MyVelibModel model) {
+		VelibSystem.printSystemInfo();
+	}
 
 }
