@@ -23,9 +23,6 @@ public class MyVelibController {
 		this.view = view;
 		this.running = true;
 	}
-	
-	// copiei e colei teu código embaixo.
-	// minha sugestão, fazer dois métodos um parse string e o outro execute pra poder usar switch case
 		
 	public String[] parseCommand(String command) {
 		return command.split(" "); // transforms single string into array of strings separated by whitespace
@@ -35,37 +32,168 @@ public class MyVelibController {
 		switch (command[0]) {
 		
 		case "addUser":
-			// completar com tratamento de erros
-			model.addUser(command[1], command[2], command[3]);
+			if (command.length == 4) {
+				if (command[2] == "vmax" || command[2] == "vlibre" || command[2] == "none")
+					try {
+						model.addUser(command[1], command[2], command[3]);
+					}
+					catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+				else
+					throw new IncompatibleArgumentsException("Card name does not exist for addUser command");
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
 			break;
 			
 		case "setup":
-			// completar com tratamento de erros
+			if (command.length == 2) {
+				try { 
+					model.setup(command[1]);
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else if (command.length == 6) {
+				try { 
+					int nStations = Integer.valueOf(command[2]);
+					int nSlots = Integer.valueOf(command[3]);
+					double s = Double.valueOf(command[4]);
+					int nBikes = Integer.valueOf(command[5]);
+					model.setup(command[1]);
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
 			model.setup(command[1]);
 			break;
 			
-		case "displayUsers":
-			// completar com tratamento de erros
-			view.displayUsers(model);
+		case "displayUser":
+			if (command.length == 3) {
+				try {
+					Integer ID = Integer.valueOf(command[2]);
+					view.displayUser(model,ID);
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
 			break;
 			
-		case "displayStations":
-			// completar com tratamento de erros
-			view.displayStations(model);
+		case "displayStation":
+			if (command.length == 3) {
+				try {
+					Integer ID = Integer.valueOf(command[2]);
+					view.displayUser(model,ID);
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
+			break;
+			
+		case "offline":
+			if(command.length == 8) {
+				try {
+					LocalDateTime time = parseTime(command[3],command[4],command[5],command[6],command[7]);
+					if (time == null)
+						throw new IncompatibleArgumentsException("Invalid time for offline");
+					else {
+						Integer ID = Integer.valueOf(command[2]);
+						model.offline(ID,time);
+					}
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
+			break;
+			
+		case "online":
+			if(command.length == 8) {
+				try {
+					LocalDateTime time = parseTime(command[3],command[4],command[5],command[6],command[7]);
+					if (time == null)
+						throw new IncompatibleArgumentsException("Invalid time for offline");
+					else {
+						Integer ID = Integer.valueOf(command[2]);
+						model.online(ID,time);
+					}
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
+			break;
+			
+		case "rentBike":
+			if(command.length == 8) {
+				try {
+					LocalDateTime time = parseTime(command[3],command[4],command[5],command[6],command[7]);
+					if (time == null)
+						throw new IncompatibleArgumentsException("Invalid time for offline");
+					else {
+						Integer userID = Integer.valueOf(command[1]);
+						Integer stationID = Integer.valueOf(command[2]);
+						model.rentBike(userID,stationID,time);
+					}
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
+			break;
+			
+		case "sortStation":
+			if (command.length == 3) {
+				if (command[2] == "mostUsed" || command[2] == "leastOccupied")
+					try {
+						view.sortStation(model,command[2]);
+					}
+					catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+				else
+					throw new IncompatibleArgumentsException("Card name does not exist for addUser command");
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
+			break;
+			
+		case "display":
+			if(command.length == 2) {
+				try {
+					view.display(model);
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
 			break;
 			
 		case "exit":
-			// completar com tratamento de erros
 			this.running = false;
 			break;
 			
-		// continuar com as outras opções .......
-		// sugiro ir copiando e colando pedaços da função debaixo
-			
 		default:
-			// Aqui o certo mesmo seria jogar uma exceçao de comando inválido
-			// botar throw
-			System.out.println("Invalid command");
+			throw new IncompatibleArgumentsException("Invalid command");
 		}
 	}
 	
@@ -93,14 +221,14 @@ public class MyVelibController {
 		this.running = running;
 	}
 
-	public LocalDateTime parseTime(String year,String month,String day,String hour,String minute) throws Exception{
+	public LocalDateTime parseTime(String year,String month,String day,String hour,String minute) {
 		try {
 			return LocalDateTime.of(Integer.valueOf(year), Integer.valueOf(month),Integer.valueOf(day),
 					Integer.valueOf(hour),Integer.valueOf(minute));
 		}
 		catch(Exception e) {
-			throw e; // muda aqui dps mano, não faz sentido tu pegar um exceção pra jogar ela pra cima de novo
-			// tinha que entrar uma msg de erro ou algo do tipo
+			System.out.println(e.getMessage());
+			return null;
 		}
 	}
 	

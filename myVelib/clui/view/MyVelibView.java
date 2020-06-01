@@ -26,12 +26,12 @@ public class MyVelibView implements Observer{
 		System.out.println(arg);
 	}
 	
-	public void displayUsers(MyVelibModel m) {
+	public void displayUser(MyVelibModel m,Integer ID) {
 		System.out.println("To no display users");
 		// completar
 	}
 	
-	public void displayStations(MyVelibModel m) {
+	public void displayStation(MyVelibModel m,Integer ID) {
 		System.out.println("To no display stations");
 		// completar
 	} 
