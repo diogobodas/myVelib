@@ -181,7 +181,7 @@ public class VelibSystem {
 	
 	/**
 	 * Used to add user to system only in testing context. The function is given directly an user object and should not be used outside of test environment.
-	 * @param usr
+	 * @param usr User to add to VelibNetwork.
 	 */
 	public void addUser(User usr) {
 		VelibSystem.users.add(usr);
@@ -189,7 +189,7 @@ public class VelibSystem {
 	}
 	
 	/**
-	 * Uses the RidePlanning object belonging to the system to plan a ride to the user based on its stations. See {@link #system.RidePlanning}.
+	 * Uses the RidePlanning object belonging to the system to plan a ride to the user based on its stations. See {@link system.RidePlanning}
 	 * @param start Start coordinate of the user
 	 * @param finish End coordinate of the user 
 	 * @param bikeType Desired bike type for the ride
@@ -229,7 +229,7 @@ public class VelibSystem {
 	}
 	
 	/**
-	 * Method for getting a station based on a given bike. Uses the station method {@link #station.Station.getBikeByID(Bike) station.Station}.
+	 * Method for getting a station based on a given bike. Uses the station method {@link station.Station#getBikeByID(Bike)}.
 	 * @param b Bike object to use for search
 	 * @return Station object containing the bike in one of its slots, null otherwise. If the bike exists but is with an user, for example, it will return null
 	 */

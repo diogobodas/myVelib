@@ -6,28 +6,46 @@ import bike.RegularBike;
 
 import java.time.LocalDateTime;
 
+/**
+ * 
+ * Abstract class representing a payment regime for an user. It was implemented to ensure the strategy design pattern for getting the value of the rents.
+ *
+ */
 public abstract class Payment {
 	// attributes
 	private LocalDateTime rent_start_time;
 	
+	/**
+	 * Initializes a Payment object and saves in it the starting time of the rent operation, so that final value can be easily deduced
+	 * @param start LocalDateTime object for the time the bike was rented.
+	 */
 	public Payment(LocalDateTime start) {
 		rent_start_time = start;
 	}
 	
-	// abstract method to be implemented by concrete classes with payments
-	// should return value of the payment to be done
+	/**
+	 * Method that gets the correct price of the bike rent
+	 * @param end_time LocalDateTime object for the return of the bike. 
+	 * @return Double with the price of the bike rental.
+	 */
 	public abstract double getValue(LocalDateTime end_time);
 	
-	// Method for returning eventual discounts in time. Since not all payment methods use it
-	// It is defaulted in the abstract class as as a return 0 method
-	// The time discount is counted exclusively in integer minutes (seconds are not considered)
-	// When used, should return a the discount in minutes
+	/**
+	 * Gets the value of the time discount that can be used for one ride when it applies. By default it returns zero. See {@link user.PaymentVlibre} to see how it is overriden.
+	 * @param end_time LocalDateTime object for the return of the bike. 
+	 * @return Integer with the number of minutes to be used in discount
+	 */
 	public long getTimeDiscount(LocalDateTime end_time) {
 		return 0;
 	}
 	
-	// static method for generating correct payment class
-	// Payment abstract class acts as factory for generating correct payment methods through this method
+	/**
+	 * Static method for generating the correct payment class. It is intended to be so that the Payment abstract class acts as a factory for generating correct payment regimes following the factory pattern
+	 * @param usr User instance that is renting the bike 
+	 * @param bike Bike instance being rented
+	 * @param time LocalDateTime with time of rental
+	 * @return Payment instance with adequate payment regime
+	 */
 	public static Payment createAdequatePayment(User usr, Bike bike, LocalDateTime time) {
 		if (usr.getRegistrationCard() == null) {
 			if (bike.getClass() == RegularBike.class)
