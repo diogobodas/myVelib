@@ -47,7 +47,7 @@ class TerminalTest {
 		} catch (Exception e) {
 			assertTrue(e instanceof IrregularCardException);
 			IrregularCardException ice = (IrregularCardException) e;
-			assertTrue(ice.getError_message().equals("User has card but is not registered in system"));
+			assertTrue(ice.getMessage().equals("User has card but is not registered in system"));
 		}
 		sys.addUser(usr1);
 		usr1.setBike(new RegularBike());
@@ -57,7 +57,7 @@ class TerminalTest {
 		} catch (Exception e) {
 			assertTrue(e instanceof IrregularUserException);
 			IrregularUserException iue = (IrregularUserException) e;
-			assertTrue(iue.getError_message().equals("User already has a bike under his name. It cannot rent any other bikes"));
+			assertTrue(iue.getMessage().equals("User already has a bike under his name. It cannot rent any other bikes"));
 		}
 		try {
 			t.identifyUser(usr2);
@@ -65,7 +65,7 @@ class TerminalTest {
 		} catch (Exception e) {
 			assertTrue(e instanceof IrregularUserException);
 			IrregularUserException iue = (IrregularUserException) e;
-			assertTrue(iue.getError_message().equals("No user is registered with this card"));
+			assertTrue(iue.getMessage().equals("No user is registered with this card"));
 		}
 		sys.addUser(usr2);
 		usr2.setBike(new RegularBike());
@@ -75,7 +75,7 @@ class TerminalTest {
 		} catch (Exception e) {
 			assertTrue(e instanceof IrregularUserException);
 			IrregularUserException iue = (IrregularUserException) e;
-			assertTrue(iue.getError_message().equals("User already has a bike under his name. It cannot rent any other bikes"));
+			assertTrue(iue.getMessage().equals("User already has a bike under his name. It cannot rent any other bikes"));
 		}
 		try {
 			t.identifyUser(usr3);
@@ -83,7 +83,7 @@ class TerminalTest {
 		} catch (Exception e) {
 			assertTrue(e instanceof IrregularUserException);
 			IrregularUserException iue = (IrregularUserException) e;
-			assertTrue(iue.getError_message().equals("User not registered"));
+			assertTrue(iue.getMessage().equals("User not registered"));
 		}
 	}
 
