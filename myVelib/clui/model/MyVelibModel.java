@@ -1,5 +1,7 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Observer;
@@ -29,10 +31,42 @@ public class MyVelibModel extends Observable{
 	/**
 	 * Setup for model to be used
 	 */
-	public MyVelibModel() {
-		// completar esse construtor com aqueles bagulhos do .ini
-		// ler .ini
-		system = null;
+	public MyVelibModel() throws Exception{
+		
+		FileReader file = null;
+		BufferedReader reader = null;
+		
+		try {
+			file = new FileReader("my_velib.ini");
+			reader = new BufferedReader(file);
+			String line;
+			if ((line = reader.readLine()) == null) {
+				throw new Exception("Ini file not correctly configured");
+			}
+			else {
+				String[] args = line.split(" ");
+				if (args.length != 5)
+					throw new Exception("Ini file not correctly configured");
+				String name = args[0];
+				int nStations = Integer.valueOf(args[1]);
+				int nSlots = Integer.valueOf(args[2]);
+				double s = Double.valueOf(args[3]);
+				int nBikes = Integer.valueOf(args[4]);
+				double occupationRate = ( (double) nBikes/(nSlots));
+				system = new VelibSystem(nStations,nSlots,s,1 - occupationRate,0.7,name);
+			}
+		}
+		catch (Exception e) {
+			throw new Exception(e);
+		}
+		finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				}
+				catch (Exception e) {}
+			}
+		}
 	}
 	
 	/**
