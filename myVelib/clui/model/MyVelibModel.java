@@ -9,6 +9,7 @@ import user.Card;
 import bike.ElectricBike;
 import bike.RegularBike;
 import station.Station;
+import system.GPS;
 import system.VelibSystem;
 import user.User;
 import user.Vlibre;
@@ -118,6 +119,18 @@ public class MyVelibModel extends Observable{
 		this.setChanged();
 		this.notifyObservers("Bike returned by User with Id" + String.valueOf(userID) + "on station with ID:" + String.valueOf(stationID));
 	
+	}
+	
+	public void planRide(double xStart,double yStart,double xEnd,double yEnd,String bikeType) throws Exception{
+		Class <?> type;
+		if (bikeType.equals("regular"))
+			type = RegularBike.class;
+		else if (bikeType.equals("electric"))
+			type = ElectricBike.class;
+		else
+			throw new Exception("Invalid bikeType");
+		Station[] stations = system.PlanRide(new GPS(xStart,yStart),new GPS(xEnd,yEnd),type);
+		System.out.println("You should start on station " + String.valueOf(stations[0].getId()) + " and drop your bike in station " + String.valueOf(stations[1].getId()));
 	}
 
 	public VelibSystem getSystem() {
