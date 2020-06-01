@@ -40,7 +40,7 @@ public class MyVelibView implements Observer{
 		User user = VelibSystem.getUserByID(ID);
 		if (user == null)
 			throw new Exception("User not found");
-		System.out.println(user.toString());
+		System.out.println(user.getName() + "'s " + user.getUsrBalance().toString());
 		
 	}
 	
@@ -48,16 +48,16 @@ public class MyVelibView implements Observer{
 		Station station = VelibSystem.getStationByID(ID);
 		if (station == null)
 			throw new Exception("User not found");
-		System.out.println(station.toString());
+		System.out.println(" Station with ID:" + String.valueOf(station.getId()) + " " +  station.getBalance().toString());
 	} 
 	
 	public void sortStation(MyVelibModel model,String policy) throws Exception{
 		ArrayList<Station> stations = new ArrayList<Station>(Arrays.asList(model.getSystem().getStations()));
-		if (policy == "mostUsed") {
+		if (policy.equals("mostUsed")) {
 			LeastOccupiedComparator comparator = new LeastOccupiedComparator();
 			Collections.sort(stations,comparator);
 		}
-		else if (policy == "leastOccupied") {
+		else if (policy.equals("leastOccupied")) {
 			MostUsedComparator comparator = new MostUsedComparator();
 			Collections.sort(stations,comparator);
 		}

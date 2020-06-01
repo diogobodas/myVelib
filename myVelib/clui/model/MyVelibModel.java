@@ -42,11 +42,11 @@ public class MyVelibModel extends Observable{
 	 */
 	public void addUser(String userName, String cardType) {
 		Card card;
-		if(cardType == "vmax")
+		if(cardType.equals("vmax"))
 			card = new Vmax();
-		else if(cardType == "vlibre")
+		else if(cardType.equals("vlibre"))
 			card = new Vlibre();
-		else
+		else 
 			card = null;
 		system.addUser(userName,card);
 		this.setChanged();
@@ -93,10 +93,10 @@ public class MyVelibModel extends Observable{
 		if (station == null)
 			throw new Exception("Station not found");
 		Class <?> type;
-		if (bykeType == "regular") {
+		if (bykeType.equals("regular")) {
 			type = RegularBike.class;
 		}
-		else if (bykeType == "electric") {
+		else if (bykeType.equals("electric")) {
 			type = ElectricBike.class;
 		}
 		else
@@ -104,6 +104,19 @@ public class MyVelibModel extends Observable{
 		user.rentBike(station, type, time);
 		this.setChanged();
 		this.notifyObservers("Bike rented by User with Id" + String.valueOf(userID) + "on station with ID:" + String.valueOf(stationID) + " of type" + String.valueOf(bykeType));
+	
+	}
+	
+	public void returnBike(int userID,int stationID,LocalDateTime time) throws Exception{
+		User user = VelibSystem.getUserByID(userID);
+		if (user == null)
+			throw new Exception("User not found");
+		Station station = VelibSystem.getStationByID(stationID);
+		if (station == null)
+			throw new Exception("Station not found");
+		user.dropBike(station, time);
+		this.setChanged();
+		this.notifyObservers("Bike returned by User with Id" + String.valueOf(userID) + "on station with ID:" + String.valueOf(stationID));
 	
 	}
 

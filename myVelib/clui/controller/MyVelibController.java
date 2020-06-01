@@ -90,7 +90,7 @@ public class MyVelibController {
 			if (command.length == 3) {
 				try {
 					Integer ID = Integer.valueOf(command[2]);
-					view.displayUser(model,ID);
+					view.displayStation(model,ID);
 				}
 				catch (Exception e) {
 					System.out.println(e.getMessage());
@@ -147,7 +147,27 @@ public class MyVelibController {
 					else {
 						int userID = Integer.valueOf(command[1]);
 						int stationID = Integer.valueOf(command[2]);
-						model.rentBike(userID,stationID,time,command[9]);
+						model.rentBike(userID,stationID,time,command[8]);
+					}
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
+			break;
+			
+		case "returnBike":
+			if(command.length == 8) {
+				try {
+					LocalDateTime time = parseTime(command[3],command[4],command[5],command[6],command[7]);
+					if (time == null)
+						throw new IncompatibleArgumentsException("Invalid time for offline");
+					else {
+						int userID = Integer.valueOf(command[1]);
+						int stationID = Integer.valueOf(command[2]);
+						model.returnBike(userID,stationID,time);
 					}
 				}
 				catch (Exception e) {
@@ -160,7 +180,7 @@ public class MyVelibController {
 			
 		case "sortStation":
 			if (command.length == 3) {
-				if (command[2] == "mostUsed" || command[2] == "leastOccupied")
+				if (command[2].equals("mostUsed") || command[2].equals("leastOccupied"))
 					try {
 						view.sortStation(model,command[2]);
 					}
@@ -168,7 +188,7 @@ public class MyVelibController {
 						System.out.println(e.getMessage());
 					}
 				else
-					throw new IncompatibleArgumentsException("Card name does not exist for addUser command");
+					throw new IncompatibleArgumentsException("Policy does not exist for sortStations command");
 			}
 			else
 				throw new IncompatibleArgumentsException("Wrong number of arguments");
@@ -276,12 +296,13 @@ public class MyVelibController {
 		// Assuming user is spawned at random location
 		else if (command == "addUser"){
 			if (argsSize == 4) {
-				Random rand = new Random();
 				String card = args[2];
-				if (card == "vlibre")
+				System.out.println(card);
+				if (card.equals("vlibre"))
 					sys.addUser(args[1],new Vlibre());
-				else if (card == "vmax")
+				else if (card.equals("vmax")) {
 					sys.addUser(args[1],new Vmax());
+				}
 				else if (card == "none")
 					sys.addUser(args[1],null);
 				else
