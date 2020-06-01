@@ -35,5 +35,7 @@ public class MyVelibView implements Observer{
 		System.out.println("To no display stations");
 		// completar
 	} 
+	
+	public void sortStation
 
 }

@@ -69,7 +69,7 @@ public class MyVelibModel extends Observable{
 	}
 	
 	public void rentBike(int userID,int stationID,LocalDateTime time,String bykeType) throws Exception{
-		User user = VelibSystem.getUserByID(userId);
+		User user = VelibSystem.getUserByID(userID);
 		if (user == null)
 			throw new Exception("User not found");
 		Station station = VelibSystem.getStationByID(stationID);
@@ -86,6 +86,7 @@ public class MyVelibModel extends Observable{
 			throw new Exception("Byketype does not exist");
 		user.rentBike(station, type, time);
 		this.setChanged();
-		this.notifyObservers("Bike rented by User with Id" + String.valueOf(userId) + "on station with ID:" + String.valueOf(ID) + " of type" + String.valueOf(bykeType));
+		this.notifyObservers("Bike rented by User with Id" + String.valueOf(userID) + "on station with ID:" + String.valueOf(stationID) + " of type" + String.valueOf(bykeType));
 	
+	}
 }

@@ -196,6 +196,13 @@ public class VelibSystem {
 		return null;
 	}
 	
+	public static User getUserByID(int id) {
+		for (User user : VelibSystem.users)
+			if (user.getID() == id)
+				return user;
+		return null;
+	}
+	
 	public static ArrayList <User> getUsersWithCreditCard(String card_number) {
 		ArrayList <User> us = new ArrayList <User> ();
 		for (User u : VelibSystem.users) {
