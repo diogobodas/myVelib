@@ -35,9 +35,8 @@ public class MyVelibModel extends Observable{
 		
 		FileReader file = null;
 		BufferedReader reader = null;
-		
 		try {
-			file = new FileReader("my_velib.ini");
+			file = new FileReader("clui/main/my_velib.ini");
 			reader = new BufferedReader(file);
 			String line;
 			if ((line = reader.readLine()) == null) {
@@ -68,6 +67,8 @@ public class MyVelibModel extends Observable{
 			}
 		}
 	}
+	
+	
 	
 	/**
 	 * Method for adding user to existing VelibSystem Model

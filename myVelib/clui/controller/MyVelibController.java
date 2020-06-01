@@ -1,5 +1,9 @@
 package controller;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.util.Random;
 
@@ -21,6 +25,33 @@ public class MyVelibController {
 		this.model = model;
 		this.view = view;
 		this.running = true;
+	}
+	
+	public void readAndWrite(String fileName) throws Exception{
+		PrintStream out = new PrintStream(new FileOutputStream("clui/main/" + fileName + "output.txt"));
+		System.setOut(out);
+		FileReader file = null;
+		BufferedReader reader = null;
+		try {
+			file = new FileReader("clui/main/" + fileName + ".txt");
+			reader = new BufferedReader(file);
+			String line;
+			while ((line = reader.readLine()) != null) {
+				String[] args = parseCommand(line);
+				executeCommand(args);
+			}
+		}
+		catch (Exception e) {
+			throw new Exception(e);
+		}
+		finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				}
+				catch (Exception e) {}
+			}
+		}
 	}
 		
 	public String[] parseCommand(String command) {
