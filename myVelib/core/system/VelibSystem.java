@@ -298,6 +298,4 @@ public class VelibSystem {
 		return squareLength;
 	}
 	
-	
-	
 }

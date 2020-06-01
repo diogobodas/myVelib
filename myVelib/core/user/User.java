@@ -196,4 +196,32 @@ public class User {
 		this.bike = bike;
 	}
 	
+	public String toString() {
+		String result = "Id: " + String.valueOf(this.id);
+		result += " Name: " + String.valueOf(this.name);
+		result += " RegistrationCard: ";
+		if (this.registrationCard == null)
+			result += "None";
+		else if (this.registrationCard instanceof Vmax )
+			result += "vmax";
+		else
+			result += "vlibre";
+		result += " Bikeholder: ";
+		if (this.bike == null)
+			result += "no";
+		else
+			result += "yes";
+		return result;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	
 }

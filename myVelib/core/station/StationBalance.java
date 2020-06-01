@@ -296,8 +296,8 @@ public class StationBalance {
 	 */
 	@Override
 	public String toString() {
-		return "StationBalance [rentCount=" + rentCount + ", returnCount=" + returnCount + ", timeSlotDict="
-				+ timeSlotDict + ", station=" + station + "]";
+		return "StationBalance [rentCount=" + rentCount + ", return Count=" + returnCount + ", rate of occupation="
+				+ rate + "]";
 	}
 
 	public int getRentCount() {

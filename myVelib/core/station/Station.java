@@ -213,6 +213,8 @@ public class Station {
 		this.balance = balance;
 	}
 	
-	
+	public String toString() {
+		return "Station id: " + String.valueOf(this.id);
+	}
 }
 	
