@@ -14,6 +14,7 @@ import system.GPS;
 import system.VelibSystem;
 import user.User;
 import user.Vlibre;
+import user.Vmax;
 
 class VelibSystemTest {
 
@@ -67,4 +68,55 @@ class VelibSystemTest {
 		sys.getStations()[3].getSlots()[5].setBike(b);
 		assertTrue(VelibSystem.getStationByBike(b).equals(sys.getStations()[3]));
 	}
+	
+	@Test
+	void testGetUserByRegistrationCard() {
+		VelibSystem sys = new VelibSystem(5,33);
+		Vmax vmax = new Vmax();
+		Vlibre vlibre = new Vlibre();
+		User u1 = new User(0, new GPS(0,0), "000");
+		User u2 = new User(1, new GPS(0,0), "010", vmax);
+		User u3 = new User(2, new GPS(0,0), "110", vlibre);
+		sys.addUser(u1);
+		sys.addUser(u3);
+		assertNull(VelibSystem.getUserByRegistrationCard(vmax));
+		sys.addUser(u2);
+		assertTrue(VelibSystem.getUserByRegistrationCard(vlibre).equals(u3));
+		assertTrue(VelibSystem.getUserByRegistrationCard(vmax).equals(u2));
+	}
+	
+	@Test
+	void testGetStationByID() {
+		VelibSystem sys = new VelibSystem(5,33); // should create network with 5 stations numbered 0 to 4
+		for(int i = 0; i < 5; i++)
+			assertTrue(VelibSystem.getStationByID(i).equals(sys.getStations()[i]));
+		assertNull(VelibSystem.getStationByID(7));
+	}
+	
+	@Test
+	void testgetUserByID() {
+		VelibSystem sys = new VelibSystem(5,33);
+		Vmax vmax = new Vmax();
+		Vlibre vlibre = new Vlibre();
+		sys.addUser("U1", null);
+		sys.addUser("U2", vmax);
+		sys.addUser("U3", vlibre);
+		assertNull(VelibSystem.getUserByID(5));
+		assertNull(VelibSystem.getUserByID(0).getRegistrationCard());
+		assertTrue(VelibSystem.getUserByID(1).getRegistrationCard().equals(vmax));
+		assertTrue(VelibSystem.getUserByID(2).getRegistrationCard().equals(vlibre));
+	}
+	
+	@Test
+	void testGetUsersWithCreditCard() {
+		VelibSystem sys = new VelibSystem(5,33);
+		sys.addUser(new GPS(0,0), "000");
+		sys.addUser(new GPS(0,0), "001");
+		assertTrue(VelibSystem.getUsersWithCreditCard("002").isEmpty());
+		assertTrue(VelibSystem.getUsersWithCreditCard("000").size() == 1);
+		sys.addUser(new GPS(0,0), "001");
+		assertTrue(VelibSystem.getUsersWithCreditCard("001").size() == 2);
+		
+	}
+	
 }
