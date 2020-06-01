@@ -159,7 +159,7 @@ public class VelibSystem {
 	
 	/**
 	 * Same as {@link #addUser(GPS, String)} but with the addition of a registration card for the user.
-	 * @param location GPDS object with coordinates for the user
+	 * @param location GPS object with coordinates for the user
 	 * @param credit_card_number String containing the credit card identifier of the user
 	 * @param registrationCard Card object with the registrationCard of the user, if he has any
 	 */
@@ -180,7 +180,7 @@ public class VelibSystem {
 	}
 	
 	/**
-	 * Used to add user to system in testing context. The function is given directly an user object.
+	 * Used to add user to system only in testing context. The function is given directly an user object and should not be used outside of test environment.
 	 * @param usr
 	 */
 	public void addUser(User usr) {
@@ -241,14 +241,26 @@ public class VelibSystem {
 		return null;
 	}
 	
+	/**
+	 * Method for searching a user on the ArrayList users of the network based on its registration card.
+	 * @param c Card Object with the registration card being searched
+	 * @return User object if there is a user registered with that card, null otherwise
+	 */
 	public static User getUserByRegistrationCard(Card c) {
 		for (User u : VelibSystem.users) {
-			if (u.getRegistrationCard().getID() == c.getID())
-				return u;
+			if (u.getRegistrationCard() != null) {
+				if (u.getRegistrationCard().getID() == c.getID())
+					return u;
+			}
 		}
 		return null;
 	}
 	
+	/**
+	 * Method for searching a station based on its ID
+	 * @param id Integer for the station ID
+	 * @return Station object having the given id or null if no such object exists
+	 */
 	public static Station getStationByID(int id) {
 		for (Station station : VelibSystem.stations)
 			if (station.getId() == id)
@@ -256,6 +268,11 @@ public class VelibSystem {
 		return null;
 	}
 	
+	/**
+	 * Method for searching a registered user based on its ID. In use context, all users have an unique ID because {@link #addUser(String, Card)} ensures that.
+	 * @param id Integer for User ID
+	 * @return Returns the user with the corresponding ID if it is registered, null otherwise.
+	 */
 	public static User getUserByID(int id) {
 		for (User user : VelibSystem.users)
 			if (user.getID() == id)
@@ -263,6 +280,11 @@ public class VelibSystem {
 		return null;
 	}
 	
+	/**
+	 * Gets all users that have credit card according to the string given. Since one credit card may be the same for different users, it returns an ArrayList of Users
+	 * @param card_number String containing credit card number
+	 * @return ArrayList of users having the provided card.
+	 */
 	public static ArrayList <User> getUsersWithCreditCard(String card_number) {
 		ArrayList <User> us = new ArrayList <User> ();
 		for (User u : VelibSystem.users) {
@@ -273,7 +295,9 @@ public class VelibSystem {
 		return us;
 	}
 	
-	// Sort of a toString analog
+	/**
+	 * Method for printing in screen main system info such as stations, users, and rideplanning method
+	 */
 	public static void printSystemInfo() {
 		String stationsInfo = "";
 		String usersInfo = "";
