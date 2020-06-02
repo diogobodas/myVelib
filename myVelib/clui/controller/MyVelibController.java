@@ -33,15 +33,17 @@ public class MyVelibController {
 		BufferedReader reader = null;
 		PrintStream stdout = System.out;
 		try {
-			file = new FileReader("clui/main/" + fileName + ".txt");
+			file = new FileReader("clui/inputFiles/" + fileName + ".txt");
 			reader = new BufferedReader(file);
 			
-			FileOutputStream fileOut = new FileOutputStream("clui/main/" + fileName + "output.txt");
+			FileOutputStream fileOut = new FileOutputStream("clui/outputFiles/" + fileName + "output.txt");
 			PrintStream out = new PrintStream(fileOut);
 			System.setOut(out);
 			
 			String line;
 			while ((line = reader.readLine()) != null) {
+				if (line.charAt(0) == '/')
+					continue;
 				String[] args = parseCommand(line);
 				executeCommand(args);
 			}
@@ -71,7 +73,7 @@ public class MyVelibController {
 		switch (command[0]) {
 		
 		case "addUser":
-			if (command.length == 4) {
+			if (command.length == 3) {
 				if (command[2].equals("vmax") || command[2].equals("vlibre") || command[2].equals("none")) {
 					try {
 						model.addUser(command[1], command[2]);
@@ -112,10 +114,34 @@ public class MyVelibController {
 				throw new IncompatibleArgumentsException("Wrong number of arguments");
 			break;
 			
-		case "displayUser":
-			if (command.length == 3) {
+		case "userState":
+			if (command.length == 2) {
 				try {
-					Integer ID = Integer.valueOf(command[2]);
+					Integer ID = Integer.valueOf(command[1]);
+					view.userState(model, ID);
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+			
+		case "stationState":
+			if (command.length == 2) {
+				try {
+					Integer ID = Integer.valueOf(command[1]);
+					view.stationState(model, ID);
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+			
+		case "displayUser":
+			if (command.length == 2) {
+				try {
+					Integer ID = Integer.valueOf(command[1]);
 					view.displayUser(model,ID);
 				}
 				catch (Exception e) {
@@ -127,9 +153,9 @@ public class MyVelibController {
 			break;
 			
 		case "displayStation":
-			if (command.length == 3) {
+			if (command.length == 2) {
 				try {
-					Integer ID = Integer.valueOf(command[2]);
+					Integer ID = Integer.valueOf(command[1]);
 					view.displayStation(model,ID);
 				}
 				catch (Exception e) {
@@ -141,13 +167,13 @@ public class MyVelibController {
 			break;
 			
 		case "offline":
-			if(command.length == 8) {
+			if(command.length == 7) {
 				try {
-					LocalDateTime time = parseTime(command[3],command[4],command[5],command[6],command[7]);
+					LocalDateTime time = parseTime(command[2],command[3],command[4],command[5],command[6]);
 					if (time == null)
 						throw new IncompatibleArgumentsException("Invalid time for offline");
 					else {
-						Integer ID = Integer.valueOf(command[2]);
+						Integer ID = Integer.valueOf(command[1]);
 						model.offline(ID,time);
 					}
 				}
@@ -160,13 +186,13 @@ public class MyVelibController {
 			break;
 			
 		case "online":
-			if(command.length == 8) {
+			if(command.length == 7) {
 				try {
-					LocalDateTime time = parseTime(command[3],command[4],command[5],command[6],command[7]);
+					LocalDateTime time = parseTime(command[2],command[3],command[4],command[5],command[6]);
 					if (time == null)
 						throw new IncompatibleArgumentsException("Invalid time for offline");
 					else {
-						Integer ID = Integer.valueOf(command[2]);
+						Integer ID = Integer.valueOf(command[1]);
 						model.online(ID,time);
 					}
 				}
@@ -219,10 +245,10 @@ public class MyVelibController {
 			break;
 			
 		case "sortStation":
-			if (command.length == 3) {
+			if (command.length == 2) {
 				if (command[2].equals("mostUsed") || command[2].equals("leastOccupied"))
 					try {
-						view.sortStation(model,command[2]);
+						view.sortStation(model,command[1]);
 					}
 					catch (Exception e) {
 						System.out.println(e.getMessage());
@@ -235,7 +261,7 @@ public class MyVelibController {
 			break;
 			
 		case "display":
-			if(command.length == 2) {
+			if(command.length == 1) {
 				try {
 					view.display(model);
 				}
@@ -258,8 +284,6 @@ public class MyVelibController {
 			else
 				throw new IncompatibleArgumentsException("Wrong number of arguments");
 			break;
-			
-		case "readAndWriteS":
 			
 		case "exit":
 			this.running = false;

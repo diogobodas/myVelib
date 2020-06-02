@@ -14,7 +14,7 @@ public class MostUsedComparator implements Comparator<Station>{
 	 */
 	public int compare(Station s1,Station s2) {
 		StationBalance sb1 = s1.getBalance(), sb2 = s2.getBalance();
-		return (sb1.getRentCount() + sb1.getReturnCount()) - (sb2.getRentCount() + sb2.getReturnCount());
+		return (sb2.getRentCount() + sb2.getReturnCount()) - (sb1.getRentCount() + sb1.getReturnCount());
 	}
 	
 }

@@ -22,6 +22,7 @@ import station.Terminal;
  */
 public class VelibSystem {
 
+	public static long seed = 15;
 	private static Station[] stations;
 	private static ArrayList<User> users;
 	private static RidePlanning rideplan;
@@ -45,7 +46,7 @@ public class VelibSystem {
 		VelibSystem.users = new ArrayList<User>();
 		VelibSystem.rideplan = new StandardPlanning();
 		stations = new Station[N];
-		Random rand = new Random();
+		Random rand = new Random(VelibSystem.seed);
 		for (int i = 0; i < N;i ++) {
 			int numSlots;
 			if (i < N -1)
@@ -72,7 +73,7 @@ public class VelibSystem {
 		VelibSystem.users = new ArrayList<User>();
 		VelibSystem.rideplan = new StandardPlanning();
 		stations = new Station[N];
-		Random rand = new Random();
+		Random rand = new Random(VelibSystem.seed);
 		for (int i = 0; i < N;i ++) {
 			int numSlots;
 			if (i < N -1)
@@ -102,7 +103,7 @@ public class VelibSystem {
 		VelibSystem.users = new ArrayList<User>();
 		VelibSystem.rideplan = new StandardPlanning();
 		stations = new Station[N];
-		Random rand = new Random();
+		Random rand = new Random(VelibSystem.seed);
 		for (int i = 0; i < N;i ++) {
 			int numSlots;
 			if (i < N -1)

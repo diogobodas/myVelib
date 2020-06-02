@@ -13,6 +13,6 @@ public class LeastOccupiedComparator implements Comparator<Station>{
 	 * Compare method for two stations. If s2 has a bigger occupation rate than s1 then s2 > s1
 	 */
 	public int compare(Station s1,Station s2) {
-		return (int) (s2.getBalance().getRate()*100 - s1.getBalance().getRate()*100);
+		return (int) (s1.getBalance().getRate()*100 - s2.getBalance().getRate()*100);
 	}
 }

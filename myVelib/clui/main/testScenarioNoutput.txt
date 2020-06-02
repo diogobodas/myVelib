@@ -6,10 +6,20 @@ Added user Pierre
 Bike rented by User with Id0on station with ID:2 of typeregular
 Bike returned by User with Id0on station with ID:3
 Diogo's UserBalance [rideNumber=1, totalBikeTime=30, totalCharge=0.5]
-Station with ID:2 StationBalance [rentCount=1, return Count=0, rate of occupation=0.85]
-Station with ID:3 StationBalance [rentCount=0, return Count=1, rate of occupation=0.975]
-System name: myvelib
-Stations Station id: 0 (0.003037400874386531, 2.9902377174575436) Station id: 1 (5.095647769710094, 5.605933386657117) Station id: 2 (5.387861999745131, 3.9785838981092656) Station id: 3 (3.6659671410364405, 2.8639359242802698) Station id: 4 (0.9431679157078996, 0.908159659940595) 
-Users Id: 0 Name: Diogo RegistrationCard: None Bikeholder: no Id: 1 Name: Bernardo RegistrationCard: vlibre Bikeholder: no Id: 2 Name: Pierre RegistrationCard: None Bikeholder: no 
-RidePlanningStandard Planning
-You should start on station 4 and drop your bike in station 2
+Station with ID:2 StationBalance [rentCount=1, return Count=0, rate of occupation=0.8142857142857143]
+Station with ID:3 StationBalance [rentCount=0, return Count=1, rate of occupation=0.9214285714285714]
+You should start on station 3 and drop your bike in station 2
+Bike rented by User with Id2on station with ID:3 of typeelectric
+Bike returned by User with Id2on station with ID:2
+Station sorted with policy: leastOccupied
+StationBalance [rentCount=1, return Count=1, rate of occupation=0.8464285714285714]
+StationBalance [rentCount=1, return Count=1, rate of occupation=0.8464285714285714]
+StationBalance [rentCount=0, return Count=0, rate of occupation=0.9]
+StationBalance [rentCount=0, return Count=0, rate of occupation=0.9]
+StationBalance [rentCount=0, return Count=0, rate of occupation=0.9]
+Station sorted with policy: mostUsed
+StationBalance [rentCount=1, return Count=1, rate of occupation=0.8464285714285714]
+StationBalance [rentCount=1, return Count=1, rate of occupation=0.8464285714285714]
+StationBalance [rentCount=0, return Count=0, rate of occupation=0.9]
+StationBalance [rentCount=0, return Count=0, rate of occupation=0.9]
+StationBalance [rentCount=0, return Count=0, rate of occupation=0.9]

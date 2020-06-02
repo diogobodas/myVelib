@@ -1,0 +1,16 @@
+/ To add comments, just start a new line with / character
+setup myvelib 5 50 6 40
+addUser Diogo none myvelib
+addUser Bernardo vlibre myvelib
+addUser Pierre none myvelib
+rentBike 0 2 2020 6 1 13 30 regular
+returnBike 0 3 2020 6 1 14 00
+displayUser myvelib 0
+displayStation myvelib 2
+displayStation myvelib 3
+planRide 2 2 3 4 electric
+/ With a fixed seed for Random, we checked using planRide that startId = 3 and arrivalId = 2
+rentBike 2 3 2020 6 1 14 15 electric
+returnBike 2 2 2020 6 1 14 45 
+sortStation myvelib leastOccupied
+sortStation myvelib mostUsed
