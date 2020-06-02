@@ -1,0 +1,11 @@
+setup myVelib2020 10 100 10 70
+addUser Diogo vmax 
+addUser Bernardo vlibre
+addUser Pierre none
+rentBike 0 2 2020 6 1 12 45 regular
+returnBike 0 3 2020 6 1 13 00
+userState 0
+displayUser 0
+stationState 2
+displayStation 2
+display

@@ -1,0 +1,15 @@
+Default setup for myVelib2020: 
+10 stations, 100 slots,10.0km square side, occupation rate of 70.0% and electric bike rate of 30%
+Added user Diogo
+Added user Bernardo
+Added user Pierre
+Bike rented by User with Id0on station with ID:2 of typeregular
+Bike returned by User with Id0on station with ID:3
+User ID: 0, User name: Diogo, Location: (6.49837623186748,5.426926130229291), No bike, Holds a vmax card
+Diogo's UserBalance [rideNumber=1, totalBikeTime=15, totalCharge=0.0 timeCredit=0.0]
+Location: (6.698621362863425,7.351050399591992), station.ParkingSlot@e7station.ParkingSlot@e8station.ParkingSlot@e9station.ParkingSlot@eastation.ParkingSlot@ebstation.ParkingSlot@ecstation.ParkingSlot@edstation.ParkingSlot@eestation.ParkingSlot@efstation.ParkingSlot@f0
+Station with ID:2 StationBalance [rentCount=1, return Count=0, rate of occupation=0.6035714285714285]
+System name: myVelib2020
+Stations Station id: 0 (7.299823878824023, 1.0552478460052028) Station id: 1 (9.106890605104496, 1.5551743026783382) Station id: 2 (6.698621362863425, 7.351050399591992) Station id: 3 (7.4886105395855065, 4.9010394910872375) Station id: 4 (6.273188857680094, 8.954117834298776) Station id: 5 (6.193779695664628, 5.33726931705735) Station id: 6 (7.686108500850284, 3.3893855654040186) Station id: 7 (8.082404410780626, 8.310261635094209) Station id: 8 (2.139129480190649, 4.727520126011036) Station id: 9 (0.5226039460937881, 7.742666587965817) 
+Users Id: 0 Name: Diogo RegistrationCard: vmax Bikeholder: no Id: 1 Name: Bernardo RegistrationCard: vlibre Bikeholder: no Id: 2 Name: Pierre RegistrationCard: None Bikeholder: no 
+RidePlanningStandard Planning
