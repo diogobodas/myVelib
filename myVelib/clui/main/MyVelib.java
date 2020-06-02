@@ -32,10 +32,16 @@ public class MyVelib {
 				}
 			}
 			else {
-				System.out.println("Please specify file name");
-				String fileName = keyboard.nextLine();
-				controller.readAndWrite(fileName);
-			}
+				try {
+					System.out.println("Please specify file name");
+					String fileName = keyboard.nextLine();
+					controller.readAndWrite(fileName);
+				}
+				catch (Exception e) {
+					System.out.println("Incorrect file name");
+					main(args);
+				}
+				}
 			keyboard.close();
 		}
 		catch (Exception e) {
