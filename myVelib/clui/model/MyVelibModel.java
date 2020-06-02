@@ -53,6 +53,7 @@ public class MyVelibModel extends Observable{
 				int nBikes = Integer.valueOf(args[4]);
 				double occupationRate = ( (double) nBikes/(nSlots));
 				system = new VelibSystem(nStations,nSlots,s,1 - occupationRate,0.7,name);
+				this.name = name;
 			}
 		}
 		catch (Exception e) {
@@ -90,14 +91,16 @@ public class MyVelibModel extends Observable{
 	}
 	
 	public void setup(String velibNetworkName) {
-		system = new VelibSystem(10, 100, 4.0, 0.25, 0.7, velibNetworkName); 
+		system = new VelibSystem(10, 100, 4.0, 0.25, 0.7, velibNetworkName);
+		name = velibNetworkName;
 		this.setChanged();
 		this.notifyObservers("Default setup for " + velibNetworkName + ": " + "\n" + "10 stations, 100 bikes, 4km square side, occupation rate of 75% and electric bike rate of 30%");	
 	}
 	
 	public void setup(String velibNetworkName,int nStations,int nSlots,double s,int nBikes) {
 		double occupationRate = ( (double) nBikes/(nSlots));
-		system = new VelibSystem(nStations, nSlots, s, 1- occupationRate, 0.7, velibNetworkName); 
+		system = new VelibSystem(nStations, nSlots, s, 1- occupationRate, 0.7, velibNetworkName);
+		name = velibNetworkName;
 		this.setChanged();
 		this.notifyObservers("Default setup for " + velibNetworkName + ": " + "\n" + String.valueOf(nStations) + " stations, "+ String.valueOf(nSlots) + " bikes," + String.valueOf(s) + "km square side, occupation rate of " + String.valueOf((double) 100*(occupationRate)) + "% and electric bike rate of 30%");	
 	}

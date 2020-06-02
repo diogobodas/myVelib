@@ -3,6 +3,7 @@ package controller;
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -28,18 +29,25 @@ public class MyVelibController {
 	}
 	
 	public void readAndWrite(String fileName) throws Exception{
-		PrintStream out = new PrintStream(new FileOutputStream("clui/main/" + fileName + "output.txt"));
-		System.setOut(out);
 		FileReader file = null;
 		BufferedReader reader = null;
 		try {
 			file = new FileReader("clui/main/" + fileName + ".txt");
 			reader = new BufferedReader(file);
+			
+			PrintStream stdout = System.out;
+			FileOutputStream fileOut = new FileOutputStream("clui/main/" + fileName + "output.txt");
+			PrintStream out = new PrintStream(fileOut);
+			System.setOut(out);
+			
 			String line;
 			while ((line = reader.readLine()) != null) {
 				String[] args = parseCommand(line);
 				executeCommand(args);
 			}
+			System.setOut(stdout);
+			System.out.println("File wrote successfully");
+			out.close();
 		}
 		catch (Exception e) {
 			throw new Exception(e);

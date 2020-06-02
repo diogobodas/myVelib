@@ -1,1 +1,3 @@
-display app
+setup myvelib
+display myvelib
+addUser Diogo vmax myvelib

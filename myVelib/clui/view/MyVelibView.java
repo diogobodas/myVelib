@@ -70,6 +70,7 @@ public class MyVelibView implements Observer{
 	}
 	
 	public void display(MyVelibModel model) {
+		System.out.println("System name: " + model.getName());
 		VelibSystem.printSystemInfo();
 	}
 
