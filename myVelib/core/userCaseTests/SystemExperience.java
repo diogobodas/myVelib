@@ -7,6 +7,11 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
 import bike.RegularBike;
+import exceptions.IrregularCardException;
+import exceptions.IrregularUserException;
+import exceptions.UnavailableBikeException;
+import exceptions.UnavailableSlotException;
+import exceptions.UnavailableStationException;
 import system.GPS;
 import system.VelibSystem;
 import user.User;
@@ -15,7 +20,7 @@ import user.Vlibre;
 class SystemExperience {
 
 	@Test
-	void test() {
+	void test() throws UnavailableBikeException, IrregularUserException, IrregularCardException, UnavailableStationException, UnavailableSlotException {
 		// PROBLEM WHEN M IS NOT DIVISBLE BY N!!!
 		VelibSystem sys = new VelibSystem(5,30);
 		sys.addUser(new GPS(5,5), "153", new Vlibre());
