@@ -136,7 +136,7 @@ public class MyVelibModel extends Observable{
 			type = ElectricBike.class;
 		}
 		else
-			throw new Exception("Byketype does not exist");
+			throw new Exception("Bike type does not exist");
 		user.rentBike(station, type, time);
 		this.setChanged();
 		this.notifyObservers("Bike rented by User with Id" + String.valueOf(userID) + "on station with ID:" + String.valueOf(stationID) + " of type" + String.valueOf(bykeType));

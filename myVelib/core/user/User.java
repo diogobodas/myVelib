@@ -7,6 +7,7 @@ import exceptions.IrregularCardException;
 import exceptions.IrregularUserException;
 import exceptions.UnavailableBikeException;
 import exceptions.UnavailableSlotException;
+import exceptions.UnavailableStationException;
 import station.ParkingSlot;
 import station.SlotStatus;
 import station.Station;
@@ -14,6 +15,11 @@ import station.Terminal;
 import java.time.LocalDateTime;
 import java.util.Random;
 
+/**
+ * 
+ * Class representing the user of the myVelib Network. It has an ID, GPS coordinates, a credit card number, and a registration card.
+ * Other attributes were created in order to support system functions such as Payment for correctly handling payment regimes and UserBalance for handling statistics.
+ */
 public class User {
 
 	private int id;
@@ -25,7 +31,12 @@ public class User {
 	private UserBalance usrBalance;
 	private String name = "Unnamed";
 	
-	
+	/**
+	 * Initializes an user through an ID a location and a card number. Used mainly in testing
+	 * @param id Integer for numerical ID of the user
+	 * @param location GPS object containing the position of the user in the map
+	 * @param card_number String with the card number
+	 */
 	public User(int id, GPS location, String card_number) {
 		this.id = id;
 		this.location = location;
@@ -36,6 +47,13 @@ public class User {
 		this.usrBalance = new UserBalance(this);
 	}
 	
+	/**
+	 * Same as {@link #User(int, GPS, String)} but with the addition of a Card object for registration card
+	 * @param id Integer for numerical ID of the user
+	 * @param location GPS object containing the position of the user in the map
+	 * @param card_number String with the card number
+	 * @param registrationCard Card object with the user registration card
+	 */
 	public User(int id, GPS location, String card_number,Card registrationCard) {
 		this.id = id;
 		this.location = location;
@@ -46,10 +64,10 @@ public class User {
 		this.usrBalance = new UserBalance(this);
 	}
 	/**
-	 * Used in CLUI addUser
-	 * @param name
-	 * @param id
-	 * @param registrationCard
+	 * User constructor used in the CLUI addUser. It gives also a name to the user and initializes his credit card as his ID turned to string
+	 * @param name String with the user's name
+	 * @param id Integer for numerical ID
+	 * @param registrationCard Card object with the registration card. Can be provided as null for users without card
 	 */
 	public User(String name,int id,Card registrationCard) {
 		this.id = id;
@@ -72,59 +90,48 @@ public class User {
 		this.usrBalance = usrBalance;
 	}
 
-	// Rents a bike through the station's terminal
-	public void rentBike(Station station, Class <?> bikeType, LocalDateTime time) {
+	/**
+	 * Method for renting a bike through a station terminal
+	 * @param station Station instance where the user wishes to rent the bike
+	 * @param bikeType Class object having the desired bike type
+	 * @param time LocalDateTime of rental start
+	 * @throws UnavailableBikeException Thrown by {@link station.Terminal#releaseBike(User, Class, LocalDateTime)}
+	 * @throws IrregularUserException Thrown by {@link station.Terminal#identifyUser(User)}
+	 * @throws IrregularCardException Thrown by {@link station.Terminal#identifyUser(User)}
+	 * @throws UnavailableStationException when station is offline
+	 */
+	public void rentBike(Station station, Class <?> bikeType, LocalDateTime time) throws UnavailableBikeException, IrregularUserException, IrregularCardException, UnavailableStationException {
 		if (!station.isOn_service()) {
-			System.out.println("Cannot use this station, it is offline");
-			// add custom exception here later?
-			return;
+			throw new UnavailableStationException("Station is offline, cannot rent bike here");
 		}
 		if (!station.hasDesiredBike(bikeType)) {
-			System.out.println("The bike is not available in this station");
-			// add custom exception here later?
-			return;
+			throw new UnavailableBikeException("Station does not have the desired bike");
 		}
 		Terminal terminal = station.getTerminal();	
-		try {
-			terminal.identifyUser(this);
-			terminal.releaseBike(this,bikeType, time);
-		} catch (UnavailableBikeException e) {
-			System.out.println(e);
-		} catch (IrregularUserException e) {
-			System.out.println(e);
-		} catch (IrregularCardException e) {
-			System.out.println(e);
-		}
+		terminal.identifyUser(this);
+		terminal.releaseBike(this,bikeType, time);
 	}
 	
-	public void dropBike(Station station, LocalDateTime time) {
-		
-		//checks if there is an available slot for the drop off
-		// insert exception here later? 
+	/**
+	 * Method for returning a bike to a station
+	 * @param station Station in which the bike is trying to be returned
+	 * @param time LocalDateTime of bike return
+	 * @throws UnavailableBikeException Thrown by {@link station.ParkingSlot#receiveBike(Bike, LocalDateTime)}
+	 * @throws UnavailableSlotException Thrown by {@link station.ParkingSlot#receiveBike(Bike, LocalDateTime)} or when station has no free slots.
+	 */
+	public void dropBike(Station station, LocalDateTime time) throws UnavailableBikeException, UnavailableSlotException{
 		if (station.hasFreeSlot() == false) {
-			System.out.println("Sorry, there are no free slots to drop off your bike in this station");
-			return;
+			throw new UnavailableSlotException("Station has no free parking slot");
 		}
-		
 		ParkingSlot freeSlot = null;
-		
-		//finds free slot
 		for (ParkingSlot slot: station.getSlots()) {
 			if (slot.getStatus() == SlotStatus.FREE) {
 				freeSlot = slot;
 				break;
 			}	
 		}
-		
-		// drops off bike
-		try {
-			freeSlot.receiveBike(this.bike, time);
-			this.bike = null;
-		} catch (UnavailableBikeException e) {
-			System.out.println(e);
-		} catch (UnavailableSlotException e) {
-			System.out.println(e);
-		}
+		freeSlot.receiveBike(this.bike, time);
+		this.bike = null;
 	}
 	
 	@Override
