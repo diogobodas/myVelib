@@ -48,7 +48,7 @@ public class MyVelibView implements Observer{
 		Station station = VelibSystem.getStationByID(ID);
 		if (station == null)
 			throw new Exception("User not found");
-		System.out.println(" Station with ID:" + String.valueOf(station.getId()) + " " +  station.getBalance().toString());
+		System.out.println("Station with ID:" + String.valueOf(station.getId()) + " " +  station.getBalance().toString());
 	} 
 	
 	public void sortStation(MyVelibModel model,String policy) throws Exception{
