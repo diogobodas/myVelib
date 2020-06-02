@@ -38,7 +38,8 @@ public class MyVelib {
 					controller.readAndWrite(fileName);
 				}
 				catch (Exception e) {
-					System.out.println("Incorrect file name");
+					e.printStackTrace();
+					//System.out.println("Incorrect file name or commands not correctly typed");
 					main(args);
 				}
 				}

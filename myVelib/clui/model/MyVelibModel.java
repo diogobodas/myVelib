@@ -87,14 +87,14 @@ public class MyVelibModel extends Observable{
 			card = null;
 		system.addUser(userName,card);
 		this.setChanged();
-		this.notifyObservers("Added user");
+		this.notifyObservers("Added user " + userName);
 	}
 	
 	public void setup(String velibNetworkName) {
 		system = new VelibSystem(10, 100, 4.0, 0.25, 0.7, velibNetworkName);
 		name = velibNetworkName;
 		this.setChanged();
-		this.notifyObservers("Default setup for " + velibNetworkName + ": " + "\n" + "10 stations, 100 bikes, 4km square side, occupation rate of 75% and electric bike rate of 30%");	
+		this.notifyObservers("Default setup for " + velibNetworkName + ": " + "\n" + "10 stations, 100 slots, 4km square side, occupation rate of 75% and electric bike rate of 30%");	
 	}
 	
 	public void setup(String velibNetworkName,int nStations,int nSlots,double s,int nBikes) {
@@ -102,7 +102,7 @@ public class MyVelibModel extends Observable{
 		system = new VelibSystem(nStations, nSlots, s, 1- occupationRate, 0.7, velibNetworkName);
 		name = velibNetworkName;
 		this.setChanged();
-		this.notifyObservers("Default setup for " + velibNetworkName + ": " + "\n" + String.valueOf(nStations) + " stations, "+ String.valueOf(nSlots) + " bikes," + String.valueOf(s) + "km square side, occupation rate of " + String.valueOf((double) 100*(occupationRate)) + "% and electric bike rate of 30%");	
+		this.notifyObservers("Default setup for " + velibNetworkName + ": " + "\n" + String.valueOf(nStations) + " stations, "+ String.valueOf(nSlots) + " slots," + String.valueOf(s) + "km square side, occupation rate of " + String.valueOf((double) 100*(occupationRate)) + "% and electric bike rate of 30%");	
 	}
 	
 	public void offline(int ID,LocalDateTime time) throws Exception{

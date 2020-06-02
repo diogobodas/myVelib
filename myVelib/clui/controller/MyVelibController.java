@@ -31,11 +31,11 @@ public class MyVelibController {
 	public void readAndWrite(String fileName) throws Exception{
 		FileReader file = null;
 		BufferedReader reader = null;
+		PrintStream stdout = System.out;
 		try {
 			file = new FileReader("clui/main/" + fileName + ".txt");
 			reader = new BufferedReader(file);
 			
-			PrintStream stdout = System.out;
 			FileOutputStream fileOut = new FileOutputStream("clui/main/" + fileName + "output.txt");
 			PrintStream out = new PrintStream(fileOut);
 			System.setOut(out);
@@ -50,6 +50,7 @@ public class MyVelibController {
 			out.close();
 		}
 		catch (Exception e) {
+			System.setOut(stdout);
 			throw new Exception(e);
 		}
 		finally {
