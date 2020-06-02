@@ -1,0 +1,10 @@
+setup myVelib2020 10 100 10 70
+addUser Diogo vmax 
+addUser Bernardo vlibre
+addUser Pierre none
+rentBike 0 2 2020 6 1 12 45 regular
+returnBike 0 3 2020 6 1 13 00 
+displayUser 0
+rentBike 2 5 2020 6 1 13 10 electric
+returnBike 2 1 2020 6 1 13 30 
+displayUser 2

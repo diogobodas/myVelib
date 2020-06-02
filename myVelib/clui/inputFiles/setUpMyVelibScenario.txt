@@ -1,0 +1,7 @@
+setup myVelib2020 10 100 10 70
+addUser Diogo vmax 
+addUser Bernardo vlibre
+addUser Pierre none
+userState 0
+userState 1
+userState 2

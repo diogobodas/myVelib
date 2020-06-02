@@ -1,0 +1,25 @@
+Default setup for myvelib: 
+5 stations, 50 slots,6.0km square side, occupation rate of 80.0% and electric bike rate of 30%
+Added user Diogo
+Added user Bernardo
+Added user Pierre
+Bike rented by User with Id0on station with ID:2 of typeregular
+Bike returned by User with Id0on station with ID:3
+Diogo's UserBalance [rideNumber=1, totalBikeTime=30, totalCharge=0.5]
+Station with ID:2 StationBalance [rentCount=1, return Count=0, rate of occupation=0.8142857142857143]
+Station with ID:3 StationBalance [rentCount=0, return Count=1, rate of occupation=0.9214285714285714]
+You should start on station 3 and drop your bike in station 2
+Bike rented by User with Id2on station with ID:3 of typeelectric
+Bike returned by User with Id2on station with ID:2
+Station sorted with policy: leastOccupied
+StationBalance [rentCount=1, return Count=1, rate of occupation=0.8464285714285714]
+StationBalance [rentCount=1, return Count=1, rate of occupation=0.8464285714285714]
+StationBalance [rentCount=0, return Count=0, rate of occupation=0.9]
+StationBalance [rentCount=0, return Count=0, rate of occupation=0.9]
+StationBalance [rentCount=0, return Count=0, rate of occupation=0.9]
+Station sorted with policy: mostUsed
+StationBalance [rentCount=1, return Count=1, rate of occupation=0.8464285714285714]
+StationBalance [rentCount=1, return Count=1, rate of occupation=0.8464285714285714]
+StationBalance [rentCount=0, return Count=0, rate of occupation=0.9]
+StationBalance [rentCount=0, return Count=0, rate of occupation=0.9]
+StationBalance [rentCount=0, return Count=0, rate of occupation=0.9]

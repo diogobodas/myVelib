@@ -1,0 +1,11 @@
+Default setup for myVelib2020: 
+10 stations, 100 slots,10.0km square side, occupation rate of 70.0% and electric bike rate of 30%
+Added user Diogo
+Added user Bernardo
+Added user Pierre
+Bike rented by User with Id0on station with ID:2 of typeregular
+Bike returned by User with Id0on station with ID:3
+Diogo's UserBalance [rideNumber=1, totalBikeTime=15, totalCharge=0.0 timeCredit=0.0]
+Bike rented by User with Id2on station with ID:5 of typeelectric
+Bike returned by User with Id2on station with ID:1
+Pierre's UserBalance [rideNumber=1, totalBikeTime=20, totalCharge=0.6666666666666666]
