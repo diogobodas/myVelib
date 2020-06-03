@@ -31,7 +31,7 @@ public class MyVelib {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			main(args);
+			//main(args);
 		}
 	}
 }

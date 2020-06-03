@@ -10,12 +10,14 @@ import user.Card;
 
 import bike.ElectricBike;
 import bike.RegularBike;
+import controller.MyVelibController;
 import station.Station;
 import system.GPS;
 import system.VelibSystem;
 import user.User;
 import user.Vlibre;
 import user.Vmax;
+import view.MyVelibView;
 
 /**
  * Model to be used during CLUI use of the system
@@ -35,38 +37,28 @@ public class MyVelibModel extends Observable{
 		
 		FileReader file = null;
 		BufferedReader reader = null;
+		
 		try {
 			file = new FileReader("clui/main/my_velib.ini");
 			reader = new BufferedReader(file);
+			MyVelibView view = new MyVelibView(this);
+			MyVelibController control = new MyVelibController(this,view);
 			String line;
-			if ((line = reader.readLine()) == null) {
-				throw new Exception("Ini file not correctly configured");
-			}
-			else {
-				String[] args = line.split(" ");
-				if (args.length != 5)
-					throw new Exception("Ini file not correctly configured");
-				String name = args[0];
-				int nStations = Integer.valueOf(args[1]);
-				int nSlots = Integer.valueOf(args[2]);
-				double s = Double.valueOf(args[3]);
-				int nBikes = Integer.valueOf(args[4]);
-				double occupationRate = ( (double) nBikes/(nSlots));
-				system = new VelibSystem(nStations,nSlots,s,1 - occupationRate,0.7,name);
-				this.name = name;
-			}
+			while((line = reader.readLine()) != null) {
+				System.out.println(line);
+				String[] command = control.parseCommand(line);
+				control.executeCommand(command);
+				}
+			System.out.println("Config file loaded!");
 		}
 		catch (Exception e) {
-			throw new Exception(e);
+			throw new Exception("Ini file not correctly configured");
 		}
 		finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				}
-				catch (Exception e) {}
-			}
+			if(reader != null)
+				reader.close();
 		}
+		
 	}
 	
 	

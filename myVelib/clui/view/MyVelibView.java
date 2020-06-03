@@ -87,7 +87,7 @@ public class MyVelibView implements Observer{
 	public void displayStation(MyVelibModel m,Integer ID) throws Exception{
 		Station station = VelibSystem.getStationByID(ID);
 		if (station == null)
-			throw new Exception("User not found");
+			throw new Exception("Station not found");
 		System.out.println("Station with ID:" + String.valueOf(station.getId()) + " " +  station.getBalance().toString());
 	} 
 	
