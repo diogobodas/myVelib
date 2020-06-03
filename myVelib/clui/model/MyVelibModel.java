@@ -41,11 +41,9 @@ public class MyVelibModel extends Observable{
 		try {
 			file = new FileReader("clui/main/my_velib.ini");
 			reader = new BufferedReader(file);
-			MyVelibView view = new MyVelibView(this);
-			MyVelibController control = new MyVelibController(this,view);
+			MyVelibController control = new MyVelibController(this,null);
 			String line;
 			while((line = reader.readLine()) != null) {
-				System.out.println(line);
 				String[] command = control.parseCommand(line);
 				control.executeCommand(command);
 				}

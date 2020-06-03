@@ -48,7 +48,6 @@ public class MyVelibController {
 				executeCommand(args);
 			}
 			System.setOut(stdout);
-			System.out.println("File wrote successfully");
 			out.close();
 		}
 		catch (Exception e) {
