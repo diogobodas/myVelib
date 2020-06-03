@@ -75,7 +75,8 @@ public class MyVelibView implements Observer{
 		if (station == null)
 			throw new Exception("User not found");
 		String toPrint;
-		toPrint = "Location: (" + String.valueOf(station.getCoordinates().getX()) + "," +
+		toPrint = "Station ID :" + String.valueOf(ID) + " ";
+		toPrint += "Location: (" + String.valueOf(station.getCoordinates().getX()) + "," +
 		String.valueOf(station.getCoordinates().getY()) + "), ";
 		for (ParkingSlot slot:station.getSlots()) {
 			toPrint += slot.toString();

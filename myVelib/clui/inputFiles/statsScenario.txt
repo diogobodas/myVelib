@@ -1,0 +1,24 @@
+setup mySystem
+addUser Diogo vmax
+addUser Bernardo vlibre
+addUser Pierre none
+addUser Pablo vmax
+rentBike 0 2 2020 6 1 12 00 regular
+rentBike 1 2 2020 6 1 12 15 electric
+rentBike 2 2 2020 6 1 12 30 regular
+returnBike 0 3 2020 6 1 12 45 
+rentBike 3 1 2020 6 1 13 00 electric
+returnBike 1 5 2020 6 1 13 30
+returnBike 2 6 2020 6 1 14 00
+returnBike 3 7 2020 6 1 14 15
+rentBike 0 6 2020 6 1 14 20 electric
+returnBike 0 4 2020 6 1 14 25 
+displayUser 0
+displayUser 1
+displayUser 2
+displayUser 3
+displayStation 0
+displayStation 1
+displayStation 2
+displayStation 3
+display

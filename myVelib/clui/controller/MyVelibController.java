@@ -72,6 +72,20 @@ public class MyVelibController {
 	public void executeCommand(String[] command) throws IncompatibleArgumentsException,Exception {
 		switch (command[0]) {
 		
+		case "runtest":
+			if (command.length == 2) {
+				try {
+					readAndWrite(command[1]);
+					System.out.println("File wrote successfully");
+				}
+				catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments for runtest");	
+		break;
+		
 		case "addUser":
 			if (command.length == 3) {
 				if (command[2].equals("vmax") || command[2].equals("vlibre") || command[2].equals("none")) {
@@ -246,7 +260,7 @@ public class MyVelibController {
 			
 		case "sortStation":
 			if (command.length == 2) {
-				if (command[2].equals("mostUsed") || command[2].equals("leastOccupied"))
+				if (command[1].equals("mostUsed") || command[1].equals("leastOccupied"))
 					try {
 						view.sortStation(model,command[1]);
 					}
