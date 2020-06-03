@@ -71,6 +71,26 @@ public class MyVelibController {
 	public void executeCommand(String[] command) throws IncompatibleArgumentsException,Exception {
 		switch (command[0]) {
 		
+		case "setTimeWindow":
+			if(command.length == 11) {
+				try {
+					LocalDateTime ts = parseTime(command[1],command[2],command[3],command[4],command[5]);
+					if (ts == null)
+						throw new IncompatibleArgumentsException("Invalid time for time start");
+					LocalDateTime te = parseTime(command[6],command[7],command[8],command[9],command[10]);
+					if (te == null)
+						throw new IncompatibleArgumentsException("Invalid time for time end");
+					else 
+						model.setTimeWindow(ts, te);
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
+			break;
+		
 		case "runtest":
 			if (command.length == 2) {
 				try {

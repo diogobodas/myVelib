@@ -12,6 +12,7 @@ import bike.ElectricBike;
 import bike.RegularBike;
 import controller.MyVelibController;
 import station.Station;
+import station.StationBalance;
 import system.GPS;
 import system.VelibSystem;
 import user.User;
@@ -78,6 +79,11 @@ public class MyVelibModel extends Observable{
 		system.addUser(userName,card);
 		this.setChanged();
 		this.notifyObservers("Added user " + userName);
+	}
+	
+	public void setTimeWindow(LocalDateTime ts,LocalDateTime te) {
+		StationBalance.ts = ts;
+		StationBalance.te = te;
 	}
 	
 	public void setup(String velibNetworkName) {
