@@ -46,10 +46,10 @@ public class MyVelibController {
 		BufferedReader reader = null;
 		PrintStream stdout = System.out;
 		try {
-			file = new FileReader("clui/inputFiles/" + fileName + ".txt");
+			file = new FileReader("eval/inputFiles/" + fileName + ".txt");
 			reader = new BufferedReader(file);
 			
-			FileOutputStream fileOut = new FileOutputStream("clui/outputFiles/" + fileName + "output.txt");
+			FileOutputStream fileOut = new FileOutputStream("eval/outputFiles/" + fileName + "output.txt");
 			PrintStream out = new PrintStream(fileOut);
 			System.setOut(out);
 			

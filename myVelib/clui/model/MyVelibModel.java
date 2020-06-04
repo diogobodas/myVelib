@@ -40,7 +40,7 @@ public class MyVelibModel extends Observable{
 		BufferedReader reader = null;
 		
 		try {
-			file = new FileReader("clui/main/my_velib.ini");
+			file = new FileReader("eval/inputFiles/my_velib.ini");
 			reader = new BufferedReader(file);
 			MyVelibController control = new MyVelibController(this,null);
 			String line;
@@ -66,7 +66,6 @@ public class MyVelibModel extends Observable{
 	 * Method for adding user to existing VelibSystem Model
 	 * @param userName Username for created user
 	 * @param cardType Type of card, if user possesses any
-	 * @param velibNetworkName Network being updated
 	 */
 	public void addUser(String userName, String cardType) {
 		Card card;
@@ -84,7 +83,7 @@ public class MyVelibModel extends Observable{
 	 * Sets time window for rate of occupation calculation (Station statistics). 
 	 * VERY IMPORTANT to set a time window that comprises all operations! (As specified on the report)
 	 * @param ts time Start
-	 * @param tet time End
+	 * @param te time End
 	 */
 	public void setTimeWindow(LocalDateTime ts,LocalDateTime te) {
 		StationBalance.ts = ts;
@@ -149,7 +148,7 @@ public class MyVelibModel extends Observable{
 	 * @param userID int ID of the user 
 	 * @param stationID int ID of the station
 	 * @param time LocalDateTime time
-	 * @param bykeType String in set = {"regular","electric"}
+	 * @param bikeType String in set = {"regular","electric"}
 	 * @throws Exception
 	 */
 	public void rentBike(int userID,int stationID,LocalDateTime time,String bikeType) throws Exception{

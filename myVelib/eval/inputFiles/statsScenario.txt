@@ -1,3 +1,4 @@
+setup statsTest
 addUser Diogo vmax
 addUser Bernardo vlibre
 addUser Pierre none
