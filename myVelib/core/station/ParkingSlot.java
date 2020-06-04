@@ -53,7 +53,7 @@ public class ParkingSlot {
 	 * @param bike Bike being returned by the user. It must be given as a usr.getBike(), otherwise it will raise an exception
 	 * @param time Time of bike return. Must be a java.time.LocalDateTime value
 	 * @throws UnavailableBikeException Exception thrown when the bike being returned is not registered under any user and is thus in fact unavailable
-	 * @throws UnavailableSlotException Exception thrown when slot is not free
+	 * @throws UnavailableSlotException Exception thrown when slot is not free. Should not be thrown here in normal usage. Was added for tests before implementation of a few classes
 	 */
 	public void receiveBike(Bike bike, LocalDateTime time) throws UnavailableBikeException, UnavailableSlotException{
 		if (this.status == SlotStatus.FREE) {
@@ -81,7 +81,7 @@ public class ParkingSlot {
 	 * Method for releasing bike on command from terminal. It will attribute a payment regime to the user renting the bike, change slot status and user bike and update system statistics.
 	 * @param usr User renting the bike. Should be informed by the station terminal after identification
 	 * @param time Time of bike rent. Should also be a java.time.LocalDateTime value
-	 * @throws UnavailableBikeException Exception thrown when there is no bike in this slot or when it is out of order.
+	 * @throws UnavailableBikeException Exception thrown when there is no bike in this slot or when it is out of order. Should not be thrown here in normal usage. Was added for tests before implementation of a few classes
 	 */
 	public void releaseBike(User usr, LocalDateTime time) throws UnavailableBikeException {
 		if (this.status == SlotStatus.OCCUPIED) {
