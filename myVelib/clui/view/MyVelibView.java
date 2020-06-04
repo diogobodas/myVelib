@@ -71,11 +71,12 @@ public class MyVelibView implements Observer{
 	}
 	
 	public void stationState(MyVelibModel m,Integer ID) throws Exception{
-		Station station = VelibSystem.getStationByID(ID);
+		Station station = VelibSystem.getStationByID(ID); 
 		if (station == null)
 			throw new Exception("User not found");
 		String toPrint;
-		toPrint = "Location: (" + String.valueOf(station.getCoordinates().getX()) + "," +
+		toPrint = "Station ID :" + String.valueOf(ID) + " ";
+		toPrint += "Location: (" + String.valueOf(station.getCoordinates().getX()) + "," +
 		String.valueOf(station.getCoordinates().getY()) + "), ";
 		for (ParkingSlot slot:station.getSlots()) {
 			toPrint += slot.toString();
@@ -86,7 +87,7 @@ public class MyVelibView implements Observer{
 	public void displayStation(MyVelibModel m,Integer ID) throws Exception{
 		Station station = VelibSystem.getStationByID(ID);
 		if (station == null)
-			throw new Exception("User not found");
+			throw new Exception("Station not found");
 		System.out.println("Station with ID:" + String.valueOf(station.getId()) + " " +  station.getBalance().toString());
 	} 
 	

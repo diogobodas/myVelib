@@ -1,0 +1,26 @@
+Added user Diogo
+Added user Bernardo
+Added user Pierre
+Added user Pablo
+Bike rented by User with Id0on station with ID:2 of typeregular
+Bike rented by User with Id1on station with ID:2 of typeelectric
+Bike rented by User with Id2on station with ID:2 of typeregular
+Bike returned by User with Id0on station with ID:3
+Bike rented by User with Id3on station with ID:1 of typeelectric
+Station not found
+Station not found
+Station not found
+Station not found
+null
+Rafaela's UserBalance [rideNumber=1, totalBikeTime=45, totalCharge=0.75]
+Diogo's UserBalance [rideNumber=0, totalBikeTime=0, totalCharge=0.0 timeCredit=0.0]
+Bernardo's UserBalance [rideNumber=0, totalBikeTime=0, totalCharge=0.0 timeCredit=0.0]
+Pierre's UserBalance [rideNumber=0, totalBikeTime=0, totalCharge=0.0]
+Station with ID:0 StationBalance [rentCount=0, return Count=0, rate of occupation=0.6]
+Station with ID:1 StationBalance [rentCount=1, return Count=0, rate of occupation=0.5428571428571428]
+Station with ID:2 StationBalance [rentCount=3, return Count=0, rate of occupation=0.36428571428571427]
+Station with ID:3 StationBalance [rentCount=0, return Count=1, rate of occupation=0.7357142857142858]
+System name: myVelibNetwork
+Stations: Station ID: 0, Normal Station, Online: true , Location: (7.299823878824023, 1.0552478460052028) Station ID: 1, Normal Station, Online: true , Location: (9.106890605104496, 1.5551743026783382) Station ID: 2, Normal Station, Online: true , Location: (6.698621362863425, 7.351050399591992) Station ID: 3, Normal Station, Online: true , Location: (7.4886105395855065, 4.9010394910872375) Station ID: 4, Normal Station, Online: true , Location: (6.273188857680094, 8.954117834298776) 
+Users Id: 0 Name: Rafaela RegistrationCard: None Bikeholder: no, Id: 1 Name: Diogo RegistrationCard: vmax Bikeholder: yes, Id: 2 Name: Bernardo RegistrationCard: vlibre Bikeholder: yes, Id: 3 Name: Pierre RegistrationCard: None Bikeholder: yes, Id: 4 Name: Pablo RegistrationCard: vmax Bikeholder: no, 
+RidePlanningStandard Planning

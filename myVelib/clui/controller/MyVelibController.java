@@ -48,7 +48,6 @@ public class MyVelibController {
 				executeCommand(args);
 			}
 			System.setOut(stdout);
-			System.out.println("File wrote successfully");
 			out.close();
 		}
 		catch (Exception e) {
@@ -71,6 +70,40 @@ public class MyVelibController {
 	
 	public void executeCommand(String[] command) throws IncompatibleArgumentsException,Exception {
 		switch (command[0]) {
+		
+		case "setTimeWindow":
+			if(command.length == 11) {
+				try {
+					LocalDateTime ts = parseTime(command[1],command[2],command[3],command[4],command[5]);
+					if (ts == null)
+						throw new IncompatibleArgumentsException("Invalid time for time start");
+					LocalDateTime te = parseTime(command[6],command[7],command[8],command[9],command[10]);
+					if (te == null)
+						throw new IncompatibleArgumentsException("Invalid time for time end");
+					else 
+						model.setTimeWindow(ts, te);
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments");
+			break;
+		
+		case "runtest":
+			if (command.length == 2) {
+				try {
+					readAndWrite(command[1]);
+					System.out.println("File wrote successfully");
+				}
+				catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			else
+				throw new IncompatibleArgumentsException("Wrong number of arguments for runtest");	
+		break;
 		
 		case "addUser":
 			if (command.length == 3) {
@@ -246,7 +279,7 @@ public class MyVelibController {
 			
 		case "sortStation":
 			if (command.length == 2) {
-				if (command[2].equals("mostUsed") || command[2].equals("leastOccupied"))
+				if (command[1].equals("mostUsed") || command[1].equals("leastOccupied"))
 					try {
 						view.sortStation(model,command[1]);
 					}
@@ -351,112 +384,4 @@ public class MyVelibController {
 	 * @param args
 	 * @throws IncompatibleArgumentsException
 	 */
-	// aqui te deixo adaptar as paradas
-	void parseArgumentsAndExecute(VelibSystem sys,String Name,final String args[]) throws IncompatibleArgumentsException,Exception {
-		int argsSize = args.length;
-		if (argsSize < 1)
-			throw new IncompatibleArgumentsException(" No command specified");
-		String command = args[0];
-		if (sys == null)
-			if(command != "setup")
-				throw new IncompatibleArgumentsException(" You need to setup your system before running other commands");
-		if (command == "setup") {
-			if (argsSize == 2) {
-				sys = new VelibSystem(10,100,4.0);
-				Name = args[1];
-			}
-			else if (argsSize == 6) {
-				//to complete
-			}
-			else 
-				throw new IncompatibleArgumentsException("Number of Arguments do not match command setup");
-		}
-		// Assuming user is spawned at random location
-		else if (command == "addUser"){
-			if (argsSize == 4) {
-				String card = args[2];
-				System.out.println(card);
-				if (card.equals("vlibre"))
-					sys.addUser(args[1],new Vlibre());
-				else if (card.equals("vmax")) {
-					sys.addUser(args[1],new Vmax());
-				}
-				else if (card == "none")
-					sys.addUser(args[1],null);
-				else
-					throw new IncompatibleArgumentsException("Incorrect card Type");
-			}
-			else
-				throw new IncompatibleArgumentsException("Number of Arguments do not match command addUser");
-		}
-		else if (command == "offline"){
-			if (argsSize == 7) {
-				LocalDateTime time;
-				try {
-				time = parseTime(args[2],args[3],args[4],args[5],args[6]);
-				}
-				catch(Exception e) {
-					throw e;
-				}
-				int ID = Integer.valueOf(args[2]);
-				Station station = VelibSystem.getStationByID(ID);
-				station.setStationOffline(time);
-			}
-			else
-				throw new IncompatibleArgumentsException("Number of Arguments do not match command offline");
-		}
-		else if (command == "online"){
-			if (argsSize == 3) {
-				//to complete
-			}
-			else
-				throw new IncompatibleArgumentsException("Number of Arguments do not match command online");
-		}
-		else if (command == "rentBike"){
-			if (argsSize == 4) {
-				//to complete
-			}
-			else
-				throw new IncompatibleArgumentsException("Number of Arguments do not match command rentBike");
-		}
-		else if (command == "returnBike"){
-			if (argsSize == 4) {
-				//to complete
-			}
-			else
-				throw new IncompatibleArgumentsException("Number of Arguments do not match command returnBike");
-		}
-		else if (command == "displayStation"){
-			if (argsSize == 3) {
-				//to complete
-			}
-			else
-				throw new IncompatibleArgumentsException("Number of Arguments do not match command displayStation");
-		}
-		else if (command == "displayUser"){
-			if (argsSize == 3) {
-				//to complete
-			}
-			else
-				throw new IncompatibleArgumentsException("Number of Arguments do not match command displayUser");
-		}
-		else if (command == "sortStation"){
-			if (argsSize == 3) {
-				//to complete
-			}
-			else
-				throw new IncompatibleArgumentsException("Number of Arguments do not match command sortStation");
-		}
-		else if (command == "display"){
-			if (argsSize == 2) {
-				//to complete
-			}
-			else
-				throw new IncompatibleArgumentsException("Number of Arguments do not match command display");
-		}
-		else 
-			throw new IncompatibleArgumentsException("Command doesn't exist");
-	
-	}
-	
 }

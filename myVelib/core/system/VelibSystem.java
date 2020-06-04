@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import station.ParkingSlot;
+import station.PlusStation;
 import station.Station;
 import station.Terminal;
 
@@ -303,10 +304,13 @@ public class VelibSystem {
 		String stationsInfo = "";
 		String usersInfo = "";
 		for (Station station:stations)
-			stationsInfo += station.toString() + " " + station.getCoordinates().toString() + " ";
+			if (station instanceof PlusStation)
+				stationsInfo += "Station ID: " + String.valueOf(station.getId()) + ", Plus Station, Online: " + String.valueOf(station.isOn_service()) + " , Location: " + station.getCoordinates().toString() + " ";
+			else
+				stationsInfo += "Station ID: " + String.valueOf(station.getId()) + ", Normal Station, Online: " + String.valueOf(station.isOn_service()) + " , Location: " + station.getCoordinates().toString() + " ";
 		for (User user:users) 
-			usersInfo += user.toString() + " ";
-		System.out.println("Stations " + stationsInfo);
+			usersInfo += user.toString() + ", ";
+		System.out.println("Stations: " + stationsInfo);
 		System.out.println("Users " + usersInfo);
 		System.out.println("RidePlanning" + rideplan.toString());
 	}

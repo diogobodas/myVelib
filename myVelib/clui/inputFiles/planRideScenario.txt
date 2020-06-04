@@ -1,0 +1,7 @@
+setup myVelib2020 4 80 12 60
+addUser Diogo vmax 
+planRide 2.2 3 10.5 8 regular
+userState 0
+rentBike 0 0 2020 6 1 13 00 regular
+userState 0
+returnBike 0 2 2020 6 1 13 30

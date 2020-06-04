@@ -46,6 +46,19 @@ public class ParkingSlot {
 		startedFree = false;
 		//station.getBalance().initBikeOcuppation(this);
 	}
+	/**
+	 * toString to print most important features of a slot
+	 */
+	public String toString() {
+		String result = "Slot ID: " + String.valueOf(this.id);
+		if (this.status == SlotStatus.OCCUPIED) 
+			result += " Status: Occupied ";
+		else if (this.status == SlotStatus.FREE) 
+			result += " Status : Free ";
+		else 
+			result += " Status : Out of Order ";
+		return result;
+	}
 	
 	/**
 	 * Method for receiving bike from user at a given time. This method should be called by the user when returning the bike.

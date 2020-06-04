@@ -17,10 +17,7 @@ public class MyVelib {
 			MyVelibController controller = new MyVelibController(system, ui);
 			Scanner keyboard = new Scanner(System.in);
 			String command = "";
-			System.out.println("Enter 0 for interactive, 1 to read an instruction file");
-			command = keyboard.nextLine();
-			if (command.equals("0")) {
-				while (controller.isRunning()) {
+			while (controller.isRunning()) {
 					System.out.println("Enter command: ");
 					command = keyboard.nextLine();
 					try {
@@ -30,23 +27,11 @@ public class MyVelib {
 						e.printStackTrace();
 					}
 				}
-			}
-			else {
-				try {
-					System.out.println("Please specify file name");
-					String fileName = keyboard.nextLine();
-					controller.readAndWrite(fileName);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-					//System.out.println("Incorrect file name or commands not correctly typed");
-					main(args);
-				}
-				}
 			keyboard.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+			main(args);
 		}
 	}
 }
