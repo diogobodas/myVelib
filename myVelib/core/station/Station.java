@@ -25,10 +25,10 @@ public class Station {
 	private StationBalance balance;
 	
 	/**
-	 * Initializes station without terminal through the use of {@link #station.SlotCreator} to assure correct filling of the slots.
+	 * Initializes station without terminal through the use of {@link station.SlotCreator} to assure correct filling of the slots.
 	 * @param id_num ID of the station. Is an integer
 	 * @param online Boolean variable representing if the station is online or not
-	 * @param coord GPS coordinates of the station. It is a {@link #system.GPS} type
+	 * @param coord GPS coordinates of the station. It is a {@link system.GPS} type
 	 * @param number_of_slots Number of slots of this station. Is an integer.
 	 */
 	public Station(int id_num, boolean online, GPS coord, int number_of_slots) {
@@ -45,7 +45,7 @@ public class Station {
 	 * Initializes station without terminal with custom percentages for maximum rate of empty slots and regular bikes. Same use as both others constructors
 	 * @param id_num ID of the station. Is an integer
 	 * @param online Boolean variable representing if the station is online or not
-	 * @param coord GPS coordinates of the station. It is a {@link #system.GPS} type
+	 * @param coord GPS coordinates of the station. It is a {@link system.GPS} type
 	 * @param number_of_slots Number of slots of this station. Is an integer.
 	 * @param empty Maximum percentage of empty slots in the station
 	 * @param regular Maximum percentage of regular bikes in the station
@@ -61,11 +61,12 @@ public class Station {
 	}
 	
 	/**
-	 * Initializes station with terminal through the use of {@link #station.SlotCreator} to assure correct filling of the slots.
+	 * Initializes station with terminal through the use of {@link station.SlotCreator} to assure correct filling of the slots.
 	 * Only to be used in testing. The correct version used in the system initialization does not include the terminal because it needs a reference station for correct use.
 	 * @param id_num ID of the station. Is an integer
 	 * @param online Boolean variable representing if the station is online or not
-	 * @param coord GPS coordinates of the station. It is a {@link #system.GPS} type
+	 * @param coord GPS coordinates of the station. It is a {@link system.GPS} type
+	 * @param t Terminal to be attributed to the station
 	 * @param number_of_slots Number of slots of this station. Is an integer.
 	 */
 	public Station(int id_num, boolean online, GPS coord, Terminal t, int number_of_slots) {
@@ -105,7 +106,7 @@ public class Station {
 	}
 	
 	/**
-	 * Method for getting a Bike object from this station based on its ID. Should be used only to aid {@link #system.VelibSystem} methods
+	 * Method for getting a Bike object from this station based on its ID. Should be used only to aid {@link system.VelibSystem} methods
 	 * @param id ID number of the bike being searched
 	 * @return Bike object with desired id, if it is in this station
 	 */

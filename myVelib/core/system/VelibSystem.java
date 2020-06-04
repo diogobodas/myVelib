@@ -231,7 +231,7 @@ public class VelibSystem {
 	}
 	
 	/**
-	 * Method for getting a station based on a given bike. Uses the station method {@link station.Station#getBikeByID(Bike)}.
+	 * Method for getting a station based on a given bike. Uses the station method {@link station.Station#getBikeByID(int)}.
 	 * @param b Bike object to use for search
 	 * @return Station object containing the bike in one of its slots, null otherwise. If the bike exists but is with an user, for example, it will return null
 	 */

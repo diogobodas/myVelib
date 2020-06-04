@@ -41,7 +41,7 @@ public class MyVelibController {
 	 * @param fileName String, only the filename without .txt, file assumed to be on eval folder.
 	 * @throws Exception
 	 */
-	public void readAndWrite(String fileName) throws Exception{
+	public void readAndWrite(String fileName) throws Exception {
 		FileReader file = null;
 		BufferedReader reader = null;
 		PrintStream stdout = System.out;

@@ -30,7 +30,7 @@ public class Terminal {
 	 * @param usr User renting the bike
 	 * @param bikeType Desired bike type. It is a class object
 	 * @param time Timestamp of the rental. It is a LocalDateTime object.
-	 * @throws UnavailableBikeException Exception thrown by release bike. Should not be handled here, see {@link #user.User}
+	 * @throws UnavailableBikeException Exception thrown by release bike. Should not be handled here, see {@link user.User}
 	 */
 	public void releaseBike(User usr, Class <?> bikeType, LocalDateTime time) throws UnavailableBikeException {
 		ParkingSlot[] pslots = this.station.getSlots();
