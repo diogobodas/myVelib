@@ -1,28 +1,26 @@
-Default setup for mySystem: 
-10 stations, 100 slots, 4km square side, occupation rate of 75% and electric bike rate of 30%
 Added user Diogo
 Added user Bernardo
 Added user Pierre
 Added user Pablo
-Index 1 out of bounds for length 1
-Index 1 out of bounds for length 1
-Index 1 out of bounds for length 1
+Bike rented by User with Id0on station with ID:2 of typeregular
+Bike rented by User with Id1on station with ID:2 of typeelectric
+Bike rented by User with Id2on station with ID:2 of typeregular
 Bike returned by User with Id0on station with ID:3
 Bike rented by User with Id3on station with ID:1 of typeelectric
-Bike returned by User with Id1on station with ID:5
-Bike returned by User with Id2on station with ID:6
-Bike returned by User with Id3on station with ID:7
-Bike rented by User with Id0on station with ID:6 of typeelectric
-Bike returned by User with Id0on station with ID:4
-Diogo's UserBalance [rideNumber=2, totalBikeTime=50, totalCharge=0.0 timeCredit=0.0]
-Bernardo's UserBalance [rideNumber=1, totalBikeTime=75, totalCharge=1.5 timeCredit=0.0]
-Pierre's UserBalance [rideNumber=1, totalBikeTime=90, totalCharge=1.5]
-Pablo's UserBalance [rideNumber=1, totalBikeTime=75, totalCharge=0.25 timeCredit=0.0]
-Station with ID:0 StationBalance [rentCount=0, return Count=0, rate of occupation=0.8]
-Station with ID:1 StationBalance [rentCount=1, return Count=0, rate of occupation=0.7071428571428572]
-Station with ID:2 StationBalance [rentCount=3, return Count=0, rate of occupation=0.8]
-Station with ID:3 StationBalance [rentCount=0, return Count=1, rate of occupation=0.8035714285714286]
-System name: mySystem
-Stations: Station ID: 0, Normal Station, Online: true , Location: (2.9199295515296093, 0.42209913840208113) Station ID: 1, Normal Station, Online: true , Location: (3.6427562420417985, 0.6220697210713353) Station ID: 2, Normal Station, Online: true , Location: (2.67944854514537, 2.9404201598367967) Station ID: 3, Normal Station, Online: true , Location: (2.9954442158342025, 1.9604157964348952) Station ID: 4, Normal Station, Online: true , Location: (2.5092755430720377, 3.5816471337195104) Station ID: 5, Normal Station, Online: true , Location: (2.4775118782658514, 2.13490772682294) Station ID: 6, Normal Station, Online: true , Location: (3.0744434003401135, 1.3557542261616073) Station ID: 7, Normal Station, Online: true , Location: (3.2329617643122504, 3.3241046540376837) Station ID: 8, Normal Station, Online: true , Location: (0.8556517920762596, 1.8910080504044147) Station ID: 9, Normal Station, Online: true , Location: (0.20904157843751525, 3.097066635186327) 
-Users Id: 0 Name: Diogo RegistrationCard: vmax Bikeholder: no, Id: 1 Name: Bernardo RegistrationCard: vlibre Bikeholder: no, Id: 2 Name: Pierre RegistrationCard: None Bikeholder: no, Id: 3 Name: Pablo RegistrationCard: vmax Bikeholder: no, 
+Station not found
+Station not found
+Station not found
+Station not found
+null
+Rafaela's UserBalance [rideNumber=1, totalBikeTime=45, totalCharge=0.75]
+Diogo's UserBalance [rideNumber=0, totalBikeTime=0, totalCharge=0.0 timeCredit=0.0]
+Bernardo's UserBalance [rideNumber=0, totalBikeTime=0, totalCharge=0.0 timeCredit=0.0]
+Pierre's UserBalance [rideNumber=0, totalBikeTime=0, totalCharge=0.0]
+Station with ID:0 StationBalance [rentCount=0, return Count=0, rate of occupation=0.6]
+Station with ID:1 StationBalance [rentCount=1, return Count=0, rate of occupation=0.5428571428571428]
+Station with ID:2 StationBalance [rentCount=3, return Count=0, rate of occupation=0.36428571428571427]
+Station with ID:3 StationBalance [rentCount=0, return Count=1, rate of occupation=0.7357142857142858]
+System name: myVelibNetwork
+Stations: Station ID: 0, Normal Station, Online: true , Location: (7.299823878824023, 1.0552478460052028) Station ID: 1, Normal Station, Online: true , Location: (9.106890605104496, 1.5551743026783382) Station ID: 2, Normal Station, Online: true , Location: (6.698621362863425, 7.351050399591992) Station ID: 3, Normal Station, Online: true , Location: (7.4886105395855065, 4.9010394910872375) Station ID: 4, Normal Station, Online: true , Location: (6.273188857680094, 8.954117834298776) 
+Users Id: 0 Name: Rafaela RegistrationCard: None Bikeholder: no, Id: 1 Name: Diogo RegistrationCard: vmax Bikeholder: yes, Id: 2 Name: Bernardo RegistrationCard: vlibre Bikeholder: yes, Id: 3 Name: Pierre RegistrationCard: None Bikeholder: yes, Id: 4 Name: Pablo RegistrationCard: vmax Bikeholder: no, 
 RidePlanningStandard Planning
