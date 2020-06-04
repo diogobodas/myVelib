@@ -21,7 +21,7 @@ import user.Vmax;
 import view.MyVelibView;
 
 /**
- * Model to be used during CLUI use of the system
+ * Model to be used during CLUI use of the system (Observed by View)
  * 
  *
  */
@@ -80,19 +80,34 @@ public class MyVelibModel extends Observable{
 		this.setChanged();
 		this.notifyObservers("Added user " + userName);
 	}
-	
+	/**
+	 * Sets time window for rate of occupation calculation (Station statistics). 
+	 * VERY IMPORTANT to set a time window that comprises all operations! (As specified on the report)
+	 * @param ts time Start
+	 * @param tet time End
+	 */
 	public void setTimeWindow(LocalDateTime ts,LocalDateTime te) {
 		StationBalance.ts = ts;
 		StationBalance.te = te;
 	}
-	
+	/**
+	 * setup a system with the given name, 10 stations, 100 slots, map of a square of 4Km X 4Km and 75 bikes. 
+	 * @param velibNetworkName
+	 */
 	public void setup(String velibNetworkName) {
 		system = new VelibSystem(10, 100, 4.0, 0.25, 0.7, velibNetworkName);
 		name = velibNetworkName;
 		this.setChanged();
 		this.notifyObservers("Default setup for " + velibNetworkName + ": " + "\n" + "10 stations, 100 slots, 4km square side, occupation rate of 75% and electric bike rate of 30%");	
 	}
-	
+	/**
+	 * setup a system with the given name, nStations stations, nSlots slots, map of a square of sKm X sKm and nBikes bikes. 
+	 * @param velibNetworkName
+	 * @param nStations int number of stations
+	 * @param nSlots int number of slots
+	 * @param s double side
+	 * @param nBikes int number of bikes
+	 */
 	public void setup(String velibNetworkName,int nStations,int nSlots,double s,int nBikes) {
 		double occupationRate = ( (double) nBikes/(nSlots));
 		system = new VelibSystem(nStations, nSlots, s, 1- occupationRate, 0.7, velibNetworkName);
@@ -100,7 +115,12 @@ public class MyVelibModel extends Observable{
 		this.setChanged();
 		this.notifyObservers("Default setup for " + velibNetworkName + ": " + "\n" + String.valueOf(nStations) + " stations, "+ String.valueOf(nSlots) + " slots," + String.valueOf(s) + "km square side, occupation rate of " + String.valueOf((double) 100*(occupationRate)) + "% and electric bike rate of 30%");	
 	}
-	
+	/**
+	 * Sets station with id = ID offline.
+	 * @param ID int id
+	 * @param time LocalDateTime
+	 * @throws Exception
+	 */
 	public void offline(int ID,LocalDateTime time) throws Exception{
 		Station station = VelibSystem.getStationByID(ID);
 		if (station == null)
@@ -109,7 +129,12 @@ public class MyVelibModel extends Observable{
 		this.setChanged();
 		this.notifyObservers("Station with ID:" + String.valueOf(ID) + " is set offline");
 	}
-	
+	/**
+	 * Sets station with id = ID online.
+	 * @param ID int id
+	 * @param time LocalDateTime
+	 * @throws Exception
+	 */
 	public void online(int ID,LocalDateTime time) throws Exception{
 		Station station = VelibSystem.getStationByID(ID);
 		if (station == null)
@@ -119,8 +144,15 @@ public class MyVelibModel extends Observable{
 		this.notifyObservers("Station with ID:" + String.valueOf(ID) + " is set online");
 	
 	}
-	
-	public void rentBike(int userID,int stationID,LocalDateTime time,String bykeType) throws Exception{
+	/**
+	 * User with id = userId rents a bike in station with id = stationID, at specified time of the desired type = bikeType
+	 * @param userID int ID of the user 
+	 * @param stationID int ID of the station
+	 * @param time LocalDateTime time
+	 * @param bykeType String in set = {"regular","electric"}
+	 * @throws Exception
+	 */
+	public void rentBike(int userID,int stationID,LocalDateTime time,String bikeType) throws Exception{
 		User user = VelibSystem.getUserByID(userID);
 		if (user == null)
 			throw new Exception("User not found");
@@ -128,20 +160,26 @@ public class MyVelibModel extends Observable{
 		if (station == null)
 			throw new Exception("Station not found");
 		Class <?> type;
-		if (bykeType.equals("regular")) {
+		if (bikeType.equals("regular")) {
 			type = RegularBike.class;
 		}
-		else if (bykeType.equals("electric")) {
+		else if (bikeType.equals("electric")) {
 			type = ElectricBike.class;
 		}
 		else
 			throw new Exception("Bike type does not exist");
 		user.rentBike(station, type, time);
 		this.setChanged();
-		this.notifyObservers("Bike rented by User with Id" + String.valueOf(userID) + "on station with ID:" + String.valueOf(stationID) + " of type" + String.valueOf(bykeType));
+		this.notifyObservers("Bike rented by User with Id" + String.valueOf(userID) + "on station with ID:" + String.valueOf(stationID) + " of type" + String.valueOf(bikeType));
 	
 	}
-	
+	/**
+	 * User with id = userId drops a bike in station with id = stationID, at specified time.
+	 * @param userID int ID of the user 
+	 * @param stationID int ID of the station
+	 * @param time LocalDateTime time
+	 * @throws Exception
+	 */
 	public void returnBike(int userID,int stationID,LocalDateTime time) throws Exception{
 		User user = VelibSystem.getUserByID(userID);
 		if (user == null)
@@ -154,7 +192,15 @@ public class MyVelibModel extends Observable{
 		this.notifyObservers("Bike returned by User with Id" + String.valueOf(userID) + "on station with ID:" + String.valueOf(stationID));
 	
 	}
-	
+	/**
+	 * Prints to the user the optimal start station and final station, respectively to pick up and drop off the desired bike.
+	 * @param xStart double x position of start station
+	 * @param yStart double y position of start station
+	 * @param xEnd double x position of final station
+	 * @param yEnd double y position of final station
+	 * @param bikeType
+	 * @throws Exception
+	 */
 	public void planRide(double xStart,double yStart,double xEnd,double yEnd,String bikeType) throws Exception{
 		Class <?> type;
 		if (bikeType.equals("regular"))

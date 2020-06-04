@@ -9,6 +9,11 @@ import exceptions.IncompatibleArgumentsException;
 import model.MyVelibModel;
 import view.MyVelibView;
 
+/**
+ * Main class that reads from user input and proceeds to call the controller to handle it.
+ * 
+ *
+ */
 public class MyVelib {
 	public static void main(String[] args) {
 		try {
@@ -31,6 +36,7 @@ public class MyVelib {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+			// Makes sure main is called until forced by the user
 			main(args);
 		}
 	}

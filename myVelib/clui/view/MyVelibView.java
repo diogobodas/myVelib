@@ -21,13 +21,17 @@ import user.Vmax;
 
 @SuppressWarnings("deprecation")
 /**
- * View for the Velub System CLUI.
+ * View for the Velub System CLUI. (Observes MyVelibModel)
  *
  */
 public class MyVelibView implements Observer{
 	
 	private MyVelibModel model;
 	
+	/**
+	 * Basic constructor for MyVelibView, needs a model to perform its operations.
+	 * @param model MyVelibModel 
+	 */
 	public MyVelibView(MyVelibModel model) {
 		super();
 		this.model = model;
@@ -38,7 +42,12 @@ public class MyVelibView implements Observer{
 	public void update(Observable o, Object arg) {
 		System.out.println(arg);
 	}
-	
+	/**
+	 * Prints user's statistics
+	 * @param m MyVelibModel
+	 * @param ID
+	 * @throws Exception
+	 */
 	public void displayUser(MyVelibModel m,Integer ID) throws Exception{
 		User user = VelibSystem.getUserByID(ID);
 		if (user == null)
@@ -46,7 +55,12 @@ public class MyVelibView implements Observer{
 		System.out.println(user.getName() + "'s " + user.getUsrBalance().toString());
 		
 	}
-	
+	/**
+	 * Prints user's state and information, such as ID, name, location, its bike type if any and also its card type if any.
+	 * @param m MyVelibModel
+	 * @param ID
+	 * @throws Exception
+	 */
 	public void userState(MyVelibModel m,Integer ID) throws Exception {
 		User user = VelibSystem.getUserByID(ID);
 		if (user == null)
@@ -69,7 +83,12 @@ public class MyVelibView implements Observer{
 			toPrint += "Holds a vlibre card";
 		System.out.println(toPrint);
 	}
-	
+	/**
+	 * Prints station state and information, such as id, location and status of each of its slots.
+	 * @param m MyVelibModel
+	 * @param ID
+	 * @throws Exception
+	 */
 	public void stationState(MyVelibModel m,Integer ID) throws Exception{
 		Station station = VelibSystem.getStationByID(ID); 
 		if (station == null)
@@ -83,14 +102,24 @@ public class MyVelibView implements Observer{
 		}
 		System.out.println(toPrint);
 	}
-	
+	/**
+	 * Prints station's statistics.
+	 * @param m MyVelibModel
+	 * @param ID
+	 * @throws Exception
+	 */
 	public void displayStation(MyVelibModel m,Integer ID) throws Exception{
 		Station station = VelibSystem.getStationByID(ID);
 		if (station == null)
 			throw new Exception("Station not found");
 		System.out.println("Station with ID:" + String.valueOf(station.getId()) + " " +  station.getBalance().toString());
 	} 
-	
+	/**
+	 * Prints all station sorted by a specified policy.
+	 * @param model MyVelibModel
+	 * @param policy String in set = {"leastOccupied","mostUsed"}
+	 * @throws Exception
+	 */
 	public void sortStation(MyVelibModel model,String policy) throws Exception{
 		ArrayList<Station> stations = new ArrayList<Station>(Arrays.asList(model.getSystem().getStations()));
 		if (policy.equals("mostUsed")) {
@@ -110,7 +139,10 @@ public class MyVelibView implements Observer{
 			System.out.println(station.getBalance().toString());
 		}
 	}
-	
+	/**
+	 * Display's all the system's most relevant information, including which stations are online or offline.
+	 * @param model MyVelibModel
+	 */
 	public void display(MyVelibModel model) {
 		System.out.println("System name: " + model.getName());
 		VelibSystem.printSystemInfo();

@@ -1,5 +1,8 @@
 package exceptions;
-
+/**
+ * Exception class used throughout the CLUI to identify incorrect user input.
+ *
+ */
 public class IncompatibleArgumentsException extends Exception {
 
 	private static final long serialVersionUID = 1L;

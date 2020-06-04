@@ -15,19 +15,32 @@ import system.VelibSystem;
 import user.Vlibre;
 import user.Vmax;
 import view.MyVelibView;
-
+/**
+ * Controller class that permits an user of the application to interact with the model.
+ * 
+ *
+ */
 public class MyVelibController {
 	
 	private MyVelibModel model;
 	private MyVelibView view;
 	private boolean running;
-	
+	/**
+	 * Basic constructor for the controller
+	 * @param model in which the constructor operates (Observable)
+	 * @param view (Observer)
+	 */
 	public MyVelibController(MyVelibModel model, MyVelibView view) {
 		this.model = model;
 		this.view = view;
 		this.running = true;
 	}
 	
+	/**
+	 * Method called to read the user case scenario files.
+	 * @param fileName String, only the filename without .txt, file assumed to be on eval folder.
+	 * @throws Exception
+	 */
 	public void readAndWrite(String fileName) throws Exception{
 		FileReader file = null;
 		BufferedReader reader = null;
@@ -63,11 +76,21 @@ public class MyVelibController {
 			}
 		}
 	}
-		
+	/**
+	 * A simple parser for the command + arguments.
+	 * @param command
+	 * @return String[] result - Such that result[0] is the command, and result[i] for i = 1..result.length[] - 1 is an argument.
+	 */
 	public String[] parseCommand(String command) {
 		return command.split(" "); // transforms single string into array of strings separated by whitespace
 	}
-	
+	/**
+	 * Main method for controller, identifies a command + arguments from parseCommand result, and calls appropriate function from either model or
+	 * view. List of all possible commands + arguments in our report, as well as their explanation were left to the report.
+	 * @param command
+	 * @throws IncompatibleArgumentsException
+	 * @throws Exception
+	 */
 	public void executeCommand(String[] command) throws IncompatibleArgumentsException,Exception {
 		switch (command[0]) {
 		
@@ -351,6 +374,15 @@ public class MyVelibController {
 		this.running = running;
 	}
 
+	/**
+	 *  Auxiliary function that parses a String sequence into a LocalDateTime class instance, which is used extensively on our project.
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @param hour
+	 * @param minute
+	 * @return
+	 */
 	public LocalDateTime parseTime(String year,String month,String day,String hour,String minute) {
 		try {
 			return LocalDateTime.of(Integer.valueOf(year), Integer.valueOf(month),Integer.valueOf(day),
@@ -361,27 +393,5 @@ public class MyVelibController {
 			return null;
 		}
 	}
-	
-	/**
-	 * 
-	 * List of all commands and their expected parameters:
-	 * 
-	 * 
-	 * setup <VelibNetworkName> / setup <VelibNetworkName,nStations,nSlots,s,nBikes>
-	 * addUser <userName,cardType,VelibNetworkName>
-	 * offline <velibNetworkName,stationID,time>
-	 * online <velibNetworkName,stationID,time>
-	 * rentBike <userID,stationID,time,type>
-	 * returnBike <userID,stationID,time>
-	 * displayStation <velibNetworkName,stationID>
-	 * displayUser <velibNetworkName,userID>
-	 * sortStation <velibNetworkName,sortPolicy>
-	 * display <velibNetworkName>
-	 * 
-	 * Important remarks for parameters:
-	 * Expected time format : "year month day hour minute"
-	 * 
-	 * @param args
-	 * @throws IncompatibleArgumentsException
-	 */
+
 }
