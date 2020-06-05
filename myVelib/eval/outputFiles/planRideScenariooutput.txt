@@ -2,7 +2,7 @@ Default setup for myVelib2020:
 4 stations, 80 slots,12.0km square side, occupation rate of 75.0% and electric bike rate of 30%
 Added user Diogo
 You should start on station 0 and drop your bike in station 2
-User ID: 0, User name: Diogo, Location: (6.532269267470169,8.781996668307722), No bike, Holds a vmax card
+User ID: 0, User name: Diogo, Location: (5.725716717074672,9.934293548294738), No bike, Holds a vmax card
 Bike rented by User with Id0on station with ID:0 of typeregular
-User ID: 0, User name: Diogo, Location: (6.532269267470169,8.781996668307722), Holds a regular bike, Holds a vmax card
+User ID: 0, User name: Diogo, Location: (5.725716717074672,9.934293548294738), Holds a regular bike, Holds a vmax card
 Bike returned by User with Id0on station with ID:2

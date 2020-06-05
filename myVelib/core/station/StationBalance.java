@@ -36,7 +36,7 @@ public class StationBalance {
 	private double rate;
 	private HashMap<ParkingSlot,ArrayList<LocalDateTime>> timeSlotDict;
 	private Station station;
-	public static LocalDateTime ts = LocalDateTime.of(2020, 6, 1, 12, 30);
+	public static LocalDateTime ts = LocalDateTime.of(2020, 6, 1, 8, 30);
 	public static LocalDateTime te = LocalDateTime.of(2020, 6, 1, 19, 30);
 	
 	/**

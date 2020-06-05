@@ -36,9 +36,9 @@ class ParkingSlotTest {
 		sys.setStations(stations);
 		stations[0].setSlots(slots);
 		usr1.setBike(bike1);
-		usr1.setPaymentMode(new PaymentStd(LocalDateTime.of(2020, 5, 28, 10, 30), 1.0));
+		usr1.setPaymentMode(new PaymentStd(LocalDateTime.of(2020, 6, 1, 10, 30), 1.0));
 		try {
-			stations[0].getSlots()[0].receiveBike(bike1, LocalDateTime.of(2020, 5, 28, 12, 30));
+			stations[0].getSlots()[0].receiveBike(bike1, LocalDateTime.of(2020, 6, 1, 12, 30));
 			assertTrue(stations[0].getSlots()[0].getStatus().equals(SlotStatus.OCCUPIED));
 			assertTrue(stations[0].getSlots()[0].getBike().equals(bike1));
 			assertTrue(usr1.getPaymentMode() == null);
@@ -46,12 +46,12 @@ class ParkingSlotTest {
 			fail("Unexpected exception found during ok execution of bike return operation");
 		}
 		try {
-			stations[0].getSlots()[1].receiveBike(new RegularBike(), LocalDateTime.of(2020, 5, 28, 12, 30));
+			stations[0].getSlots()[1].receiveBike(new RegularBike(), LocalDateTime.of(2020, 6, 1, 12, 30));
 			fail("Did not catch expected exception");
 		} catch (UnavailableBikeException e) {}
 		usr1.setBike(bike1);
 		try {
-			stations[0].getSlots()[0].receiveBike(bike1, LocalDateTime.of(2020, 5, 28, 12, 30));
+			stations[0].getSlots()[0].receiveBike(bike1, LocalDateTime.of(2020, 6, 1, 12, 30));
 			fail("Did not catch expected exception");
 		} catch (UnavailableSlotException e) {}
 	}
@@ -66,7 +66,7 @@ class ParkingSlotTest {
 		slots[2].setStatus(SlotStatus.OUT_OF_ORDER);
 		stations[0].setSlots(slots);
 		try {
-			slots[0].releaseBike(usr1, LocalDateTime.of(2020, 5, 28, 12, 30));
+			slots[0].releaseBike(usr1, LocalDateTime.of(2020, 6, 1, 12, 30));
 			assertTrue(usr1.getBike().equals(bike1));
 			assertTrue(slots[0].getBike() == null);
 			assertTrue(slots[0].getStatus().equals(SlotStatus.FREE));
@@ -75,11 +75,11 @@ class ParkingSlotTest {
 		}
 		usr1.setBike(null);
 		try {
-			slots[1].releaseBike(usr1, LocalDateTime.of(2020, 5, 28, 12, 30));
+			slots[1].releaseBike(usr1, LocalDateTime.of(2020, 6, 1, 12, 30));
 			fail("Expected to catch exception because slot is empty");
 		} catch (UnavailableBikeException e) {}
 		try {
-			slots[2].releaseBike(usr1, LocalDateTime.of(2020, 5, 28, 12, 30));
+			slots[2].releaseBike(usr1, LocalDateTime.of(2020, 6, 1, 12, 30));
 			fail("Expected to catch exception because slot is out of order");
 		} catch (UnavailableBikeException e) {}	
 	}

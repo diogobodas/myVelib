@@ -26,7 +26,7 @@ class TerminalTest {
 		User usr = new User(1, new GPS(1,1), "001");
 		sys.addUser(usr);
 		try {
-			terminal.releaseBike(usr, RegularBike.class, LocalDateTime.of(2020, 5, 30, 10, 30));
+			terminal.releaseBike(usr, RegularBike.class, LocalDateTime.of(2020, 6, 1, 10, 30));
 			assertTrue(usr.getBike() instanceof RegularBike);
 		} catch (UnavailableBikeException e) {
 			System.out.println(e);

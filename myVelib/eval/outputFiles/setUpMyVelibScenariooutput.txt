@@ -3,6 +3,6 @@ Default setup for myVelib2020:
 Added user Diogo
 Added user Bernardo
 Added user Pierre
-User ID: 0, User name: Diogo, Location: (4.110568685998582,9.11207215307218), No bike, Holds a vmax card
-User ID: 1, User name: Bernardo, Location: (6.6081355106132165,1.876078763040806), No bike, Holds a vlibre card
-User ID: 2, User name: Pierre, Location: (0.42862233011101925,7.350849010130293), No bike, No Card
+User ID: 0, User name: Diogo, Location: (4.443654527292505,8.118421277308103), No bike, Holds a vmax card
+User ID: 1, User name: Bernardo, Location: (5.490088251579949,0.3426903624694344), No bike, Holds a vlibre card
+User ID: 2, User name: Pierre, Location: (2.954925687518294,5.777506565020428), No bike, No Card
