@@ -385,8 +385,12 @@ public class MyVelibController {
 	 */
 	public LocalDateTime parseTime(String year,String month,String day,String hour,String minute) {
 		try {
-			return LocalDateTime.of(Integer.valueOf(year), Integer.valueOf(month),Integer.valueOf(day),
-					Integer.valueOf(hour),Integer.valueOf(minute));
+			int y = Integer.valueOf(year);
+			int m = Integer.valueOf(month);
+			int d = Integer.valueOf(day);
+			int h = Integer.valueOf(hour);
+			int min = Integer.valueOf(minute);
+			return LocalDateTime.of(y,m,d,h,min);
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
